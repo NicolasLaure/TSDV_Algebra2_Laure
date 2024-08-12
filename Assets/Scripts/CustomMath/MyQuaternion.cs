@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace customMath
+namespace CustomMath
 {
     [Serializable]
     public class MyQuaternion : IEquatable<MyQuaternion>, IFormattable
@@ -300,7 +300,7 @@ namespace customMath
             float m20 = forward.x;
             float m21 = forward.y;
             float m22 = forward.z;
-            //Tambien se podría tratar mediante matriz 4x4, seteando una matriz en base a nuestros ejes y pedirle la rotation
+            //Tambien se podrï¿½a tratar mediante matriz 4x4, seteando una matriz en base a nuestros ejes y pedirle la rotation
 
             float diagonals = m00 + m11 + m22;
 
