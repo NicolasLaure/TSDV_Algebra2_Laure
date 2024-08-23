@@ -31,8 +31,21 @@ namespace CustomMath
         {
             get
             {
-                MY4X4 m = this;
                 MyQuaternion q = MyQuaternion.identity;
+                MY4X4 m = this;
+                Vec3 scale = new Vec3(m.GetColumn(0).magnitude, m.GetColumn(1).magnitude, m.GetColumn(2).magnitude);
+
+                // Normalize Scale from Matrix4x4
+                m[0, 0] /= scale.x;
+                m[0, 1] /= scale.y;
+                m[0, 2] /= scale.z;
+                m[1, 0] /= scale.x;
+                m[1, 1] /= scale.y;
+                m[1, 2] /= scale.z;
+                m[2, 0] /= scale.x;
+                m[2, 1] /= scale.y;
+                m[2, 2] /= scale.z;
+
                 //Toma diagonal m00 m11 m22 (Escala)
                 // Agarra y setea una suma o resta dependiendo del componente en el que estemos siendo 
                 // w suma de todas las escalas
@@ -43,10 +56,11 @@ namespace CustomMath
                 q.z = Mathf.Sqrt(Mathf.Max(0, 1 - m[0, 0] - m[1, 1] + m[2, 2])) / 2;
 
                 // m[2, 1] - m[1, 2] son las posiciones de los senos de cada eje dentro de la matriz
-                q.x *= Mathf.Sign(q.x * (m[2, 1] - m[1, 2]));
-                q.y *= Mathf.Sign(q.y * (m[0, 2] - m[2, 0])); //Son los valores de la matriz que se van a modificar
-                q.z *= Mathf.Sign(q.z * (m[1, 0] - m[0, 1]));
-                return q;
+                q.x *= Mathf.Sign(q.x * (m21 - m12));
+                q.y *= Mathf.Sign(q.y * (m02 - m20)); //Son los valores de la matriz que se van a modificar
+                q.z *= Mathf.Sign(q.z * (m10 - m01));
+
+                return q.normalized;
             }
         }
 
