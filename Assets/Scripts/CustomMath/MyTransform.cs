@@ -47,19 +47,28 @@ namespace CustomMath
         /// <summary>
         ///   Matrix that transforms a point from world space into local space (Read Only).
         /// </summary>
-        public MY4X4 worldToLocalMatrix { get; }
-
-        /// <summary>
-        ///   Matrix that transforms a point from local space into world space (Read Only).
-        /// </summary>
-        public MY4X4 localToWorldMatrix
+        public MY4X4 WorldToLocalMatrix
         {
             get
             {
                 if (parent == null)
                     return matrixTRS;
 
-                return parent.localToWorldMatrix * matrixTRS;
+                return matrixTRS.inverse * parent.WorldToLocalMatrix;
+            }
+        }
+
+        /// <summary>
+        ///   Matrix that transforms a point from local space into world space (Read Only).
+        /// </summary>
+        public MY4X4 LocalToWorldMatrix
+        {
+            get
+            {
+                if (parent == null)
+                    return matrixTRS;
+
+                return parent.LocalToWorldMatrix * matrixTRS;
             }
         }
 
@@ -68,7 +77,7 @@ namespace CustomMath
         /// </summary>
         public Vec3 Position
         {
-            get { return localToWorldMatrix.GetPosition(); }
+            get { return LocalToWorldMatrix.GetPosition(); }
             set { throw new NotImplementedException(); }
         }
 
@@ -119,7 +128,7 @@ namespace CustomMath
         /// </summary>
         public MyQuaternion Rotation
         {
-            get { return localToWorldMatrix.rotation; }
+            get { return LocalToWorldMatrix.rotation; }
             set
             {
                 //Should set local rotation in a certain way that the global rotation matches when multiplying with all parents
@@ -159,7 +168,7 @@ namespace CustomMath
         /// </summary>
         public Vec3 lossyScale
         {
-            get { return localToWorldMatrix.lossyScale; }
+            get { return LocalToWorldMatrix.lossyScale; }
         }
 
         /// <summary>
@@ -241,7 +250,7 @@ namespace CustomMath
             localRotation = MyQuaternion.Euler(rotationEulers);
 
             matrixTRS.SetTRS(localPosition, localRotation, scale);
-            _worldPosition = localToWorldMatrix.GetPosition();
+            _worldPosition = LocalToWorldMatrix.GetPosition();
             _worldRotation = Rotation;
             _localScale = localScale;
             _lossyScale = lossyScale;
@@ -367,7 +376,7 @@ namespace CustomMath
 
         public void GetPositionAndRotation(out Vec3 position, out MyQuaternion rotation)
         {
-            MY4X4 transformedMatrix = localToWorldMatrix;
+            MY4X4 transformedMatrix = LocalToWorldMatrix;
             position = transformedMatrix.GetPosition();
             rotation = transformedMatrix.rotation;
         }
@@ -713,7 +722,7 @@ namespace CustomMath
         }
 
         /// <summary>
-        ///   MyTransforms position from world space to local space.
+        ///   transforms position from world space to local space.
         /// </summary>
         /// <param name="position"></param>
         public Vec3 InverseMyTransformPoint(Vec3 position)

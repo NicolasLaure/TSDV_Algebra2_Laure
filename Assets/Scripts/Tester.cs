@@ -18,7 +18,6 @@ public class Tester : MonoBehaviour
         // Debug.Log(unityTransform.rotation);
         // Debug.Log(unityTransform.lossyScale);
 
-        Debug.Log(unityTransform.position);
-        Debug.Log(_transform.Position);
+        Debug.Log(unityTransform.worldToLocalMatrix + "\n" + _transform.WorldToLocalMatrix);
     }
 }

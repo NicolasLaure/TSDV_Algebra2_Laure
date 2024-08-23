@@ -99,7 +99,7 @@ namespace CustomMath
         //
         // Summary:
         //     The inverse of this matrix. (Read Only)
-        //public MY4X4 inverse { get { return Inverse(this); } }
+        public MY4X4 inverse { get { return Inverse(this); } }
 
         #endregion
 
