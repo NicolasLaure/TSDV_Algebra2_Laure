@@ -23,6 +23,7 @@ namespace CustomMath
 
         private Vec3 _worldPosition;
         private MyQuaternion _worldRotation;
+        private Vec3 _localScale;
         private Vec3 _lossyScale;
         private List<MyTransform> _children = new List<MyTransform>();
 
@@ -203,6 +204,7 @@ namespace CustomMath
             matrixTRS.SetTRS(localPosition, localRotation, scale);
             _worldPosition = localToWorldMatrix.GetPosition();
             _worldRotation = Rotation;
+            _localScale = localScale;
             _lossyScale = lossyScale;
 
             transform.SetLocalPositionAndRotation(localPosition, localRotation.toQuaternion);
