@@ -32,7 +32,7 @@ namespace CustomMath
             get
             {
                 MyQuaternion q = MyQuaternion.identity;
-                MY4X4 m = this;
+                MY4X4 m = new MY4X4(GetColumn(0), GetColumn(1), GetColumn(2), GetColumn(3));
                 Vec3 scale = new Vec3(m.GetColumn(0).magnitude, m.GetColumn(1).magnitude, m.GetColumn(2).magnitude);
 
                 // Normalize Scale from Matrix4x4
