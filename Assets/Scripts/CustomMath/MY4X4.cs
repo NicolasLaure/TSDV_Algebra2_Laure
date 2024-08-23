@@ -33,7 +33,7 @@ namespace CustomMath
             {
                 MyQuaternion q = MyQuaternion.identity;
                 MY4X4 m = new MY4X4(GetColumn(0), GetColumn(1), GetColumn(2), GetColumn(3));
-                Vec3 scale = new Vec3(m.GetColumn(0).magnitude, m.GetColumn(1).magnitude, m.GetColumn(2).magnitude);
+                Vec3 scale = lossyScale;
 
                 // Normalize Scale from Matrix4x4
                 m[0, 0] /= scale.x;
@@ -69,15 +69,7 @@ namespace CustomMath
         //     Attempts to get a scale value from the matrix. (Read Only)
         public Vec3 lossyScale
         {
-            get
-            {
-                Vec3 scale;
-
-                scale.x = Mathf.Abs(m00 + m10 + m20);
-                scale.y = Mathf.Abs(m01 + m11 + m21);
-                scale.z = Mathf.Abs(m02 + m12 + m22);
-                return scale;
-            }
+            get { return new Vec3(GetColumn(0).magnitude, GetColumn(1).magnitude, GetColumn(2).magnitude); }
         }
 
         //
