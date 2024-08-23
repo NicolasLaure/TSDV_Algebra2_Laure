@@ -85,7 +85,12 @@ namespace CustomMath
         public Vec3 Position
         {
             get { return LocalToWorldMatrix.GetPosition(); }
-            set { throw new NotImplementedException(); }
+            set
+            {
+                MyTransform worldTransform = new MyTransform(value, MyQuaternion.identity, Vec3.One);
+                worldTransform.parent = parent;
+                localPosition = worldTransform.WorldToLocalMatrix.inverse.GetPosition();
+            }
         }
 
         /// <summary>

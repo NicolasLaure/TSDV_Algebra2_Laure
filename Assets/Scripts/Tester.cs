@@ -18,6 +18,7 @@ public class Tester : MonoBehaviour
         // Debug.Log(unityTransform.rotation);
         // Debug.Log(unityTransform.lossyScale);
 
-        Debug.Log(unityTransform.worldToLocalMatrix + "\n" + _transform.WorldToLocalMatrix);
+        _transform.Position = new Vec3(10, 0, 0);
+        //Debug.Log(unityTransform.worldToLocalMatrix + "\n" + _transform.WorldToLocalMatrix);
     }
 }
