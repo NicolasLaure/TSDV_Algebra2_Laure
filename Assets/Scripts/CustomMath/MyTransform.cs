@@ -28,6 +28,10 @@ namespace CustomMath
 
         protected MyTransform()
         {
+            localPosition = Vec3.Zero;
+            localRotation = MyQuaternion.identity;
+            scale = Vec3.One;
+            matrixTRS = MY4X4.TRS(localPosition, localRotation, scale);
         }
 
         #endregion
