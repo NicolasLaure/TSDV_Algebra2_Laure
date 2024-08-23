@@ -207,8 +207,23 @@ namespace CustomMath
             _localScale = localScale;
             _lossyScale = lossyScale;
 
-            transform.SetLocalPositionAndRotation(localPosition, localRotation.toQuaternion);
-            transform.localScale = scale;
+            transform.SetPositionAndRotation(_worldPosition, _worldRotation.toQuaternion);
+            transform.localScale = lossyScale;
+
+        }
+
+        private void Update()
+        {
+            localRotation = MyQuaternion.Euler(rotationEulers);
+
+            matrixTRS.SetTRS(localPosition, localRotation, scale);
+            _worldPosition = localToWorldMatrix.GetPosition();
+            _worldRotation = Rotation;
+            _localScale = localScale;
+            _lossyScale = lossyScale;
+
+            transform.SetPositionAndRotation(_worldPosition, _worldRotation.toQuaternion);
+            transform.localScale = lossyScale;
         }
 
         #region Hierarchy
