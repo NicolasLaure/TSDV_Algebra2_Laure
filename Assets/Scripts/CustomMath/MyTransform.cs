@@ -68,7 +68,7 @@ namespace CustomMath
         /// </summary>
         public Vec3 Position
         {
-            get { throw new NotImplementedException(); }
+            get { return localToWorldMatrix.GetPosition(); }
             set { throw new NotImplementedException(); }
         }
 

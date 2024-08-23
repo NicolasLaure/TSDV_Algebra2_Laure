@@ -17,7 +17,8 @@ public class Tester : MonoBehaviour
         // Debug.Log(unityTransform.position);
         // Debug.Log(unityTransform.rotation);
         // Debug.Log(unityTransform.lossyScale);
-        
-        Debug.Log(_transform.HierarchyCount);
+
+        Debug.Log(unityTransform.position);
+        Debug.Log(_transform.Position);
     }
 }
