@@ -22,6 +22,8 @@ namespace CustomMath
         [SerializeField] private MyTransform parent;
 
         private Vec3 _worldPosition;
+        private MyQuaternion _worldRotation;
+        private Vec3 _lossyScale;
         private List<MyTransform> _children = new List<MyTransform>();
 
         #endregion
@@ -41,14 +43,23 @@ namespace CustomMath
         #region Properties
 
         /// <summary>
-        ///   Matrix that MyTransforms a point from world space into local space (Read Only).
+        ///   Matrix that transforms a point from world space into local space (Read Only).
         /// </summary>
         public MY4X4 worldToLocalMatrix { get; }
 
         /// <summary>
-        ///   Matrix that MyTransforms a point from local space into world space (Read Only).
+        ///   Matrix that transforms a point from local space into world space (Read Only).
         /// </summary>
-        public MY4X4 localToWorldMatrix { get; }
+        public MY4X4 localToWorldMatrix
+        {
+            get
+            {
+                if (parent == null)
+                    return matrixTRS;
+
+                return parent.localToWorldMatrix * matrixTRS;
+            }
+        }
 
         /// <summary>
         ///   The world space position of the MyTransform.
@@ -106,7 +117,7 @@ namespace CustomMath
         /// </summary>
         public MyQuaternion Rotation
         {
-            get { throw new NotImplementedException(); }
+            get { return localToWorldMatrix.rotation; }
             set
             {
                 //Should set local rotation in a certain way that the global rotation matches when multiplying with all parents
@@ -144,7 +155,10 @@ namespace CustomMath
         /// <summary>
         ///   The global scale of the object (Read Only).
         /// </summary>
-        public Vec3 lossyScale { get; }
+        public Vec3 lossyScale
+        {
+            get { return localToWorldMatrix.lossyScale; }
+        }
 
         /// <summary>
         ///   The parent of the MyTransform.
@@ -181,6 +195,19 @@ namespace CustomMath
         #endregion
 
         #region Functions
+
+        private void OnValidate()
+        {
+            localRotation = MyQuaternion.Euler(rotationEulers);
+
+            matrixTRS.SetTRS(localPosition, localRotation, scale);
+            _worldPosition = localToWorldMatrix.GetPosition();
+            _worldRotation = Rotation;
+            _lossyScale = lossyScale;
+
+            transform.SetLocalPositionAndRotation(localPosition, localRotation.toQuaternion);
+            transform.localScale = scale;
+        }
 
         #region Hierarchy
 
@@ -287,12 +314,15 @@ namespace CustomMath
 
         public void GetPositionAndRotation(out Vec3 position, out MyQuaternion rotation)
         {
-            throw new NotImplementedException();
+            MY4X4 transformedMatrix = localToWorldMatrix;
+            position = transformedMatrix.GetPosition();
+            rotation = transformedMatrix.rotation;
         }
 
         public void GetLocalPositionAndRotation(out Vec3 localPosition, out MyQuaternion localRotation)
         {
-            throw new NotImplementedException();
+            localPosition = matrixTRS.GetPosition();
+            localRotation = matrixTRS.rotation;
         }
 
         #region Translates
