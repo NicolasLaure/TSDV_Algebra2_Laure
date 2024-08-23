@@ -47,6 +47,7 @@ namespace CustomMath
             scale = s;
             matrixTRS = MY4X4.TRS(localPosition, localRotation, scale);
         }
+
         #endregion
 
         #region Properties
@@ -85,12 +86,7 @@ namespace CustomMath
         public Vec3 Position
         {
             get { return LocalToWorldMatrix.GetPosition(); }
-            set
-            {
-                MyTransform worldTransform = new MyTransform(value, MyQuaternion.identity, Vec3.One);
-                worldTransform.parent = parent;
-                localPosition = worldTransform.WorldToLocalMatrix.inverse.GetPosition();
-            }
+            set { localPosition = InverseMyTransformPoint(value); }
         }
 
         /// <summary>
@@ -739,7 +735,9 @@ namespace CustomMath
         /// <param name="position"></param>
         public Vec3 InverseMyTransformPoint(Vec3 position)
         {
-            throw new NotImplementedException();
+            MyTransform worldTransform = new MyTransform(position, MyQuaternion.identity, Vec3.One);
+            worldTransform.parent = parent;
+            return worldTransform.WorldToLocalMatrix.inverse.GetPosition();
         }
 
         /// <summary>
