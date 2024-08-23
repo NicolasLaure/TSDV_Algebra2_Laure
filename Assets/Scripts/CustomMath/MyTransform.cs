@@ -22,6 +22,7 @@ namespace CustomMath
         [SerializeField] private MyTransform parent;
 
         private Vec3 _worldPosition;
+        private List<MyTransform> _children = new List<MyTransform>();
 
         #endregion
 
@@ -136,11 +137,7 @@ namespace CustomMath
         public MyTransform Parent
         {
             get { return parent; }
-            set
-            {
-                parent = value;
-                // Update TRS to depend from parent
-            }
+            set { SetParent(value); }
         }
 
         /// <summary>
@@ -161,18 +158,38 @@ namespace CustomMath
         /// <summary>
         ///   Set the parent of the MyTransform.
         /// </summary>
-        public void SetParent(MyTransform p)
+        public void SetParent(MyTransform newParent)
         {
-            throw new NotImplementedException();
+            parent.RemoveChild(this);
+            parent = newParent;
+            parent.AddChild(this);
+            
+            //Translate to match local position relative to parent
         }
 
         /// <summary>
         ///   Set the parent of the MyTransform.
         /// </summary>
-        /// <param name="parent">The parent MyTransform to use.</param>
+        /// <param name="newParent">The parent MyTransform to use.</param>
         /// <param name="worldPositionStays">If true, the parent-relative position, scale and rotation are modified such that the object keeps the same world space position, rotation and scale as before.</param>
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        public extern void SetParent(MyTransform parent, bool worldPositionStays);
+        public void SetParent(MyTransform newParent, bool worldPositionStays)
+        {
+            parent.RemoveChild(this);
+            parent = newParent;
+            parent.AddChild(this);
+            
+            //Update local position without moving world position
+        }
+
+        public void RemoveChild(MyTransform child)
+        {
+            _children.Remove(child);
+        }
+
+        public void AddChild(MyTransform child)
+        {
+            _children.Add(child);
+        }
 
         /// <summary>
         ///   Matrix that MyTransforms a point from world space into local space (Read Only).
