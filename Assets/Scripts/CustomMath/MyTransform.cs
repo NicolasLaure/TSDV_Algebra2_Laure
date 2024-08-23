@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using UnityEngine;
@@ -142,8 +143,20 @@ namespace CustomMath
             }
         }
 
+        /// <summary>
+        ///   The MyTransform capacity of the MyTransform's hierarchy data structure.
+        /// </summary>
+        public int hierarchyCapacity { get; set; }
+
+        /// <summary>
+        ///   The number of MyTransforms in the MyTransform's hierarchy data structure.
+        /// </summary>
+        public int hierarchyCount { get; }
+
         #endregion
 
+
+        #region Functions
 
         /// <summary>
         ///   Set the parent of the MyTransform.
@@ -649,14 +662,6 @@ namespace CustomMath
         [MethodImpl(MethodImplOptions.InternalCall)]
         public extern MyTransform GetChild(int index);
 
-        /// <summary>
-        ///   The MyTransform capacity of the MyTransform's hierarchy data structure.
-        /// </summary>
-        public int hierarchyCapacity { get; set; }
-
-        /// <summary>
-        ///   The number of MyTransforms in the MyTransform's hierarchy data structure.
-        /// </summary>
-        public int hierarchyCount { get; }
+        #endregion
     }
 }
