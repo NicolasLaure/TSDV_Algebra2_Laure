@@ -41,6 +41,16 @@ namespace CustomMath
         #region Properties
 
         /// <summary>
+        ///   Matrix that MyTransforms a point from world space into local space (Read Only).
+        /// </summary>
+        public MY4X4 worldToLocalMatrix { get; }
+
+        /// <summary>
+        ///   Matrix that MyTransforms a point from local space into world space (Read Only).
+        /// </summary>
+        public MY4X4 localToWorldMatrix { get; }
+
+        /// <summary>
         ///   The world space position of the MyTransform.
         /// </summary>
         public Vec3 Position
@@ -132,12 +142,30 @@ namespace CustomMath
         }
 
         /// <summary>
+        ///   The global scale of the object (Read Only).
+        /// </summary>
+        public Vec3 lossyScale { get; }
+
+        /// <summary>
         ///   The parent of the MyTransform.
         /// </summary>
         public MyTransform Parent
         {
             get { return parent; }
             set { SetParent(value); }
+        }
+
+        /// <summary>
+        ///   Returns the topmost MyTransform in the hierarchy.
+        /// </summary>
+        public MyTransform root { get; }
+
+        /// <summary>
+        ///   The number of children the parent MyTransform has.
+        /// </summary>
+        public int childCount
+        {
+            get { return _children.Count; }
         }
 
         /// <summary>
@@ -152,8 +180,9 @@ namespace CustomMath
 
         #endregion
 
-
         #region Functions
+
+        #region Hierarchy
 
         /// <summary>
         ///   Set the parent of the MyTransform.
@@ -163,7 +192,7 @@ namespace CustomMath
             parent.RemoveChild(this);
             parent = newParent;
             parent.AddChild(this);
-            
+
             //Translate to match local position relative to parent
         }
 
@@ -177,7 +206,7 @@ namespace CustomMath
             parent.RemoveChild(this);
             parent = newParent;
             parent.AddChild(this);
-            
+
             //Update local position without moving world position
         }
 
@@ -192,14 +221,49 @@ namespace CustomMath
         }
 
         /// <summary>
-        ///   Matrix that MyTransforms a point from world space into local space (Read Only).
+        ///   Unparents all children.
         /// </summary>
-        public MY4X4 worldToLocalMatrix { get; }
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void DetachChildren();
 
         /// <summary>
-        ///   Matrix that MyTransforms a point from local space into world space (Read Only).
+        ///   Move the MyTransform to the start of the local MyTransform list.
         /// </summary>
-        public MY4X4 localToWorldMatrix { get; }
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void SetAsFirstSibling();
+
+        /// <summary>
+        ///   Move the MyTransform to the end of the local MyTransform list.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void SetAsLastSibling();
+
+        /// <summary>
+        ///   Sets the sibling index.
+        /// </summary>
+        /// <param name="index">Index to set.</param>
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void SetSiblingIndex(int index);
+
+        /// <summary>
+        ///   Gets the sibling index.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern int GetSiblingIndex();
+
+        /// <summary>
+        ///   Finds a child by name n and returns it.
+        /// </summary>
+        /// <param name="n">Name of child to be found.</param>
+        /// <returns>
+        ///   The found child MyTransform. Null if child with matching name isn't found.
+        /// </returns>
+        public MyTransform Find(string n)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
 
         /// <summary>
         ///   Sets the world space position and rotation of the MyTransform component.
@@ -221,11 +285,17 @@ namespace CustomMath
             throw new NotImplementedException();
         }
 
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        public extern void GetPositionAndRotation(out Vec3 position, out MyQuaternion rotation);
+        public void GetPositionAndRotation(out Vec3 position, out MyQuaternion rotation)
+        {
+            throw new NotImplementedException();
+        }
 
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        public extern void GetLocalPositionAndRotation(out Vec3 localPosition, out MyQuaternion localRotation);
+        public void GetLocalPositionAndRotation(out Vec3 localPosition, out MyQuaternion localRotation)
+        {
+            throw new NotImplementedException();
+        }
+
+        #region Translates
 
         /// <summary>
         ///   Moves the MyTransform in the direction and distance of translation.
@@ -291,6 +361,10 @@ namespace CustomMath
             throw new NotImplementedException();
         }
 
+        #endregion
+
+        #region Rotates
+
         /// <summary>
         ///   Applies a rotation of eulerAngles.z degrees around the z-axis, eulerAngles.x degrees around the x-axis, and eulerAngles.y degrees around the y-axis (in that order).
         /// </summary>
@@ -353,6 +427,8 @@ namespace CustomMath
         {
             throw new NotImplementedException();
         }
+
+        #endregion
 
         /// <summary>
         ///   Rotates the MyTransform about axis passing through point in world coordinates by angle degrees.
@@ -584,73 +660,17 @@ namespace CustomMath
         }
 
         /// <summary>
-        ///   Returns the topmost MyTransform in the hierarchy.
+        ///   Is this MyTransform a child of parent?
         /// </summary>
-        public MyTransform root { get; }
-
-        /// <summary>
-        ///   The number of children the parent MyTransform has.
-        /// </summary>
-        public extern int childCount
-        {
-            [MethodImpl(MethodImplOptions.InternalCall)]
-            get;
-        }
-
-        /// <summary>
-        ///   Unparents all children.
-        /// </summary>
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        public extern void DetachChildren();
-
-        /// <summary>
-        ///   Move the MyTransform to the start of the local MyTransform list.
-        /// </summary>
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        public extern void SetAsFirstSibling();
-
-        /// <summary>
-        ///   Move the MyTransform to the end of the local MyTransform list.
-        /// </summary>
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        public extern void SetAsLastSibling();
-
-        /// <summary>
-        ///   Sets the sibling index.
-        /// </summary>
-        /// <param name="index">Index to set.</param>
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        public extern void SetSiblingIndex(int index);
-
-        /// <summary>
-        ///   Gets the sibling index.
-        /// </summary>
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        public extern int GetSiblingIndex();
-
-        /// <summary>
-        ///   Finds a child by name n and returns it.
-        /// </summary>
-        /// <param name="n">Name of child to be found.</param>
-        /// <returns>
-        ///   The found child MyTransform. Null if child with matching name isn't found.
-        /// </returns>
-        public MyTransform Find(string n)
+        /// <param name="parent"></param>
+        public bool IsChildOf(MyTransform parent)
         {
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        ///   The global scale of the object (Read Only).
-        /// </summary>
-        public Vec3 lossyScale { get; }
+        #endregion
 
-        /// <summary>
-        ///   Is this MyTransform a child of parent?
-        /// </summary>
-        /// <param name="parent"></param>
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        public extern bool IsChildOf(MyTransform parent);
+        #region Internals
 
         /// <summary>
         ///   Has the MyTransform changed since the last time the flag was set to 'false'?
@@ -667,7 +687,6 @@ namespace CustomMath
         {
             throw new NotImplementedException();
         }
-
 
         /// <summary>
         ///   Returns a MyTransform child by index.
