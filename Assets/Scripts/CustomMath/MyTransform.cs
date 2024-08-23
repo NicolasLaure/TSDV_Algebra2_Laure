@@ -3,35 +3,72 @@ using System.Collections;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using UnityEngine;
-using Component = UnityEngine.Component;
+using UnityEngine.Serialization;
 
 namespace CustomMath
 {
-    public class MyTransform : Component, IEnumerable
+    [Serializable]
+    public class MyTransform : MonoBehaviour, IEnumerable
     {
+        #region Variables
+
+        private MY4X4 matrixTRS;
+
+        [SerializeField] private Vec3 localPosition;
+        [SerializeField] private Vec3 rotationEulers;
+        [SerializeField] private MyQuaternion localRotation;
+        [SerializeField] private Vec3 scale;
+        [SerializeField] private MyTransform parent;
+
+        private Vec3 _worldPosition;
+
+        #endregion
+
+        #region Constructors
+
         protected MyTransform()
         {
         }
 
+        #endregion
+
+        #region Properties
+
         /// <summary>
         ///   The world space position of the MyTransform.
         /// </summary>
-        public Vec3 position { get; set; }
+        public Vec3 Position
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
 
         /// <summary>
         ///   Position of the MyTransform relative to the parent MyTransform.
         /// </summary>
-        public Vec3 localPosition { get; set; }
+        public Vec3 LocalPosition
+        {
+            get { return localPosition; }
+            set { localPosition = value; }
+        }
 
         /// <summary>
         ///   The rotation as Euler angles in degrees.
         /// </summary>
-        public Vec3 eulerAngles { get; set; }
+        public Vec3 eulerAngles
+        {
+            get { throw new NotImplementedException(); }
+            set { SetPositionAndRotation(localPosition, MyQuaternion.Euler(value.x, value.y, value.z)); }
+        }
 
         /// <summary>
         ///   The rotation as Euler angles in degrees relative to the parent MyTransform's rotation.
         /// </summary>
-        public Vec3 localEulerAngles { get; set; }
+        public Vec3 localEulerAngles
+        {
+            get { return matrixTRS.rotation.eulerAngles; }
+            set { SetLocalPositionAndRotation(localPosition, MyQuaternion.Euler(value.x, value.y, value.z)); }
+        }
 
         /// <summary>
         ///   The red axis of the MyTransform in world space.
@@ -51,22 +88,58 @@ namespace CustomMath
         /// <summary>
         ///   A MyMyQuaternion that stores the rotation of the MyTransform in world space.
         /// </summary>
-        public MyQuaternion rotation { get; set; }
+        public MyQuaternion Rotation
+        {
+            get { throw new NotImplementedException(); }
+            set
+            {
+                //Should set local rotation in a certain way that the global rotation matches when multiplying with all parents
+                throw new NotImplementedException();
+            }
+        }
 
         /// <summary>
         ///   The rotation of the MyTransform relative to the MyTransform rotation of the parent.
         /// </summary>
-        public MyQuaternion localRotation { get; set; }
+        public MyQuaternion LocalRotation
+        {
+            get { return localRotation; }
+            set
+            {
+                localRotation = value;
+                rotationEulers = new Vec3(localRotation.eulerAngles);
+                matrixTRS.SetTRS(localPosition, localRotation, localScale);
+            }
+        }
 
         /// <summary>
         ///   The scale of the MyTransform relative to the GameObjects parent.
         /// </summary>
-        public Vec3 localScale { get; set; }
+        public Vec3 localScale
+        {
+            get { return new Vec3(matrixTRS.lossyScale); }
+            set
+            {
+                scale = value;
+                matrixTRS.SetTRS(localPosition, localRotation, scale);
+            }
+        }
 
         /// <summary>
         ///   The parent of the MyTransform.
         /// </summary>
-        public MyTransform parent { get; set; }
+        public MyTransform Parent
+        {
+            get { return parent; }
+            set
+            {
+                parent = value;
+                // Update TRS to depend from parent
+            }
+        }
+
+        #endregion
+
 
         /// <summary>
         ///   Set the parent of the MyTransform.
@@ -556,34 +629,11 @@ namespace CustomMath
             set;
         }
 
-        [Obsolete("FindChild has been deprecated. Use Find instead (UnityUpgradable) -> Find([mscorlib] System.String)",
-        false)]
-        public MyTransform FindChild(string n)
-        {
-            throw new NotImplementedException();
-        }
-
         public IEnumerator GetEnumerator()
         {
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        ///   
-        /// </summary>
-        /// <param name="axis"></param>
-        /// <param name="angle"></param>
-        [Obsolete("warning use MyTransform.Rotate instead.")]
-        public void RotateAround(Vec3 axis, float angle)
-        {
-            throw new NotImplementedException();
-        }
-
-        [Obsolete("warning use MyTransform.Rotate instead.")]
-        public void RotateAroundLocal(Vec3 axis, float angle)
-        {
-            throw new NotImplementedException();
-        }
 
         /// <summary>
         ///   Returns a MyTransform child by index.
