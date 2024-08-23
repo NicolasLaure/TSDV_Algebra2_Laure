@@ -238,6 +238,15 @@ namespace CustomMath
             y = newY;
             z = newZ;
         }
+        
+        public static Vec3 Normalize(Vec3 value)
+        {
+            float magnitude = value.magnitude;
+            float newX = value.x / magnitude;
+            float newY = value.y / magnitude;
+            float newZ = value.z / magnitude;
+            return new Vec3(newX, newY, newZ);
+        }
         #endregion
 
         #region Internals

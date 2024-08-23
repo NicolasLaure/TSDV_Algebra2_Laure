@@ -12,14 +12,14 @@ namespace CustomMath
         public float z;
         public float w;
 
-        public Vector3 eulerAngles
+        public Vec3 eulerAngles
         {
             get
             {
                 // pointer to Cuaterniones_y_unity.pptm.pdf page 9-14
 
                 float xValue = x * w - y * z;
-                Vector3 result = Vector3.zero;
+                Vec3 result = Vec3.Zero;
 
                 if (xValue > 0.4999f * sqrMagnitude)
                 {
@@ -73,7 +73,7 @@ namespace CustomMath
         #endregion
 
         #region Operators
-        public static Vector3 operator *(MyQuaternion rotation, Vector3 point)
+        public static Vec3 operator *(MyQuaternion rotation, Vec3 point)
         {
             //https://automaticaddison.com/how-to-convert-a-quaternion-to-a-rotation-matrix/#Convert_a_Quaternion_to_a_Rotation_Matrix
             //https://en.wikipedia.org/wiki/Rotation_matrix
@@ -82,7 +82,7 @@ namespace CustomMath
             Vector4 pointV4 = new Vector4(point.x, point.y, point.z, 1);
 
             Vector4 result = myRotationMatrix * pointV4;
-            return new Vector3(result.x, result.y, result.z);
+            return new Vec3(result.x, result.y, result.z);
         }
         public static MyQuaternion operator *(MyQuaternion lhs, MyQuaternion rhs)
         {
@@ -128,7 +128,7 @@ namespace CustomMath
             float dotAbs = Mathf.Abs(Dot(a, b));
             return a == b ? 0.0f : Mathf.Acos(Mathf.Min(dotAbs, 1.0f)) * 2 * Mathf.Rad2Deg;
         }
-        public static MyQuaternion AngleAxis(float angle, Vector3 axis)
+        public static MyQuaternion AngleAxis(float angle, Vec3 axis)
         {
             axis.Normalize();
             // we divide the angle by the amount of axis we operate minus one because the angle gets distributed through all the axis we operate
@@ -142,7 +142,7 @@ namespace CustomMath
         {
             return a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w;
         }
-        public static MyQuaternion Euler(Vector3 euler)
+        public static MyQuaternion Euler(Vec3 euler)
         {
             // pointer to Cuaterniones_y_unity.pptm.pdf page 8
             MyQuaternion qx = identity;
@@ -169,14 +169,14 @@ namespace CustomMath
 
             return qy * qx * qz;
         }
-        public static MyQuaternion FromToRotation(Vector3 fromDirection, Vector3 toDirection)
+        public static MyQuaternion FromToRotation(Vec3 fromDirection, Vec3 toDirection)
         {
             //Creates the axis based on the perpendicular vector to both (We'll rotate around it)
-            Vector3 axis = Vector3.Cross(fromDirection, toDirection);
+            Vec3 axis = Vec3.Cross(fromDirection, toDirection);
             //Gets the angle between the vectors
-            float angle = Vector3.Angle(fromDirection, toDirection);
+            float angle = Vec3.Angle(fromDirection, toDirection);
             //Returns the rotation in angles around the previously calculated axis
-            return AngleAxis(angle, axis.normalized);
+            return AngleAxis(angle, axis.normalizedVec3);
         }
         public static MyQuaternion Inverse(MyQuaternion rotation)
         {
@@ -226,11 +226,11 @@ namespace CustomMath
             result.Normalize();
             return result;
         }
-        public static MyQuaternion LookRotation(Vector3 forward)
+        public static MyQuaternion LookRotation(Vec3 forward)
         {
             forward.Normalize();
-            Vector3 right = Vector3.Normalize(Vector3.Cross(Vector3.up, forward));
-            Vector3 up = Vector3.Normalize(Vector3.Cross(forward, right));
+            Vec3 right = Vec3.Normalize(Vec3.Cross(Vec3.Up, forward));
+            Vec3 up = Vec3.Normalize(Vec3.Cross(forward, right));
 
             float m00 = right.x;
             float m01 = right.y;
@@ -285,11 +285,11 @@ namespace CustomMath
             q.w = (m01 - m10) * num1;
             return q;
         }
-        public static MyQuaternion LookRotation(Vector3 forward, [UnityEngine.Internal.DefaultValue("Vector3.up")] Vector3 upwards)
+        public static MyQuaternion LookRotation(Vec3 forward, [UnityEngine.Internal.DefaultValue("Vec3.up")] Vec3 upwards)
         {
             forward.Normalize();
-            Vector3 right = Vector3.Normalize(Vector3.Cross(upwards, forward));
-            upwards = Vector3.Normalize(Vector3.Cross(forward, right));
+            Vec3 right = Vec3.Normalize(Vec3.Cross(upwards, forward));
+            upwards = Vec3.Normalize(Vec3.Cross(forward, right));
             //Crea una matriz rotacion en base a los ejes y la devuelve a rotacion
             float m00 = right.x;
             float m01 = right.y;
@@ -401,17 +401,17 @@ namespace CustomMath
             z = newZ;
             w = newW;
         }
-        public void SetFromToRotation(Vector3 fromDirection, Vector3 toDirection)
+        public void SetFromToRotation(Vec3 fromDirection, Vec3 toDirection)
         {
-            Vector3 axis = Vector3.Cross(fromDirection, toDirection);
-            float angle = Vector3.Angle(fromDirection, toDirection);
-            MyQuaternion result = AngleAxis(angle, axis.normalized);
+            Vec3 axis = Vec3.Cross(fromDirection, toDirection);
+            float angle = Vec3.Angle(fromDirection, toDirection);
+            MyQuaternion result = AngleAxis(angle, axis.normalizedVec3);
             x = result.x;
             y = result.y;
             z = result.z;
             w = result.w;
         }
-        public void SetLookRotation(Vector3 view)
+        public void SetLookRotation(Vec3 view)
         {
             MyQuaternion q = LookRotation(view);
 
@@ -420,7 +420,7 @@ namespace CustomMath
             this.z = q.z;
             this.w = q.w;
         }
-        public void SetLookRotation(Vector3 view, [UnityEngine.Internal.DefaultValue("Vector3.up")] Vector3 up)
+        public void SetLookRotation(Vec3 view, [UnityEngine.Internal.DefaultValue("Vec3.up")] Vec3 up)
         {
             MyQuaternion q = LookRotation(view, up);
 
@@ -429,18 +429,18 @@ namespace CustomMath
             this.z = q.z;
             this.w = q.w;
         }
-        public void ToAngleAxis(out float angle, out Vector3 axis)
+        public void ToAngleAxis(out float angle, out Vec3 axis)
         {
             Normalize();
             angle = 2.0f * Mathf.Acos(w) * Mathf.Rad2Deg;
             float mag = Mathf.Sqrt(1.0f - w * w);
             if (mag > 0.0001f)
             {
-                axis = new Vector3(x, y, z) / mag;
+                axis = new Vec3(x, y, z) / mag;
             }
             else
             {
-                axis = new Vector3(1, 0, 0);
+                axis = new Vec3(1, 0, 0);
             }
         }
         #endregion
