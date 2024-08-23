@@ -8,7 +8,7 @@ using UnityEngine.Serialization;
 
 namespace CustomMath
 {
-    [Serializable]
+    [Serializable] [ExecuteInEditMode]
     public class MyTransform : MonoBehaviour, IEnumerable
     {
         #region Variables
