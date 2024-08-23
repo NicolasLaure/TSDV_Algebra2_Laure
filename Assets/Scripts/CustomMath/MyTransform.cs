@@ -40,6 +40,13 @@ namespace CustomMath
             matrixTRS = MY4X4.TRS(localPosition, localRotation, scale);
         }
 
+        protected MyTransform(Vec3 pos, MyQuaternion q, Vec3 s)
+        {
+            localPosition = pos;
+            localRotation = q;
+            scale = s;
+            matrixTRS = MY4X4.TRS(localPosition, localRotation, scale);
+        }
         #endregion
 
         #region Properties
