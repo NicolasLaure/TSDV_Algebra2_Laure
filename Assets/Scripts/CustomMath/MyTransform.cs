@@ -20,6 +20,7 @@ namespace CustomMath
         [SerializeField] private MyQuaternion localRotation;
         [SerializeField] private Vec3 scale;
         [SerializeField] private MyTransform parent;
+        private MyTransform root;
 
         private Vec3 _worldPosition;
         private MyQuaternion _worldRotation;
@@ -173,7 +174,16 @@ namespace CustomMath
         /// <summary>
         ///   Returns the topmost MyTransform in the hierarchy.
         /// </summary>
-        public MyTransform root { get; }
+        public MyTransform Root
+        {
+            get
+            {
+                if (parent == null)
+                    return this;
+
+                return parent.Root;
+            }
+        }
 
         /// <summary>
         ///   The number of children the parent MyTransform has.
@@ -209,7 +219,7 @@ namespace CustomMath
 
             transform.SetPositionAndRotation(_worldPosition, _worldRotation.toQuaternion);
             transform.localScale = lossyScale;
-
+            root = Root;
         }
 
         private void Update()
