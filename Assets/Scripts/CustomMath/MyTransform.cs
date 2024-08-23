@@ -188,7 +188,7 @@ namespace CustomMath
         /// <summary>
         ///   The number of children the parent MyTransform has.
         /// </summary>
-        public int childCount
+        public int ChildCount
         {
             get { return _children.Count; }
         }
@@ -196,31 +196,45 @@ namespace CustomMath
         /// <summary>
         ///   The MyTransform capacity of the MyTransform's hierarchy data structure.
         /// </summary>
-        public int hierarchyCapacity { get; set; }
+        public int HierarchyCapacity { get; set; }
 
         /// <summary>
         ///   The number of MyTransforms in the MyTransform's hierarchy data structure.
         /// </summary>
-        public int hierarchyCount { get; }
+        public int HierarchyCount
+        {
+            get
+            {
+                int result = 1 + root._children.Count;
+                foreach (MyTransform child in root._children)
+                {
+                    result += child.LowerHierarchyCount;
+                }
+
+                return result;
+            }
+        }
+
+        public int LowerHierarchyCount
+        {
+            get
+            {
+                if (_children.Count == 0)
+                    return 0;
+
+                int result = _children.Count;
+                foreach (MyTransform child in _children)
+                {
+                    result += child.LowerHierarchyCount;
+                }
+
+                return result;
+            }
+        }
 
         #endregion
 
         #region Functions
-
-        private void OnValidate()
-        {
-            localRotation = MyQuaternion.Euler(rotationEulers);
-
-            matrixTRS.SetTRS(localPosition, localRotation, scale);
-            _worldPosition = localToWorldMatrix.GetPosition();
-            _worldRotation = Rotation;
-            _localScale = localScale;
-            _lossyScale = lossyScale;
-
-            transform.SetPositionAndRotation(_worldPosition, _worldRotation.toQuaternion);
-            transform.localScale = lossyScale;
-            root = Root;
-        }
 
         private void Update()
         {
@@ -232,8 +246,16 @@ namespace CustomMath
             _localScale = localScale;
             _lossyScale = lossyScale;
 
+            foreach (MyTransform child in _children)
+                if (child.parent != this)
+                    RemoveChild(child);
+
+            if (parent != null)
+                SetParent(parent);
+
             transform.SetPositionAndRotation(_worldPosition, _worldRotation.toQuaternion);
             transform.localScale = lossyScale;
+            root = Root;
         }
 
         #region Hierarchy
@@ -243,7 +265,9 @@ namespace CustomMath
         /// </summary>
         public void SetParent(MyTransform newParent)
         {
-            parent.RemoveChild(this);
+            if (parent != null)
+                parent.RemoveChild(this);
+
             parent = newParent;
             parent.AddChild(this);
 
@@ -257,7 +281,9 @@ namespace CustomMath
         /// <param name="worldPositionStays">If true, the parent-relative position, scale and rotation are modified such that the object keeps the same world space position, rotation and scale as before.</param>
         public void SetParent(MyTransform newParent, bool worldPositionStays)
         {
-            parent.RemoveChild(this);
+            if (parent != null)
+                parent.RemoveChild(this);
+
             parent = newParent;
             parent.AddChild(this);
 

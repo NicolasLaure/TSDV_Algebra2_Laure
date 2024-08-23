@@ -13,9 +13,11 @@ public class Tester : MonoBehaviour
     [ContextMenu("Test")]
     private void Test()
     {
-        Debug.Log(unityTransform.localToWorldMatrix + "\n" + _transform.localToWorldMatrix);
-        Debug.Log(unityTransform.position);
-        Debug.Log(unityTransform.rotation);
-        Debug.Log(unityTransform.lossyScale);
+        // Debug.Log(unityTransform.localToWorldMatrix + "\n" + _transform.localToWorldMatrix);
+        // Debug.Log(unityTransform.position);
+        // Debug.Log(unityTransform.rotation);
+        // Debug.Log(unityTransform.lossyScale);
+        
+        Debug.Log(_transform.HierarchyCount);
     }
 }
