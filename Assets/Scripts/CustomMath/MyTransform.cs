@@ -103,7 +103,7 @@ namespace CustomMath
         /// </summary>
         public Vec3 eulerAngles
         {
-            get { throw new NotImplementedException(); }
+            get { return Rotation.eulerAngles; }
             set { SetPositionAndRotation(localPosition, MyQuaternion.Euler(value.x, value.y, value.z)); }
         }
 
@@ -748,7 +748,7 @@ namespace CustomMath
         /// <param name="z"></param>
         public Vec3 InverseMyTransformPoint(float x, float y, float z)
         {
-            throw new NotImplementedException();
+            return InverseMyTransformPoint(new Vec3(x, y, z));
         }
 
         public void InverseMyTransformPoints(ReadOnlySpan<Vec3> positions, Span<Vec3> myTransformedPositions)
