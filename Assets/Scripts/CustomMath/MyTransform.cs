@@ -140,7 +140,12 @@ namespace CustomMath
             set
             {
                 //Should set local rotation in a certain way that the global rotation matches when multiplying with all parents
-                throw new NotImplementedException();
+                MyTransform worldTransform = new MyTransform(Vec3.Zero, value, Vec3.One);
+                worldTransform.parent = parent;
+                MyQuaternion newRotation = worldTransform.WorldToLocalMatrix.inverse.rotation;
+                rotationEulers = newRotation.eulerAngles;
+
+                matrixTRS.SetTRS(localPosition, newRotation, LocalScale);
             }
         }
 
@@ -154,14 +159,14 @@ namespace CustomMath
             {
                 localRotation = value;
                 rotationEulers = new Vec3(localRotation.eulerAngles);
-                matrixTRS.SetTRS(localPosition, localRotation, localScale);
+                matrixTRS.SetTRS(localPosition, localRotation, LocalScale);
             }
         }
 
         /// <summary>
         ///   The scale of the MyTransform relative to the GameObjects parent.
         /// </summary>
-        public Vec3 localScale
+        public Vec3 LocalScale
         {
             get { return new Vec3(matrixTRS.lossyScale); }
             set
@@ -260,7 +265,7 @@ namespace CustomMath
             matrixTRS.SetTRS(localPosition, localRotation, scale);
             _worldPosition = LocalToWorldMatrix.GetPosition();
             _worldRotation = Rotation;
-            _localScale = localScale;
+            _localScale = LocalScale;
             _lossyScale = lossyScale;
 
             foreach (MyTransform child in _children)

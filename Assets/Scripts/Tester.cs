@@ -18,7 +18,9 @@ public class Tester : MonoBehaviour
         // Debug.Log(unityTransform.rotation);
         // Debug.Log(unityTransform.lossyScale);
 
-        _transform.Position = new Vec3(10, 0, 0);
+        _transform.Rotation = MyQuaternion.Euler(45, 12, 0);
+        Debug.Log(_transform.Rotation.eulerAngles);
+        Debug.Log(_transform.transform.rotation.eulerAngles);
         //Debug.Log(unityTransform.worldToLocalMatrix + "\n" + _transform.WorldToLocalMatrix);
     }
 }
