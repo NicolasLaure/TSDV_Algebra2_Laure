@@ -276,8 +276,8 @@ namespace CustomMath
             foreach (MyTransform childToDetach in childrenToDetach)
             {
                 RemoveChild(childToDetach);
-            }            
-            
+            }
+
             if (parent != null)
                 SetParent(parent);
 
@@ -322,13 +322,20 @@ namespace CustomMath
 
         public void RemoveChild(MyTransform child)
         {
-            
             _children.Remove(child);
         }
 
         public void AddChild(MyTransform child)
         {
             _children.Add(child);
+        }
+
+        public void AddChild(MyTransform child, int position)
+        {
+            if (_children.Contains(child))
+                _children.Remove(child);
+
+            _children.Insert(position, child);
         }
 
         /// <summary>
@@ -345,27 +352,41 @@ namespace CustomMath
         /// <summary>
         ///   Move the MyTransform to the start of the local MyTransform list.
         /// </summary>
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        public extern void SetAsFirstSibling();
+        public void SetAsFirstSibling()
+        {
+            parent.RemoveChild(this);
+            parent.AddChild(this, 0);
+        }
 
         /// <summary>
         ///   Move the MyTransform to the end of the local MyTransform list.
         /// </summary>
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        public extern void SetAsLastSibling();
+        public void SetAsLastSibling()
+        {
+            parent.RemoveChild(this);
+            parent.AddChild(this, parent.ChildCount);
+        }
 
         /// <summary>
         ///   Sets the sibling index.
         /// </summary>
         /// <param name="index">Index to set.</param>
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        public extern void SetSiblingIndex(int index);
+        public void SetSiblingIndex(int index)
+        {
+            parent.RemoveChild(this);
+            parent.AddChild(this, index);
+        }
 
         /// <summary>
         ///   Gets the sibling index.
         /// </summary>
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        public extern int GetSiblingIndex();
+        public int GetSiblingIndex()
+        {
+            if (parent != null)
+                return parent.GetChildIndex(this);
+
+            throw new Exception("The transform has no parent");
+        }
 
         /// <summary>
         ///   Finds a child by name n and returns it.
@@ -376,7 +397,24 @@ namespace CustomMath
         /// </returns>
         public MyTransform Find(string n)
         {
-            throw new NotImplementedException();
+            foreach (MyTransform child in _children)
+            {
+                if (child.name == n)
+                    return child;
+            }
+
+            return null;
+        }
+
+        public int GetChildIndex(MyTransform child)
+        {
+            for (int i = 0; i < _children.Count; i++)
+            {
+                if (_children[i] == child)
+                    return i;
+            }
+
+            throw new Exception("Child Not Found");
         }
 
         #endregion

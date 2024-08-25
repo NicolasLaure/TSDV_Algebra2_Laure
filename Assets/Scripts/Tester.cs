@@ -8,6 +8,7 @@ public class Tester : MonoBehaviour
 {
     [SerializeField] private Transform unityTransform;
     [SerializeField] private MyTransform _transform;
+    [SerializeField] private MyTransform _transformTest;
 
 
     [ContextMenu("Test")]
@@ -21,8 +22,9 @@ public class Tester : MonoBehaviour
         // _transform.Rotation = MyQuaternion.Euler(45, 12, 0);
         // Debug.Log(_transform.Rotation.eulerAngles);
         // Debug.Log(_transform.transform.rotation.eulerAngles);
-        
-        _transform.DetachChildren();
+
+       _transformTest = _transform.Find("Cube 2 (2)");
+
         //Debug.Log(unityTransform.worldToLocalMatrix + "\n" + _transform.WorldToLocalMatrix);
     }
 }
