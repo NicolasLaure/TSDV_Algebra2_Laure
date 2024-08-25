@@ -153,7 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unityTransform: {fileID: 1745712395}
-  _transform: {fileID: 1745712396}
+  _transform: {fileID: 0}
 --- !u!4 &447346431
 Transform:
   m_ObjectHideFlags: 0
@@ -392,14 +392,14 @@ MonoBehaviour:
     y: 0
     z: 3
   rotationEulers:
-    x: -18
+    x: 11.7
     y: 0
     z: 0
   localRotation:
-    x: -0.15643448
+    x: 0.10192445
     y: 0
     z: 0
-    w: 0.98768836
+    w: 0.99479216
   scale:
     x: 1
     y: 1
@@ -484,8 +484,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1045680978}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.15643454, y: 0, z: 0, w: 0.98768836}
-  m_LocalPosition: {x: 10, y: 0, z: 3}
+  m_LocalRotation: {x: -0.19928241, y: 0, z: 0, w: 0.97994214}
+  m_LocalPosition: {x: 0, y: 3.707408, z: 6.5167303}
   m_LocalScale: {x: 1.0000001, y: 1.0000001, z: 1.0000001}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -653,12 +653,12 @@ Transform:
   m_GameObject: {fileID: 1565675930}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.68, y: 0.46, z: 1.92}
+  m_LocalPosition: {x: 0, y: 0.46, z: 1.92}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 25, y: 15, z: 0}
+  m_LocalEulerAnglesHint: {x: -11.758, y: -19.149, z: 5.056}
 --- !u!114 &1565675935
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -672,7 +672,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   localPosition:
-    x: 1.68
+    x: 0
     y: 0.46
     z: 1.92
   rotationEulers:
@@ -788,8 +788,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1745712391}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10, y: 0, z: 0}
+  m_LocalRotation: {x: -0.29812458, y: 0, z: 0, w: 0.95452696}
+  m_LocalPosition: {x: 0, y: 2, z: 4.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -808,18 +808,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   localPosition:
-    x: 8.32
-    y: -0.46
-    z: -1.92
-  rotationEulers:
     x: 0
+    y: 1.54
+    z: 2.13
+  rotationEulers:
+    x: -34.69
     y: 0
     z: 0
   localRotation:
-    x: 0
+    x: -0.29812464
     y: 0
     z: 0
-    w: 1
+    w: 0.95452696
   scale:
     x: 1
     y: 1
@@ -860,7 +860,7 @@ MonoBehaviour:
   localPosition:
     x: 0
     y: 0
-    z: 5.18
+    z: 2.84
   rotationEulers:
     x: -40
     y: 0
@@ -874,7 +874,7 @@ MonoBehaviour:
     x: 1
     y: 1
     z: 1
-  parent: {fileID: 1745712396}
+  parent: {fileID: 1045680979}
 --- !u!65 &1879920938
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -954,9 +954,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1879920936}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.34202012, y: 0, z: 0, w: 0.9396927}
-  m_LocalPosition: {x: 10, y: 0, z: 5.18}
-  m_LocalScale: {x: 0.99999994, y: 0.99999994, z: 0.99999994}
+  m_LocalRotation: {x: -0.52242416, y: 0, z: 0, w: 0.85268575}
+  m_LocalPosition: {x: 0, y: 4.816628, z: 9.131158}
+  m_LocalScale: {x: 1, y: 1.0000001, z: 1.0000001}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}

@@ -268,10 +268,16 @@ namespace CustomMath
             _localScale = LocalScale;
             _lossyScale = lossyScale;
 
+            List<MyTransform> childrenToDetach = new List<MyTransform>();
             foreach (MyTransform child in _children)
                 if (child.parent != this)
-                    RemoveChild(child);
+                    childrenToDetach.Add(child);
 
+            foreach (MyTransform childToDetach in childrenToDetach)
+            {
+                RemoveChild(childToDetach);
+            }            
+            
             if (parent != null)
                 SetParent(parent);
 
@@ -291,7 +297,9 @@ namespace CustomMath
                 parent.RemoveChild(this);
 
             parent = newParent;
-            parent.AddChild(this);
+
+            if (parent != null)
+                parent.AddChild(this);
 
             //Translate to match local position relative to parent
         }
@@ -314,6 +322,7 @@ namespace CustomMath
 
         public void RemoveChild(MyTransform child)
         {
+            
             _children.Remove(child);
         }
 
@@ -325,8 +334,13 @@ namespace CustomMath
         /// <summary>
         ///   Unparents all children.
         /// </summary>
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        public extern void DetachChildren();
+        public void DetachChildren()
+        {
+            while (_children.Count > 0)
+            {
+                _children[0].SetParent(null);
+            }
+        }
 
         /// <summary>
         ///   Move the MyTransform to the start of the local MyTransform list.
