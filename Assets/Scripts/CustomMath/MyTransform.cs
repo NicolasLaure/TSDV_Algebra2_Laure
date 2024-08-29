@@ -119,17 +119,29 @@ namespace CustomMath
         /// <summary>
         ///   The red axis of the MyTransform in world space.
         /// </summary>
-        public Vec3 right { get; set; }
+        public Vec3 right
+        {
+            get { return LocalToWorldMatrix.MultiplyVector(Vec3.Right); }
+            set { }
+        }
 
         /// <summary>
         ///   The green axis of the MyTransform in world space.
         /// </summary>
-        public Vec3 up { get; set; }
+        public Vec3 up
+        {
+            get { return LocalToWorldMatrix.MultiplyVector(Vec3.Up); }
+            set { }
+        }
 
         /// <summary>
         ///   Returns a normalized vector representing the blue axis of the MyTransform in world space.
         /// </summary>
-        public Vec3 forward { get; set; }
+        public Vec3 forward
+        {
+            get { return LocalToWorldMatrix.MultiplyVector(Vec3.Forward); }
+            set { }
+        }
 
         /// <summary>
         ///   A MyMyQuaternion that stores the rotation of the MyTransform in world space.

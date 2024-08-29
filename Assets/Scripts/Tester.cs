@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using CustomMath;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Tester : MonoBehaviour
 {
@@ -23,7 +24,9 @@ public class Tester : MonoBehaviour
         // Debug.Log(_transform.Rotation.eulerAngles);
         // Debug.Log(_transform.transform.rotation.eulerAngles);
 
-       _transformTest = _transform.Find("Cube 2 (2)");
+
+        
+        //_transformTest = _transform.Find("Cube 2 (2)");
 
         //Debug.Log(unityTransform.worldToLocalMatrix + "\n" + _transform.WorldToLocalMatrix);
     }
