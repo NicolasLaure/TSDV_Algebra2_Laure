@@ -122,7 +122,11 @@ namespace CustomMath
         public Vec3 right
         {
             get { return LocalToWorldMatrix.MultiplyVector(Vec3.Right); }
-            set { }
+            set
+            {
+                MyQuaternion rightToForward = MyQuaternion.Euler(45, -90, 0);
+                LocalRotation = MyQuaternion.LookRotation(value.normalizedVec3, Vec3.Up) * rightToForward;
+            }
         }
 
         /// <summary>
@@ -131,7 +135,11 @@ namespace CustomMath
         public Vec3 up
         {
             get { return LocalToWorldMatrix.MultiplyVector(Vec3.Up); }
-            set { }
+            set
+            {
+                MyQuaternion upToForward = MyQuaternion.Euler(0, 90, 90);
+                LocalRotation = MyQuaternion.LookRotation(value.normalizedVec3, Vec3.Right) * upToForward;
+            }
         }
 
         /// <summary>
@@ -140,7 +148,7 @@ namespace CustomMath
         public Vec3 forward
         {
             get { return LocalToWorldMatrix.MultiplyVector(Vec3.Forward); }
-            set { }
+            set { LocalRotation = MyQuaternion.LookRotation(value); }
         }
 
         /// <summary>

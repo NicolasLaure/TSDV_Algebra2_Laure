@@ -9,8 +9,8 @@ public class Tester : MonoBehaviour
 {
     [SerializeField] private Transform unityTransform;
     [SerializeField] private MyTransform _transform;
-    [SerializeField] private MyTransform _transformTest;
 
+    [SerializeField] private Vector3 dir;
 
     [ContextMenu("Test")]
     private void Test()
@@ -24,8 +24,9 @@ public class Tester : MonoBehaviour
         // Debug.Log(_transform.Rotation.eulerAngles);
         // Debug.Log(_transform.transform.rotation.eulerAngles);
 
+        unityTransform.right = dir;
+        _transform.right = new Vec3(dir);
 
-        
         //_transformTest = _transform.Find("Cube 2 (2)");
 
         //Debug.Log(unityTransform.worldToLocalMatrix + "\n" + _transform.WorldToLocalMatrix);
