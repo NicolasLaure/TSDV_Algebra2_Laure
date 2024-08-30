@@ -26,7 +26,12 @@ namespace CustomMath
 
         public Vec3 normalizedVec3
         {
-            get { return new Vec3(x / magnitude, y / magnitude, z / magnitude); }
+            get
+            {
+                Vec3 normalizedVec = new Vec3(x, y, z);
+                normalizedVec.Normalize();
+                return normalizedVec;
+            }
         }
 
         public float magnitude
@@ -205,6 +210,9 @@ namespace CustomMath
         {
             // by definition dot product a.b = |a||b| cos(O) disclaimer: O represents the symbol theta NOT A ZERO
             // divide each side by |a||b| and cos = dot / |a||b| 
+            if (from.magnitude == 0 || to.magnitude == 0)
+                return 0;
+
             return Mathf.Acos(Vec3.Dot(from, to) / (from.magnitude * to.magnitude)) * Mathf.Rad2Deg;
         }
 
@@ -316,6 +324,9 @@ namespace CustomMath
 
         public void Normalize()
         {
+            if (magnitude == 0)
+                return;
+
             float newX = x / magnitude;
             float newY = y / magnitude;
             float newZ = z / magnitude;
@@ -329,7 +340,7 @@ namespace CustomMath
             float magnitude = value.magnitude;
             if (magnitude == 0)
                 return new Vec3(0, 0, 0);
-            
+
             float newX = value.x / magnitude;
             float newY = value.y / magnitude;
             float newZ = value.z / magnitude;
