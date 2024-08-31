@@ -461,12 +461,12 @@ namespace CustomMath
         /// <summary>
         ///   Sets the position and rotation of the MyTransform component in local space (i.e. relative to its parent MyTransform).
         /// </summary>
-        /// <param name="localPosition"></param>
-        /// <param name="localRotation"></param>
-        public void SetLocalPositionAndRotation(Vec3 localPosition, MyQuaternion localRotation)
+        /// <param name="newLocalPosition"></param>
+        /// <param name="newLocalRotation"></param>
+        public void SetLocalPositionAndRotation(Vec3 newLocalPosition, MyQuaternion newLocalRotation)
         {
-            LocalPosition = localPosition;
-            LocalRotation = localRotation;
+            LocalPosition = newLocalPosition;
+            LocalRotation = newLocalRotation;
         }
 
         public void GetPositionAndRotation(out Vec3 position, out MyQuaternion rotation)
