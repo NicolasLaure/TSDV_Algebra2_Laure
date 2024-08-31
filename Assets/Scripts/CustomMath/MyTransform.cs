@@ -124,8 +124,12 @@ namespace CustomMath
             get { return LocalToWorldMatrix.MultiplyVector(Vec3.Right); }
             set
             {
-                MyQuaternion rightToForward = MyQuaternion.Euler(45, -90, 0);
-                LocalRotation = MyQuaternion.LookRotation(value.normalizedVec3, Vec3.Up) * rightToForward;
+                Rotation = MyQuaternion.FromToRotation(Vec3.Right, value);
+
+                if (value == Vec3.Left)
+                {
+                    Rotation *= MyQuaternion.Euler(0, 180,0 );
+                }
             }
         }
 

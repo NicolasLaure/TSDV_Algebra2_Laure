@@ -24,8 +24,8 @@ public class Tester : MonoBehaviour
         // Debug.Log(_transform.Rotation.eulerAngles);
         // Debug.Log(_transform.transform.rotation.eulerAngles);
 
-        unityTransform.up = dir;
-        _transform.up = new Vec3(dir);
+        unityTransform.right = dir;
+        _transform.right = new Vec3(dir);
 
         //_transformTest = _transform.Find("Cube 2 (2)");
 
