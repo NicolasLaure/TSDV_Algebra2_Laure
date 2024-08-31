@@ -10,7 +10,8 @@ public class Tester : MonoBehaviour
     [SerializeField] private Transform unityTransform;
     [SerializeField] private MyTransform _transform;
 
-    [SerializeField] private Vector3 dir;
+    [SerializeField] private Vector3 position;
+    [SerializeField] private Vector3 eulers;
 
     [ContextMenu("Test")]
     private void Test()
@@ -24,8 +25,8 @@ public class Tester : MonoBehaviour
         // Debug.Log(_transform.Rotation.eulerAngles);
         // Debug.Log(_transform.transform.rotation.eulerAngles);
 
-        unityTransform.right = dir;
-        _transform.right = new Vec3(dir);
+        unityTransform.SetPositionAndRotation(position, Quaternion.Euler(eulers));
+        _transform.SetPositionAndRotation(new Vec3(position), MyQuaternion.Euler(new Vec3(eulers)));
 
         //_transformTest = _transform.Find("Cube 2 (2)");
 

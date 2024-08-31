@@ -454,7 +454,8 @@ namespace CustomMath
         /// <param name="rotation"></param>
         public void SetPositionAndRotation(Vec3 position, MyQuaternion rotation)
         {
-            throw new NotImplementedException();
+            Position = position;
+            Rotation = rotation;
         }
 
         /// <summary>
@@ -464,7 +465,8 @@ namespace CustomMath
         /// <param name="localRotation"></param>
         public void SetLocalPositionAndRotation(Vec3 localPosition, MyQuaternion localRotation)
         {
-            throw new NotImplementedException();
+            LocalPosition = localPosition;
+            LocalRotation = localRotation;
         }
 
         public void GetPositionAndRotation(out Vec3 position, out MyQuaternion rotation)

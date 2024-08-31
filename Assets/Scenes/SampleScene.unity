@@ -154,7 +154,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unityTransform: {fileID: 1678892360}
   _transform: {fileID: 1745712396}
-  dir: {x: 0, y: 1, z: -1}
+  position: {x: 1, y: 2, z: 3}
+  eulers: {x: 0, y: -90, z: 0}
 --- !u!4 &447346431
 Transform:
   m_ObjectHideFlags: 0
@@ -519,9 +520,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1045680978}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.07207147, y: 0.5483583, z: 0.44643387, w: 0.7034243}
-  m_LocalPosition: {x: 2.121321, y: 4.351691, z: 4.5101027}
-  m_LocalScale: {x: 1.0000004, y: 1.0000005, z: 1.0000005}
+  m_LocalRotation: {x: -0.110189244, y: -0.6616113, z: 0.24954033, w: 0.6984686}
+  m_LocalPosition: {x: -2.000001, y: 3.6816642, z: 3.538915}
+  m_LocalScale: {x: 1.0000004, y: 1.0000005, z: 1.0000004}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -601,8 +602,8 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: 0, y: 2.8516898, z: 3.010102}
-  - {x: -0.000000007963308, y: 3.558797, z: 2.302995}
+  - {x: 1.0000002, y: 3.681664, z: 3.5389147}
+  - {x: 1.0000004, y: 4.176061, z: 4.408151}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -799,8 +800,8 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: 0, y: 2.8516898, z: 3.010102}
-  - {x: -0.70710707, y: 3.35169, z: 3.5101023}
+  - {x: 1.0000002, y: 3.681664, z: 3.5389147}
+  - {x: 1.0000002, y: 4.5509005, z: 3.0445175}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -1024,8 +1025,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1678892359}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.18080641, y: 0.3555288, z: 0.6112277, w: 0.68360007}
-  m_LocalPosition: {x: 0, y: 1.54, z: 2.13}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 1, y: 2, z: 3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1202,8 +1203,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1745712391}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.5, z: 0.5, w: 0.70710677}
-  m_LocalPosition: {x: 0, y: 2.8516898, z: 3.010102}
+  m_LocalRotation: {x: -0.18080638, y: -0.6836, z: 0.18080635, w: 0.6836001}
+  m_LocalPosition: {x: 1.0000002, y: 3.681664, z: 3.5389147}
   m_LocalScale: {x: 1.0000002, y: 1.0000004, z: 1.0000004}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1223,18 +1224,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   localPosition:
-    x: 0
-    y: 1.54
-    z: 2.13
+    x: 1
+    y: 2
+    z: 3
   rotationEulers:
-    x: -10.802238
-    y: 46.04315
-    z: 79.000496
+    x: 0
+    y: -90
+    z: 0
   localRotation:
-    x: 0.18080637
-    y: 0.35552886
-    z: 0.61122775
-    w: 0.68360007
+    x: 0
+    y: -0.7071068
+    z: 0
+    w: 0.7071068
   scale:
     x: 1
     y: 1
@@ -1385,9 +1386,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1781632221}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.24184482, y: 0.29883623, z: 0.6408564, w: 0.664463}
-  m_LocalPosition: {x: 6.385176, y: 7.3666925, z: 7.5251036}
-  m_LocalScale: {x: 1.0000001, y: 1.0000002, z: 1.0000004}
+  m_LocalRotation: {x: -0.40370744, y: -0.7042133, z: -0.06390253, w: 0.5805346}
+  m_LocalPosition: {x: -8.030003, y: 3.6816647, z: 3.5389156}
+  m_LocalScale: {x: 1.0000002, y: 1.0000004, z: 1.0000004}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1521,9 +1522,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1879920936}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.24184482, y: 0.29883623, z: 0.6408564, w: 0.664463}
-  m_LocalPosition: {x: 4.242642, y: 5.8516917, z: 6.010103}
-  m_LocalScale: {x: 1.0000001, y: 1.0000002, z: 1.0000004}
+  m_LocalRotation: {x: -0.40370744, y: -0.7042133, z: -0.06390253, w: 0.5805346}
+  m_LocalPosition: {x: -5.000002, y: 3.6816645, z: 3.5389154}
+  m_LocalScale: {x: 1.0000002, y: 1.0000004, z: 1.0000004}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1588,8 +1589,8 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: 0, y: 2.8516898, z: 3.010102}
-  - {x: 0.707107, y: 3.35169, z: 3.5101023}
+  - {x: 1.0000002, y: 3.681664, z: 3.5389147}
+  - {x: -0.00000011920929, y: 3.681664, z: 3.5389147}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
