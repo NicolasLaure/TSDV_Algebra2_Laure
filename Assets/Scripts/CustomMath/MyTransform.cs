@@ -128,7 +128,7 @@ namespace CustomMath
 
                 if (value == Vec3.Left)
                 {
-                    Rotation *= MyQuaternion.Euler(0, 180,0 );
+                    Rotation *= MyQuaternion.Euler(0, 180, 0);
                 }
             }
         }
@@ -491,7 +491,13 @@ namespace CustomMath
         /// <param name="relativeTo"></param>
         public void Translate(Vec3 translation, [DefaultValue("Space.Self")] Space relativeTo)
         {
-            throw new NotImplementedException();
+            if (relativeTo == Space.Self)
+            {
+                Translate(translation);
+                return;
+            }
+
+            localPosition = InverseMyTransformPoint(Position + translation);
         }
 
         /// <summary>
@@ -500,7 +506,7 @@ namespace CustomMath
         /// <param name="translation"></param>
         public void Translate(Vec3 translation)
         {
-            throw new NotImplementedException();
+            LocalPosition += translation;
         }
 
         /// <summary>
@@ -512,7 +518,7 @@ namespace CustomMath
         /// <param name="relativeTo"></param>
         public void Translate(float x, float y, float z, [DefaultValue("Space.Self")] Space relativeTo)
         {
-            throw new NotImplementedException();
+            Translate(new Vec3(x, y, z), relativeTo);
         }
 
         /// <summary>
@@ -523,7 +529,7 @@ namespace CustomMath
         /// <param name="z"></param>
         public void Translate(float x, float y, float z)
         {
-            throw new NotImplementedException();
+            Translate(new Vec3(x, y, z));
         }
 
         /// <summary>
@@ -533,7 +539,10 @@ namespace CustomMath
         /// <param name="relativeTo"></param>
         public void Translate(Vec3 translation, MyTransform relativeTo)
         {
-            throw new NotImplementedException();
+            MyTransform relativeToCopy = new MyTransform();
+            relativeToCopy.matrixTRS = relativeTo.matrixTRS;
+
+            localPosition = RelativeInverseMyTransformPoint(Position + translation, relativeToCopy);
         }
 
         /// <summary>
@@ -545,7 +554,7 @@ namespace CustomMath
         /// <param name="relativeTo"></param>
         public void Translate(float x, float y, float z, MyTransform relativeTo)
         {
-            throw new NotImplementedException();
+            Translate(new Vec3(x, y, z), relativeTo);
         }
 
         #endregion
@@ -822,9 +831,19 @@ namespace CustomMath
         /// <param name="position"></param>
         public Vec3 InverseMyTransformPoint(Vec3 position)
         {
-            MyTransform worldTransform = new MyTransform(position, MyQuaternion.identity, Vec3.One);
+            // MyTransform worldTransform = new MyTransform(position, MyQuaternion.identity, Vec3.One);
+            // worldTransform.parent = parent;
+            // return worldTransform.WorldToLocalMatrix.inverse.GetPosition();
+
+            MyTransform worldTransform = new MyTransform();
             worldTransform.parent = parent;
-            return worldTransform.WorldToLocalMatrix.inverse.GetPosition();
+            return worldTransform.WorldToLocalMatrix.inverse.MultiplyPoint3x4(position);
+        }
+
+        public Vec3 RelativeInverseMyTransformPoint(Vec3 position, MyTransform relativeTo)
+        {
+            relativeTo.parent = parent;
+            return relativeTo.WorldToLocalMatrix.inverse.MultiplyPoint3x4(position);
         }
 
         /// <summary>
