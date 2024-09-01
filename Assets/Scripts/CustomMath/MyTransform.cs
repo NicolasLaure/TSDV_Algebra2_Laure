@@ -86,7 +86,11 @@ namespace CustomMath
         public Vec3 Position
         {
             get { return LocalToWorldMatrix.GetPosition(); }
-            set { localPosition = InverseMyTransformPoint(value); }
+            set
+            {
+                localPosition = InverseMyTransformPoint(value);
+                matrixTRS.SetTRS(localPosition, localRotation, _localScale);
+            }
         }
 
         /// <summary>
@@ -95,7 +99,11 @@ namespace CustomMath
         public Vec3 LocalPosition
         {
             get { return localPosition; }
-            set { localPosition = value; }
+            set
+            {
+                localPosition = value;
+                matrixTRS.SetTRS(localPosition, localRotation, _localScale);
+            }
         }
 
         /// <summary>
