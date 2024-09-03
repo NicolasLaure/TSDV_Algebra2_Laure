@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using UnityEditor.Timeline.Actions;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -86,11 +87,7 @@ namespace CustomMath
         public Vec3 Position
         {
             get { return LocalToWorldMatrix.GetPosition(); }
-            set
-            {
-                localPosition = InverseMyTransformPoint(value);
-                matrixTRS.SetTRS(localPosition, localRotation, _localScale);
-            }
+            set { LocalPosition = InverseMyTransformPoint(value); }
         }
 
         /// <summary>
@@ -547,10 +544,13 @@ namespace CustomMath
         /// <param name="relativeTo"></param>
         public void Translate(Vec3 translation, MyTransform relativeTo)
         {
-            MyTransform relativeToCopy = new MyTransform();
-            relativeToCopy.matrixTRS = relativeTo.matrixTRS;
-
-            localPosition = RelativeInverseMyTransformPoint(Position + translation, relativeToCopy);
+            MyTransform auxParent = parent;
+            SetParent(null);
+            MyQuaternion auxRotation = LocalRotation;
+            Rotation = relativeTo.Rotation;
+            Translate(translation);
+            SetParent(auxParent, true);
+            LocalRotation = auxRotation;
         }
 
         /// <summary>

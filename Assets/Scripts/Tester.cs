@@ -35,8 +35,8 @@ public class Tester : MonoBehaviour
          // unityTransform.Translate(dir, pivotUnityTransform);
          // _transform.Translate(new Vec3(dir), pivotTransform);
 
-        unityTransform.Translate(dir, Space.World);
-        _transform.Translate(new Vec3(dir), Space.World);
+        unityTransform.Translate(dir, pivotUnityTransform);
+        _transform.Translate(new Vec3(dir), pivotTransform);
 
         //Debug.Log(unityTransform.worldToLocalMatrix + "\n" + _transform.WorldToLocalMatrix);
     }
