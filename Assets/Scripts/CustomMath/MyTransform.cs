@@ -161,7 +161,7 @@ namespace CustomMath
         public Vec3 forward
         {
             get { return LocalToWorldMatrix.MultiplyVector(Vec3.Forward); }
-            set { LocalRotation = MyQuaternion.LookRotation(value); }
+            set { Rotation = MyQuaternion.LookRotation(value); }
         }
 
         /// <summary>
