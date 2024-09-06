@@ -544,13 +544,12 @@ namespace CustomMath
         /// <param name="relativeTo"></param>
         public void Translate(Vec3 translation, MyTransform relativeTo)
         {
-            MyTransform auxParent = parent;
-            SetParent(null);
-            MyQuaternion auxRotation = LocalRotation;
-            Rotation = relativeTo.Rotation;
-            Translate(translation);
-            SetParent(auxParent, true);
-            LocalRotation = auxRotation;
+            MY4X4 auxSelfWorldMatrix = LocalToWorldMatrix;
+            MY4X4 auxRelativeWorldMatrix = relativeTo.LocalToWorldMatrix;
+
+            Vector4 result = auxRelativeWorldMatrix * new Vector4(translation.x, translation.y, translation.z, 1);
+
+            Position = auxSelfWorldMatrix.GetPosition() + new Vec3(result.x, result.y, result.z);
         }
 
         /// <summary>

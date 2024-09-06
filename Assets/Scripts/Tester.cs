@@ -35,11 +35,12 @@ public class Tester : MonoBehaviour
         //unityTransform.SetPositionAndRotation(position, Quaternion.Euler(eulers));
         //_transform.SetPositionAndRotation(new Vec3(position), MyQuaternion.Euler(new Vec3(eulers)));
 
-        // unityTransform.Translate(dir, pivotUnityTransform);
-        // _transform.Translate(new Vec3(dir), pivotTransform);
+        unityTransform.Translate(dir, pivotUnityTransform);
+        _transform.Translate(new Vec3(dir), pivotTransform);
 
-        unityTransform.Rotate(eulers);
-        _transform.Rotate(new Vec3(eulers));
+        //Rotate based on Eulers
+        // unityTransform.Rotate(eulers);
+        // _transform.Rotate(new Vec3(eulers));
 
         //Debug.Log(unityTransform.worldToLocalMatrix + "\n" + _transform.WorldToLocalMatrix);
     }
