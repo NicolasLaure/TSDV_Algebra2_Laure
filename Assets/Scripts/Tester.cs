@@ -13,6 +13,9 @@ public class Tester : MonoBehaviour
     [SerializeField] private Transform pivotUnityTransform;
     [SerializeField] private MyTransform pivotTransform;
 
+    [SerializeField] private Transform targetUnity;
+    [SerializeField] private MyTransform target;
+
     [SerializeField] private Vector3 dir;
     [SerializeField] private Vector3 position;
     [SerializeField] private Vector3 eulers;
@@ -35,8 +38,8 @@ public class Tester : MonoBehaviour
         // unityTransform.Translate(dir, pivotUnityTransform);
         // _transform.Translate(new Vec3(dir), pivotTransform);
 
-        unityTransform.forward = Vector3.up;
-        _transform.forward = Vec3.Up;
+        unityTransform.LookAt(position);
+        _transform.LookAt(new Vec3(position));
 
         //Debug.Log(unityTransform.worldToLocalMatrix + "\n" + _transform.WorldToLocalMatrix);
     }

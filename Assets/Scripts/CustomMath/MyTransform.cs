@@ -652,7 +652,8 @@ namespace CustomMath
         /// <param name="worldUp">Vector specifying the upward direction.</param>
         public void LookAt(MyTransform target, [DefaultValue("Vec3.up")] Vec3 worldUp)
         {
-            throw new NotImplementedException();
+            Vec3 dir = (target.Position - Position).normalizedVec3;
+            Rotation = MyQuaternion.LookRotation(dir, worldUp);
         }
 
         /// <summary>
@@ -661,7 +662,7 @@ namespace CustomMath
         /// <param name="target">Object to point towards.</param>
         public void LookAt(MyTransform target)
         {
-            throw new NotImplementedException();
+            forward = (target.Position - Position).normalizedVec3;
         }
 
         /// <summary>
@@ -671,7 +672,7 @@ namespace CustomMath
         /// <param name="worldUp">Vector specifying the upward direction.</param>
         public void LookAt(Vec3 worldPosition, [DefaultValue("Vec3.up")] Vec3 worldUp)
         {
-            throw new NotImplementedException();
+            Rotation = MyQuaternion.LookRotation(worldPosition, worldUp);
         }
 
         /// <summary>
@@ -680,7 +681,7 @@ namespace CustomMath
         /// <param name="worldPosition">Point to look at.</param>
         public void LookAt(Vec3 worldPosition)
         {
-            throw new NotImplementedException();
+            forward = (worldPosition - Position).normalizedVec3;
         }
 
         /// <summary>
