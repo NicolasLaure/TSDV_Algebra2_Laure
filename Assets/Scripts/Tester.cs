@@ -9,6 +9,7 @@ public class Tester : MonoBehaviour
 {
     [SerializeField] private Transform unityTransform;
     [SerializeField] private MyTransform _transform;
+    [SerializeField] private MyTransformVisualizer visualizer;
 
     [SerializeField] private Transform pivotUnityTransform;
     [SerializeField] private MyTransform pivotTransform;
@@ -47,9 +48,8 @@ public class Tester : MonoBehaviour
         // _transform.Rotate(new Vec3(eulers));
 
         //Rotate based on Axis
-        unityTransform.Rotate(axis, angle, Space.World);
-        _transform.Rotate(new Vec3(axis), angle, Space.World);
-
+        unityTransform.Rotate(axis, angle, Space.Self);
+        visualizer.GetTransform(1).Rotate(new Vec3(axis), angle, Space.Self);
 
         //Debug.Log(unityTransform.worldToLocalMatrix + "\n" + _transform.WorldToLocalMatrix);
     }

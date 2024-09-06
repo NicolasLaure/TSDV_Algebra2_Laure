@@ -7,8 +7,8 @@ using UnityEngine;
 
 namespace CustomMath
 {
-    [Serializable] [ExecuteInEditMode]
-    public class MyTransform : MonoBehaviour, IEnumerable
+    [Serializable]
+    public class MyTransform : IEnumerable
     {
         #region Variables
 
@@ -19,7 +19,7 @@ namespace CustomMath
         [SerializeField] private MyQuaternion localRotation;
         [SerializeField] private Vec3 scale;
         [SerializeField] private MyTransform parent;
-        private MyTransform root;
+        [SerializeField] private MyTransform root;
 
         private Vec3 _worldPosition;
         private MyQuaternion _worldRotation;
@@ -27,24 +27,31 @@ namespace CustomMath
         private Vec3 _lossyScale;
         private List<MyTransform> _children = new List<MyTransform>();
 
+
+        private string _name;
+
         #endregion
 
         #region Constructors
 
-        protected MyTransform()
+        public MyTransform(string name)
         {
             localPosition = Vec3.Zero;
             localRotation = MyQuaternion.identity;
             scale = Vec3.One;
             matrixTRS = MY4X4.TRS(localPosition, localRotation, scale);
+
+            _name = name;
         }
 
-        protected MyTransform(Vec3 pos, MyQuaternion q, Vec3 s)
+        public MyTransform(string name, Vec3 pos, MyQuaternion q, Vec3 s)
         {
             localPosition = pos;
             localRotation = q;
             scale = s;
             matrixTRS = MY4X4.TRS(localPosition, localRotation, scale);
+
+            _name = name;
         }
 
         #endregion
@@ -171,12 +178,11 @@ namespace CustomMath
             set
             {
                 //Should set local rotation in a certain way that the global rotation matches when multiplying with all parents
-                MyTransform worldTransform = new MyTransform(Vec3.Zero, value, Vec3.One);
+                MyTransform worldTransform = new MyTransform("World", Vec3.Zero, value, Vec3.One);
                 worldTransform.parent = parent;
                 MyQuaternion newRotation = worldTransform.WorldToLocalMatrix.inverse.rotation;
-                rotationEulers = newRotation.eulerAngles;
 
-                matrixTRS.SetTRS(localPosition, newRotation, LocalScale);
+                LocalRotation = newRotation;
             }
         }
 
@@ -203,6 +209,7 @@ namespace CustomMath
             set
             {
                 scale = value;
+                _localScale = value;
                 matrixTRS.SetTRS(localPosition, localRotation, scale);
             }
         }
@@ -289,7 +296,7 @@ namespace CustomMath
 
         #region Functions
 
-        private void Update()
+        public void TestUpdate()
         {
             localRotation = MyQuaternion.Euler(rotationEulers);
 
@@ -299,22 +306,12 @@ namespace CustomMath
             _localScale = LocalScale;
             _lossyScale = lossyScale;
 
-            List<MyTransform> childrenToDetach = new List<MyTransform>();
-            foreach (MyTransform child in _children)
-                if (child.parent != this)
-                    childrenToDetach.Add(child);
-
-            foreach (MyTransform childToDetach in childrenToDetach)
-            {
-                RemoveChild(childToDetach);
-            }
-
-            if (parent != null)
-                SetParent(parent);
-
-            transform.SetPositionAndRotation(_worldPosition, _worldRotation.toQuaternion);
-            transform.localScale = lossyScale;
             root = Root;
+
+            foreach (MyTransform child in _children)
+            {
+                child.TestUpdate();
+            }
         }
 
         #region Hierarchy
@@ -430,7 +427,7 @@ namespace CustomMath
         {
             foreach (MyTransform child in _children)
             {
-                if (child.name == n)
+                if (child._name == n)
                     return child;
             }
 
@@ -620,14 +617,15 @@ namespace CustomMath
         /// <param name="axis">The axis to apply rotation to.</param>
         /// <param name="angle">The degrees of rotation to apply.</param>
         /// <param name="relativeTo">Determines whether to rotate the GameObject either locally to the GameObject or relative to the Scene in world space.</param>
-        public void Rotate(Vec3 axis, float angle, [DefaultValue("Space.Self")] Space relativeTo)
+        public void Rotate(Vec3 axis, float angle, Space relativeTo)
         {
             if (relativeTo == Space.Self)
             {
-                LocalRotation = localRotation * MyQuaternion.AngleAxis(angle, axis);
+                Rotate(axis, angle);
+                return;
             }
 
-            Rotate(axis, angle);
+            Rotation *= MyQuaternion.AngleAxis(angle, axis);
         }
 
         /// <summary>
@@ -637,7 +635,7 @@ namespace CustomMath
         /// <param name="angle">The degrees of rotation to apply.</param>
         public void Rotate(Vec3 axis, float angle)
         {
-            Rotation = _worldRotation * MyQuaternion.AngleAxis(angle, axis);
+            LocalRotation *= MyQuaternion.AngleAxis(angle, axis);
         }
 
         #endregion
@@ -852,7 +850,7 @@ namespace CustomMath
             // worldTransform.parent = parent;
             // return worldTransform.WorldToLocalMatrix.inverse.GetPosition();
 
-            MyTransform worldTransform = new MyTransform();
+            MyTransform worldTransform = new MyTransform("World");
             worldTransform.parent = parent;
             return worldTransform.WorldToLocalMatrix.inverse.MultiplyPoint3x4(position);
         }
