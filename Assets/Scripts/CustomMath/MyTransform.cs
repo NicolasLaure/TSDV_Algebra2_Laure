@@ -3,9 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using UnityEditor.Timeline.Actions;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace CustomMath
 {
@@ -624,7 +622,12 @@ namespace CustomMath
         /// <param name="relativeTo">Determines whether to rotate the GameObject either locally to the GameObject or relative to the Scene in world space.</param>
         public void Rotate(Vec3 axis, float angle, [DefaultValue("Space.Self")] Space relativeTo)
         {
-            throw new NotImplementedException();
+            if (relativeTo == Space.Self)
+            {
+                LocalRotation = localRotation * MyQuaternion.AngleAxis(angle, axis);
+            }
+
+            Rotate(axis, angle);
         }
 
         /// <summary>
@@ -634,7 +637,7 @@ namespace CustomMath
         /// <param name="angle">The degrees of rotation to apply.</param>
         public void Rotate(Vec3 axis, float angle)
         {
-            throw new NotImplementedException();
+            Rotation = _worldRotation * MyQuaternion.AngleAxis(angle, axis);
         }
 
         #endregion
