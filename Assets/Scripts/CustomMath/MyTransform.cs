@@ -576,7 +576,13 @@ namespace CustomMath
         /// <param name="relativeTo">Determines whether to rotate the GameObject either locally to  the GameObject or relative to the Scene in world space.</param>
         public void Rotate(Vec3 eulers, [DefaultValue("Space.Self")] Space relativeTo)
         {
-            throw new NotImplementedException();
+            if (relativeTo == Space.Self)
+            {
+                LocalRotation *= MyQuaternion.Euler(eulers.x, eulers.y, eulers.z);
+                return;
+            }
+
+            Rotate(eulers);
         }
 
         /// <summary>
@@ -585,7 +591,7 @@ namespace CustomMath
         /// <param name="eulers">The rotation to apply in euler angles.</param>
         public void Rotate(Vec3 eulers)
         {
-            throw new NotImplementedException();
+            Rotation *= MyQuaternion.Euler(eulers.x, eulers.y, eulers.z);
         }
 
         /// <summary>
@@ -597,7 +603,7 @@ namespace CustomMath
         /// <param name="relativeTo">Determines whether to rotate the GameObject either locally to the GameObject or relative to the Scene in world space.</param>
         public void Rotate(float xAngle, float yAngle, float zAngle, [DefaultValue("Space.Self")] Space relativeTo)
         {
-            throw new NotImplementedException();
+            Rotate(new Vec3(xAngle, zAngle, yAngle), relativeTo);
         }
 
         /// <summary>
@@ -608,7 +614,7 @@ namespace CustomMath
         /// <param name="zAngle">Degrees to rotate the GameObject around the Z axis.</param>
         public void Rotate(float xAngle, float yAngle, float zAngle)
         {
-            throw new NotImplementedException();
+            Rotate(new Vec3(xAngle, zAngle, yAngle));
         }
 
         /// <summary>

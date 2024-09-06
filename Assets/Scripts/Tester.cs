@@ -38,8 +38,8 @@ public class Tester : MonoBehaviour
         // unityTransform.Translate(dir, pivotUnityTransform);
         // _transform.Translate(new Vec3(dir), pivotTransform);
 
-        unityTransform.LookAt(position);
-        _transform.LookAt(new Vec3(position));
+        unityTransform.Rotate(eulers);
+        _transform.Rotate(new Vec3(eulers));
 
         //Debug.Log(unityTransform.worldToLocalMatrix + "\n" + _transform.WorldToLocalMatrix);
     }
