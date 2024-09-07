@@ -8,14 +8,11 @@ using UnityEngine.Serialization;
 public class Tester : MonoBehaviour
 {
     [SerializeField] private Transform unityTransform;
-    [SerializeField] private MyTransform _transform;
     [SerializeField] private MyTransformVisualizer visualizer;
 
     [SerializeField] private Transform pivotUnityTransform;
-    [SerializeField] private MyTransform pivotTransform;
 
     [SerializeField] private Transform targetUnity;
-    [SerializeField] private MyTransform target;
 
     [SerializeField] private Vector3 dir;
     [SerializeField] private Vector3 position;

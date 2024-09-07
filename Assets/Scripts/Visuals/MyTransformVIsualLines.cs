@@ -8,11 +8,17 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class MyTransformVIsualLines : MonoBehaviour
 {
-    [SerializeField] private MyTransform _transform;
+    [SerializeField] private MyTransformVisualizer _transformVisualizer;
 
     [SerializeField] private LineRenderer forwardLine;
     [SerializeField] private LineRenderer rightLine;
     [SerializeField] private LineRenderer upLine;
+
+    private MyTransform _transform;
+    private void OnEnable()
+    {
+        _transform = _transformVisualizer.GetTransform(0);
+    }
 
     private void Update()
     {
