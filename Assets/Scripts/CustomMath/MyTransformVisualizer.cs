@@ -33,7 +33,7 @@ public class MyTransformVisualizer : MonoBehaviour
         for (int i = 0; i < _objects.Count; i++)
         {
             _objects[i].SetPositionAndRotation(_transforms[i].Position, _transforms[i].Rotation.toQuaternion);
-            _objects[i].localScale = _transforms[i].LocalScale;
+            _objects[i].localScale = _transforms[i].lossyScale;
         }
     }
 
