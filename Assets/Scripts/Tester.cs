@@ -1,9 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using CustomMath;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class Tester : MonoBehaviour
 {
@@ -21,6 +17,14 @@ public class Tester : MonoBehaviour
     [SerializeField] private Vector3 axis;
     [SerializeField] private float angle;
 
+    [SerializeField] private bool shouldRotateAround = false;
+
+
+    private Vec3 _pivotPos = Vec3.Zero;
+    private MyQuaternion _pivotRotation = MyQuaternion.identity;
+    private Vec3 _pivotScale = Vec3.Zero;
+
+
     [ContextMenu("Test")]
     private void Test()
     {
@@ -36,10 +40,11 @@ public class Tester : MonoBehaviour
         //unityTransform.SetPositionAndRotation(position, Quaternion.Euler(eulers));
         //_transform.SetPositionAndRotation(new Vec3(position), MyQuaternion.Euler(new Vec3(eulers)));
 
-        Vec3 pivotPos = new Vec3(pivotUnityTransform.position);
-        MyQuaternion pivotRotation = new MyQuaternion(pivotUnityTransform.rotation);
-        Vec3 pivotScale = new Vec3(pivotUnityTransform.localScale);
+        _pivotPos = new Vec3(pivotUnityTransform.position);
+        _pivotRotation = new MyQuaternion(pivotUnityTransform.rotation);
+        _pivotScale = new Vec3(pivotUnityTransform.localScale);
 
+        visualizer.GetTransform(1).Position = new Vec3(0, 0, 0);
         //Works
         // Translate
         // unityTransform.Translate(dir, pivotUnityTransform);
@@ -55,7 +60,22 @@ public class Tester : MonoBehaviour
         // unityTransform.Rotate(axis, angle, Space.Self);
         // visualizer.GetTransform(1).Rotate(new Vec3(axis), angle, Space.Self);
 
-        
+        //RotateAround
+
+
         //Debug.Log(unityTransform.worldToLocalMatrix + "\n" + _transform.WorldToLocalMatrix);
+    }
+
+    private void Update()
+    {
+        _pivotPos = new Vec3(pivotUnityTransform.position);
+        _pivotRotation = new MyQuaternion(pivotUnityTransform.rotation);
+        _pivotScale = new Vec3(pivotUnityTransform.localScale);
+
+        if (shouldRotateAround)
+        {
+            unityTransform.RotateAround(pivotUnityTransform.position, axis, angle * Time.deltaTime);
+            visualizer.GetTransform(1).RotateAround(_pivotPos, new Vec3(axis), angle * Time.deltaTime);
+        }
     }
 }

@@ -26,7 +26,7 @@ public class MyTransformVisualizer : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         _transforms[0].TestUpdate();
 
