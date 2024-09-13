@@ -541,7 +541,8 @@ namespace CustomMath
         {
             MY4X4 auxSelfWorldMatrix = LocalToWorldMatrix;
             MY4X4 auxRelativeWorldMatrix = relativeTo.LocalToWorldMatrix;
-
+            auxRelativeWorldMatrix.SetColumn(3, new Vector4(0, 0, 0, 1));
+            
             Vector4 result = auxRelativeWorldMatrix * new Vector4(translation.x, translation.y, translation.z, 1);
 
             Position = auxSelfWorldMatrix.GetPosition() + new Vec3(result.x, result.y, result.z);
@@ -648,7 +649,11 @@ namespace CustomMath
         /// <param name="angle"></param>
         public void RotateAround(Vec3 point, Vec3 axis, float angle)
         {
-            throw new NotImplementedException();
+            MY4X4 offsetMatrix = MY4X4.Translate(point) * LocalToWorldMatrix;
+            MyTransform relativeTransform = new MyTransform("relative", offsetMatrix.GetPosition(), MyQuaternion.AngleAxis(angle, axis), scale);
+
+            forward = point;
+            Position = relativeTransform.Position;
         }
 
         /// <summary>
