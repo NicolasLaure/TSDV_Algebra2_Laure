@@ -264,9 +264,9 @@ MonoBehaviour:
   targetUnity: {fileID: 1704583939}
   dir: {x: 0, y: -1, z: 0}
   position: {x: 10, y: -5, z: 4}
-  eulers: {x: 8.28, y: 0, z: 0}
-  axis: {x: 1, y: 1, z: 0}
-  angle: -15
+  eulers: {x: -15, y: 10, z: 0}
+  axis: {x: 0, y: 1, z: 0}
+  angle: 15
 --- !u!4 &447346431
 Transform:
   m_ObjectHideFlags: 0

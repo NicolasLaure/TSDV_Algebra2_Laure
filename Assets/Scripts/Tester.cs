@@ -39,19 +39,23 @@ public class Tester : MonoBehaviour
         Vec3 pivotPos = new Vec3(pivotUnityTransform.position);
         MyQuaternion pivotRotation = new MyQuaternion(pivotUnityTransform.rotation);
         Vec3 pivotScale = new Vec3(pivotUnityTransform.localScale);
-       
-        // Translate
-        unityTransform.Translate(dir, pivotUnityTransform);
-        visualizer.GetTransform(1).Translate(new Vec3(dir), new MyTransform("Pivot", pivotPos, pivotRotation, pivotScale));
 
+        //Works
+        // Translate
+        // unityTransform.Translate(dir, pivotUnityTransform);
+        // visualizer.GetTransform(1).Translate(new Vec3(dir), new MyTransform("Pivot", pivotPos, pivotRotation, pivotScale));
+
+        //Works
         //Rotate based on Eulers
         // unityTransform.Rotate(eulers);
-        // _transform.Rotate(new Vec3(eulers));
+        // visualizer.GetTransform(1).Rotate(new Vec3(eulers));
 
-        //Rotate based on Axis
+        //Works
+        // //Rotate based on Axis
         // unityTransform.Rotate(axis, angle, Space.Self);
         // visualizer.GetTransform(1).Rotate(new Vec3(axis), angle, Space.Self);
 
+        
         //Debug.Log(unityTransform.worldToLocalMatrix + "\n" + _transform.WorldToLocalMatrix);
     }
 }
