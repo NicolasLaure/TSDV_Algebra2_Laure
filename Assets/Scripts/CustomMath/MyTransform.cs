@@ -93,7 +93,7 @@ namespace CustomMath
         public Vec3 Position
         {
             get { return LocalToWorldMatrix.GetPosition(); }
-            set { LocalPosition = InverseMyTransformPoint(value); }
+            set { LocalPosition = InverseTransformPoint(value); }
         }
 
         /// <summary>
@@ -498,7 +498,7 @@ namespace CustomMath
                 return;
             }
 
-            localPosition = InverseMyTransformPoint(Position + translation);
+            localPosition = InverseTransformPoint(Position + translation);
         }
 
         /// <summary>
@@ -703,9 +703,9 @@ namespace CustomMath
         ///   MyTransforms direction from local space to world space.
         /// </summary>
         /// <param name="direction"></param>
-        public Vec3 MyTransformDirection(Vec3 direction)
+        public Vec3 TransformDirection(Vec3 direction)
         {
-            throw new NotImplementedException();
+            return LocalToWorldMatrix.MultiplyPoint(direction);
         }
 
         /// <summary>
@@ -714,17 +714,17 @@ namespace CustomMath
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <param name="z"></param>
-        public Vec3 MyTransformDirection(float x, float y, float z)
+        public Vec3 TransformDirection(float x, float y, float z)
         {
             throw new NotImplementedException();
         }
 
-        public void MyTransformDirections(ReadOnlySpan<Vec3> directions, Span<Vec3> myTransformedDirections)
+        public void TransformDirections(ReadOnlySpan<Vec3> directions, Span<Vec3> myTransformedDirections)
         {
             throw new NotImplementedException();
         }
 
-        public void MyTransformDirections(Span<Vec3> directions)
+        public void TransformDirections(Span<Vec3> directions)
         {
             throw new NotImplementedException();
         }
@@ -733,7 +733,7 @@ namespace CustomMath
         ///   MyTransforms a direction from world space to local space. The opposite of MyTransform.MyTransformDirection.
         /// </summary>
         /// <param name="direction"></param>
-        public Vec3 InverseMyTransformDirection(Vec3 direction)
+        public Vec3 InverseTransformDirection(Vec3 direction)
         {
             throw new NotImplementedException();
         }
@@ -744,17 +744,17 @@ namespace CustomMath
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <param name="z"></param>
-        public Vec3 InverseMyTransformDirection(float x, float y, float z)
+        public Vec3 InverseTransformDirection(float x, float y, float z)
         {
             throw new NotImplementedException();
         }
 
-        public void InverseMyTransformDirections(ReadOnlySpan<Vec3> directions, Span<Vec3> myTransformedDirections)
+        public void InverseTransformDirections(ReadOnlySpan<Vec3> directions, Span<Vec3> myTransformedDirections)
         {
             throw new NotImplementedException();
         }
 
-        public void InverseMyTransformDirections(Span<Vec3> directions)
+        public void InverseTransformDirections(Span<Vec3> directions)
         {
             throw new NotImplementedException();
         }
@@ -763,7 +763,7 @@ namespace CustomMath
         ///   MyTransforms vector from local space to world space.
         /// </summary>
         /// <param name="vector"></param>
-        public Vec3 MyTransformVector(Vec3 vector)
+        public Vec3 TransformVector(Vec3 vector)
         {
             throw new NotImplementedException();
         }
@@ -774,17 +774,17 @@ namespace CustomMath
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <param name="z"></param>
-        public Vec3 MyTransformVector(float x, float y, float z)
+        public Vec3 TransformVector(float x, float y, float z)
         {
             throw new NotImplementedException();
         }
 
-        public void MyTransformVectors(ReadOnlySpan<Vec3> vectors, Span<Vec3> myTransformedVectors)
+        public void TransformVectors(ReadOnlySpan<Vec3> vectors, Span<Vec3> myTransformedVectors)
         {
             throw new NotImplementedException();
         }
 
-        public void MyTransformVectors(Span<Vec3> vectors)
+        public void TransformVectors(Span<Vec3> vectors)
         {
             throw new NotImplementedException();
         }
@@ -793,7 +793,7 @@ namespace CustomMath
         ///   MyTransforms a vector from world space to local space. The opposite of MyTransform.MyTransformVector.
         /// </summary>
         /// <param name="vector"></param>
-        public Vec3 InverseMyTransformVector(Vec3 vector)
+        public Vec3 InverseTransformVector(Vec3 vector)
         {
             throw new NotImplementedException();
         }
@@ -804,17 +804,17 @@ namespace CustomMath
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <param name="z"></param>
-        public Vec3 InverseMyTransformVector(float x, float y, float z)
+        public Vec3 InverseTransformVector(float x, float y, float z)
         {
             throw new NotImplementedException();
         }
 
-        public void InverseMyTransformVectors(ReadOnlySpan<Vec3> vectors, Span<Vec3> myTransformedVectors)
+        public void InverseTransformVectors(ReadOnlySpan<Vec3> vectors, Span<Vec3> myTransformedVectors)
         {
             throw new NotImplementedException();
         }
 
-        public void InverseMyTransformVectors(Span<Vec3> vectors)
+        public void InverseTransformVectors(Span<Vec3> vectors)
         {
             throw new NotImplementedException();
         }
@@ -823,7 +823,7 @@ namespace CustomMath
         ///   MyTransforms position from local space to world space.
         /// </summary>
         /// <param name="position"></param>
-        public Vec3 MyTransformPoint(Vec3 position)
+        public Vec3 TransformPoint(Vec3 position)
         {
             throw new NotImplementedException();
         }
@@ -834,17 +834,17 @@ namespace CustomMath
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <param name="z"></param>
-        public Vec3 MyTransformPoint(float x, float y, float z)
+        public Vec3 TransformPoint(float x, float y, float z)
         {
             throw new NotImplementedException();
         }
 
-        public void MyTransformPoints(ReadOnlySpan<Vec3> positions, Span<Vec3> myTransformedPositions)
+        public void TransformPoints(ReadOnlySpan<Vec3> positions, Span<Vec3> myTransformedPositions)
         {
             throw new NotImplementedException();
         }
 
-        public void MyTransformPoints(Span<Vec3> positions)
+        public void TransformPoints(Span<Vec3> positions)
         {
             throw new NotImplementedException();
         }
@@ -853,7 +853,7 @@ namespace CustomMath
         ///   transforms position from world space to local space.
         /// </summary>
         /// <param name="position"></param>
-        public Vec3 InverseMyTransformPoint(Vec3 position)
+        public Vec3 InverseTransformPoint(Vec3 position)
         {
             // MyTransform worldTransform = new MyTransform(position, MyQuaternion.identity, Vec3.One);
             // worldTransform.parent = parent;
@@ -864,7 +864,7 @@ namespace CustomMath
             return worldTransform.WorldToLocalMatrix.inverse.MultiplyPoint3x4(position);
         }
 
-        public Vec3 RelativeInverseMyTransformPoint(Vec3 position, MyTransform relativeTo)
+        public Vec3 RelativeInverseTransformPoint(Vec3 position, MyTransform relativeTo)
         {
             relativeTo.parent = parent;
             return relativeTo.WorldToLocalMatrix.inverse.MultiplyPoint3x4(position);
@@ -876,17 +876,17 @@ namespace CustomMath
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <param name="z"></param>
-        public Vec3 InverseMyTransformPoint(float x, float y, float z)
+        public Vec3 InverseTransformPoint(float x, float y, float z)
         {
-            return InverseMyTransformPoint(new Vec3(x, y, z));
+            return InverseTransformPoint(new Vec3(x, y, z));
         }
 
-        public void InverseMyTransformPoints(ReadOnlySpan<Vec3> positions, Span<Vec3> myTransformedPositions)
+        public void InverseTransformPoints(ReadOnlySpan<Vec3> positions, Span<Vec3> myTransformedPositions)
         {
             throw new NotImplementedException();
         }
 
-        public void InverseMyTransformPoints(Span<Vec3> positions)
+        public void InverseTransformPoints(Span<Vec3> positions)
         {
             throw new NotImplementedException();
         }
