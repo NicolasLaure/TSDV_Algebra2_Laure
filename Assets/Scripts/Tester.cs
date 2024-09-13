@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using CustomMath;
 using UnityEngine;
 
@@ -24,6 +26,7 @@ public class Tester : MonoBehaviour
     private MyQuaternion _pivotRotation = MyQuaternion.identity;
     private Vec3 _pivotScale = Vec3.Zero;
 
+    [SerializeField] private List<Vector3> directions = new List<Vector3>();
 
     [ContextMenu("Test")]
     private void Test()
@@ -44,7 +47,6 @@ public class Tester : MonoBehaviour
         _pivotRotation = new MyQuaternion(pivotUnityTransform.rotation);
         _pivotScale = new Vec3(pivotUnityTransform.localScale);
 
-        visualizer.GetTransform(1).Position = new Vec3(0, 0, 0);
         //Works
         // Translate
         // unityTransform.Translate(dir, pivotUnityTransform);
@@ -60,8 +62,14 @@ public class Tester : MonoBehaviour
         // unityTransform.Rotate(axis, angle, Space.Self);
         // visualizer.GetTransform(1).Rotate(new Vec3(axis), angle, Space.Self);
 
-        //RotateAround
+        //Works
+        //TransformDirection simple
+        // Debug.Log(unityTransform.TransformDirection(dir));
+        // Debug.Log(visualizer.GetTransform(1).TransformDirection(new Vec3(dir)));
 
+        //Works
+        //TransformDirection arrays
+        TestTransformDirections();
 
         //Debug.Log(unityTransform.worldToLocalMatrix + "\n" + _transform.WorldToLocalMatrix);
     }
@@ -76,6 +84,34 @@ public class Tester : MonoBehaviour
         {
             unityTransform.RotateAround(pivotUnityTransform.position, axis, angle * Time.deltaTime);
             visualizer.GetTransform(1).RotateAround(_pivotPos, new Vec3(axis), angle * Time.deltaTime);
+        }
+    }
+
+    private void TestTransformDirections()
+    {
+        List<Vec3> v3Directions = new List<Vec3>();
+        foreach (Vector3 direction in directions)
+        {
+            v3Directions.Add(new Vec3(direction));
+        }
+
+        Span<Vector3> directionsPtr = new Span<Vector3>(directions.ToArray());
+        Span<Vector3> transformedDirections = new Span<Vector3>(directions.ToArray());
+
+        unityTransform.TransformDirections(directionsPtr, transformedDirections);
+        foreach (Vector3 direction in transformedDirections)
+        {
+            Debug.Log(direction);
+        }
+
+        Span<Vec3> vec3DirectionsPtr = new Span<Vec3>(v3Directions.ToArray());
+        Span<Vec3> vec3TransformedDirections = new Span<Vec3>(v3Directions.ToArray());
+
+        visualizer.GetTransform(0).TransformDirections(vec3DirectionsPtr, vec3TransformedDirections);
+        Debug.Log("MyTransform\n\n\n\n");
+        foreach (Vec3 direction in vec3TransformedDirections)
+        {
+            Debug.Log(direction);
         }
     }
 }

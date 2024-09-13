@@ -716,17 +716,23 @@ namespace CustomMath
         /// <param name="z"></param>
         public Vec3 TransformDirection(float x, float y, float z)
         {
-            throw new NotImplementedException();
+            return TransformDirection(new Vec3(x, y, z));
         }
 
         public void TransformDirections(ReadOnlySpan<Vec3> directions, Span<Vec3> myTransformedDirections)
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < directions.Length; i++)
+            {
+                myTransformedDirections[i] = TransformDirection(directions[i]);
+            }
         }
 
         public void TransformDirections(Span<Vec3> directions)
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < directions.Length; i++)
+            {
+                directions[i] = TransformDirection(directions[i]);
+            }
         }
 
         /// <summary>
