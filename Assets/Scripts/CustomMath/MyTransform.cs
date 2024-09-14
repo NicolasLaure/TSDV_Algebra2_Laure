@@ -736,12 +736,12 @@ namespace CustomMath
         }
 
         /// <summary>
-        ///   MyTransforms a direction from world space to local space. The opposite of MyTransform.MyTransformDirection.
+        ///   Transforms a direction from world space to local space. The opposite of MyTransform.TransformDirection.
         /// </summary>
         /// <param name="direction"></param>
         public Vec3 InverseTransformDirection(Vec3 direction)
         {
-            throw new NotImplementedException();
+            return WorldToLocalMatrix.inverse.MultiplyPoint(direction);
         }
 
         /// <summary>
@@ -752,17 +752,23 @@ namespace CustomMath
         /// <param name="z"></param>
         public Vec3 InverseTransformDirection(float x, float y, float z)
         {
-            throw new NotImplementedException();
+            return InverseTransformDirection(new Vec3(x, y, z));
         }
 
         public void InverseTransformDirections(ReadOnlySpan<Vec3> directions, Span<Vec3> myTransformedDirections)
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < directions.Length; i++)
+            {
+                myTransformedDirections[i] = InverseTransformDirection(directions[i]);
+            }
         }
 
         public void InverseTransformDirections(Span<Vec3> directions)
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < directions.Length; i++)
+            {
+                directions[i] = InverseTransformDirection(directions[i]);
+            }
         }
 
         /// <summary>
