@@ -77,7 +77,7 @@ public class Tester : MonoBehaviour
         // Debug.Log(visualizer.GetTransform(1).InverseTransformDirection(new Vec3(dir)));
 
         //Works
-        //InverseTransformRotations
+        //InverseTransformDirections
         //TestInverseTransformDirections();
 
         //Works
@@ -103,8 +103,19 @@ public class Tester : MonoBehaviour
         // Debug.Log(unityTransform.TransformPoint(dir));
         // Debug.Log(visualizer.GetTransform(1).TransformPoint(new Vec3(dir)));
 
+        //Works
         //TransformPoints
-        TestTransformPoints();
+        //TestTransformPoints();
+
+        //Works As I expect not same with Unity
+        //InverseTransformPoint
+        Debug.Log(unityTransform.InverseTransformPoint(position));
+        unityTransform.localPosition = unityTransform.InverseTransformPoint(position);
+        Debug.Log(visualizer.GetTransform(1).InverseTransformPoint(new Vec3(position)));
+        visualizer.GetTransform(1).LocalPosition = visualizer.GetTransform(1).InverseTransformPoint(new Vec3(position));
+
+        //InverseTransformPoints
+        //TestInverseTransformPoints();
 
         //Debug.Log(unityTransform.worldToLocalMatrix + "\n" + _transform.WorldToLocalMatrix);
     }
@@ -255,6 +266,34 @@ public class Tester : MonoBehaviour
         Span<Vec3> vec3TransformedDirections = new Span<Vec3>(v3Directions.ToArray());
 
         visualizer.GetTransform(1).TransformPoints(vec3DirectionsPtr, vec3TransformedDirections);
+        Debug.Log("MyTransform\n\n\n\n");
+        foreach (Vec3 direction in vec3TransformedDirections)
+        {
+            Debug.Log(direction);
+        }
+    }
+
+    private void TestInverseTransformPoints()
+    {
+        List<Vec3> v3Directions = new List<Vec3>();
+        foreach (Vector3 direction in directions)
+        {
+            v3Directions.Add(new Vec3(direction));
+        }
+
+        Span<Vector3> directionsPtr = new Span<Vector3>(directions.ToArray());
+        Span<Vector3> transformedDirections = new Span<Vector3>(directions.ToArray());
+
+        unityTransform.InverseTransformPoints(directionsPtr, transformedDirections);
+        foreach (Vector3 direction in transformedDirections)
+        {
+            Debug.Log(direction);
+        }
+
+        Span<Vec3> vec3DirectionsPtr = new Span<Vec3>(v3Directions.ToArray());
+        Span<Vec3> vec3TransformedDirections = new Span<Vec3>(v3Directions.ToArray());
+
+        visualizer.GetTransform(1).InverseTransformPoints(vec3DirectionsPtr, vec3TransformedDirections);
         Debug.Log("MyTransform\n\n\n\n");
         foreach (Vec3 direction in vec3TransformedDirections)
         {

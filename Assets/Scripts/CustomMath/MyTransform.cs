@@ -885,10 +885,6 @@ namespace CustomMath
         /// <param name="position"></param>
         public Vec3 InverseTransformPoint(Vec3 position)
         {
-            // MyTransform worldTransform = new MyTransform(position, MyQuaternion.identity, Vec3.One);
-            // worldTransform.parent = parent;
-            // return worldTransform.WorldToLocalMatrix.inverse.GetPosition();
-
             MyTransform worldTransform = new MyTransform("World");
             worldTransform.parent = parent;
             return worldTransform.WorldToLocalMatrix.inverse.MultiplyPoint3x4(position);
@@ -913,12 +909,18 @@ namespace CustomMath
 
         public void InverseTransformPoints(ReadOnlySpan<Vec3> positions, Span<Vec3> myTransformedPositions)
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < positions.Length; i++)
+            {
+                myTransformedPositions[i] = InverseTransformPoint(positions[i]);
+            }
         }
 
         public void InverseTransformPoints(Span<Vec3> positions)
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < positions.Length; i++)
+            {
+                positions[i] = InverseTransformPoint(positions[i]);
+            }
         }
 
         /// <summary>
