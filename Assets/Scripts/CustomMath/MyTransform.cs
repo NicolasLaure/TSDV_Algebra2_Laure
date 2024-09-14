@@ -705,7 +705,7 @@ namespace CustomMath
         /// <param name="direction"></param>
         public Vec3 TransformDirection(Vec3 direction)
         {
-            return LocalToWorldMatrix.MultiplyPoint(direction);
+            return LocalToWorldMatrix.rotation * direction;
         }
 
         /// <summary>

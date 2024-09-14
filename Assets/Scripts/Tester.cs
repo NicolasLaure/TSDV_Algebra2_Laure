@@ -69,7 +69,7 @@ public class Tester : MonoBehaviour
 
         //Works
         //TransformDirection arrays
-        //TestTransformDirections();
+        // TestTransformDirections();
 
         //Works
         //InverseTransformDirection
@@ -89,12 +89,18 @@ public class Tester : MonoBehaviour
         //TransformVectors
         // TestTransformVectors();
 
+        //Works
         //InverseTransformVector
         // Debug.Log(unityTransform.InverseTransformVector(dir));
         // Debug.Log(visualizer.GetTransform(1).InverseTransformVector(new Vec3(dir)));
 
+        //Works
         //InverseTransformVectors
-        TestInverseTransformVectors();
+        //TestInverseTransformVectors();
+
+        //TransformPoint
+        // Debug.Log(unityTransform.TransformPoint(dir));
+        // Debug.Log(visualizer.GetTransform(1).TransformPoint(new Vec3(dir)));
 
         //Debug.Log(unityTransform.worldToLocalMatrix + "\n" + _transform.WorldToLocalMatrix);
     }
@@ -132,7 +138,7 @@ public class Tester : MonoBehaviour
         Span<Vec3> vec3DirectionsPtr = new Span<Vec3>(v3Directions.ToArray());
         Span<Vec3> vec3TransformedDirections = new Span<Vec3>(v3Directions.ToArray());
 
-        visualizer.GetTransform(0).TransformDirections(vec3DirectionsPtr, vec3TransformedDirections);
+        visualizer.GetTransform(1).TransformDirections(vec3DirectionsPtr, vec3TransformedDirections);
         Debug.Log("MyTransform\n\n\n\n");
         foreach (Vec3 direction in vec3TransformedDirections)
         {
