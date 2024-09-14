@@ -929,7 +929,10 @@ namespace CustomMath
         /// <param name="parent"></param>
         public bool IsChildOf(MyTransform parent)
         {
-            throw new NotImplementedException();
+            if (this.parent == null)
+                return false;
+
+            return this.parent == parent || this.parent.IsChildOf(parent);
         }
 
         #endregion

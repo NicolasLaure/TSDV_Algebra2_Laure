@@ -109,13 +109,18 @@ public class Tester : MonoBehaviour
 
         //Works As I expect not same with Unity
         //InverseTransformPoint
-        Debug.Log(unityTransform.InverseTransformPoint(position));
-        unityTransform.localPosition = unityTransform.InverseTransformPoint(position);
-        Debug.Log(visualizer.GetTransform(1).InverseTransformPoint(new Vec3(position)));
-        visualizer.GetTransform(1).LocalPosition = visualizer.GetTransform(1).InverseTransformPoint(new Vec3(position));
+        // Debug.Log(unityTransform.InverseTransformPoint(position));
+        // Debug.Log(visualizer.GetTransform(1).InverseTransformPoint(new Vec3(position)));
 
         //InverseTransformPoints
         //TestInverseTransformPoints();
+
+        //IsChildOf
+        Debug.Log($"UnityTransform Is Child of parent: {unityTransform.IsChildOf(unityTransform.parent)}");
+        Debug.Log($"UnityTransform child Is Child of parent: {unityTransform.IsChildOf(unityTransform.GetChild(0))}");
+        Debug.Log($"MyTransform Is Child of parent: {visualizer.GetTransform(1).IsChildOf(visualizer.GetTransform(1).Parent)}");
+        Debug.Log($"MyTransform child Is Child of parent: {visualizer.GetTransform(1).IsChildOf(visualizer.GetTransform(2))}");
+        Debug.Log($"MyTransform child Is Child of parent: {visualizer.GetTransform(2).IsChildOf(visualizer.GetTransform(1).Parent)}");
 
         //Debug.Log(unityTransform.worldToLocalMatrix + "\n" + _transform.WorldToLocalMatrix);
     }
