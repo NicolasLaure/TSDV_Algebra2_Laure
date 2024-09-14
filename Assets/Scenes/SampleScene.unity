@@ -262,7 +262,7 @@ MonoBehaviour:
   visualizer: {fileID: 1304224261}
   pivotUnityTransform: {fileID: 2110450406}
   targetUnity: {fileID: 1704583939}
-  dir: {x: 1, y: 1, z: -1}
+  dir: {x: 1, y: 1, z: 0}
   position: {x: 10, y: -5, z: 4}
   eulers: {x: -15, y: 10, z: 0}
   axis: {x: 0, y: 1, z: 0}
