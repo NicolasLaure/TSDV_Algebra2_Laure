@@ -777,7 +777,7 @@ namespace CustomMath
         /// <param name="vector"></param>
         public Vec3 TransformVector(Vec3 vector)
         {
-            throw new NotImplementedException();
+            return LocalToWorldMatrix.MultiplyVector(vector);
         }
 
         /// <summary>
@@ -788,17 +788,23 @@ namespace CustomMath
         /// <param name="z"></param>
         public Vec3 TransformVector(float x, float y, float z)
         {
-            throw new NotImplementedException();
+            return TransformVector(new Vec3(x, y, z));
         }
 
         public void TransformVectors(ReadOnlySpan<Vec3> vectors, Span<Vec3> myTransformedVectors)
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < vectors.Length; i++)
+            {
+                myTransformedVectors[i] = TransformVector(vectors[i]);
+            }
         }
 
         public void TransformVectors(Span<Vec3> vectors)
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < vectors.Length; i++)
+            {
+                vectors[i] = TransformVector(vectors[i]);
+            }
         }
 
         /// <summary>
