@@ -849,7 +849,7 @@ namespace CustomMath
         /// <param name="position"></param>
         public Vec3 TransformPoint(Vec3 position)
         {
-            throw new NotImplementedException();
+            return LocalToWorldMatrix.MultiplyPoint(position);
         }
 
         /// <summary>
@@ -860,17 +860,23 @@ namespace CustomMath
         /// <param name="z"></param>
         public Vec3 TransformPoint(float x, float y, float z)
         {
-            throw new NotImplementedException();
+            return TransformPoint(new Vec3(x, y, z));
         }
 
         public void TransformPoints(ReadOnlySpan<Vec3> positions, Span<Vec3> myTransformedPositions)
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < positions.Length; i++)
+            {
+                myTransformedPositions[i] = TransformPoint(positions[i]);
+            }
         }
 
         public void TransformPoints(Span<Vec3> positions)
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < positions.Length; i++)
+            {
+                positions[i] = TransformPoint(positions[i]);
+            }
         }
 
         /// <summary>
