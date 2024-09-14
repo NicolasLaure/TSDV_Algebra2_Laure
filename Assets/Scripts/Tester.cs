@@ -115,12 +115,13 @@ public class Tester : MonoBehaviour
         //InverseTransformPoints
         //TestInverseTransformPoints();
 
+        //Works
         //IsChildOf
-        Debug.Log($"UnityTransform Is Child of parent: {unityTransform.IsChildOf(unityTransform.parent)}");
-        Debug.Log($"UnityTransform child Is Child of parent: {unityTransform.IsChildOf(unityTransform.GetChild(0))}");
-        Debug.Log($"MyTransform Is Child of parent: {visualizer.GetTransform(1).IsChildOf(visualizer.GetTransform(1).Parent)}");
-        Debug.Log($"MyTransform child Is Child of parent: {visualizer.GetTransform(1).IsChildOf(visualizer.GetTransform(2))}");
-        Debug.Log($"MyTransform child Is Child of parent: {visualizer.GetTransform(2).IsChildOf(visualizer.GetTransform(1).Parent)}");
+        // Debug.Log($"UnityTransform Is Child of parent: {unityTransform.IsChildOf(unityTransform.parent)}");
+        // Debug.Log($"UnityTransform child Is Child of parent: {unityTransform.IsChildOf(unityTransform.GetChild(0))}");
+        // Debug.Log($"MyTransform Is Child of parent: {visualizer.GetTransform(1).IsChildOf(visualizer.GetTransform(1).Parent)}");
+        // Debug.Log($"MyTransform child Is Child of parent: {visualizer.GetTransform(1).IsChildOf(visualizer.GetTransform(2))}");
+        // Debug.Log($"MyTransform child Is Child of parent: {visualizer.GetTransform(2).IsChildOf(visualizer.GetTransform(1).Parent)}");
 
         //Debug.Log(unityTransform.worldToLocalMatrix + "\n" + _transform.WorldToLocalMatrix);
     }
