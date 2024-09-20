@@ -23,6 +23,7 @@ public class VoronoiTester : MonoBehaviour
         VoronoiPoint newVoronoiPoint = voronoi.GetClosestPoint(pointGameObject.transform.position);
         if (lastPoint == null)
             lastPoint = newVoronoiPoint;
+        
         else if(lastPoint != newVoronoiPoint)
         {
             lastPoint.objectMesh.material = defaultMat;
