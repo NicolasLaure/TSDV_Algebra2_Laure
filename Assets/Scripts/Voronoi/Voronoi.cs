@@ -28,11 +28,12 @@ public class Voronoi : MonoBehaviour
 
                 Vector3 dir = (staticObjects[i].transform.position - point.transform.position).normalized;
                 Vector3 position = Vector3.Lerp(staticObjects[i].transform.position, point.transform.position, 0.5f);
-                _planes.Add(new Plane(dir, position));
-                GameObject newPlane = Instantiate(planePrefab, position, Quaternion.identity);
-                newPlane.transform.up = dir;
+                Plane newPlane = new Plane(dir, position);
+                _planes.Add(newPlane);
+                GameObject newPlaneObject = Instantiate(planePrefab, position, Quaternion.identity);
+                newPlaneObject.transform.up = dir;
 
-                _voronoiObject[i].normals.Add(dir);
+                _voronoiObject[i].planes.Add(newPlane);
             }
         }
     }
@@ -43,9 +44,9 @@ public class Voronoi : MonoBehaviour
         foreach (VoronoiPoint voronoiPoint in _voronoiObject)
         {
             isPointOut = false;
-            for (int i = 0; i < voronoiPoint.normals.Count; i++)
+            for (int i = 0; i < voronoiPoint.planes.Count; i++)
             {
-                if (Vector3.Dot(voronoiPoint.normals[i], point) < 0)
+                if (!voronoiPoint.planes[i].GetSide(point))
                 {
                     isPointOut = true;
                     continue;

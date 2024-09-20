@@ -5,6 +5,6 @@ using UnityEngine;
 [Serializable]
 public class VoronoiPoint
 {
-    public List<Vector3> normals = new List<Vector3>();
+    public List<Plane> planes = new List<Plane>();
     public MeshRenderer objectMesh;
 }
