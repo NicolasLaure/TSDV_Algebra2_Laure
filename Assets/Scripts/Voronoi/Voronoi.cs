@@ -1,12 +1,11 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
+using CustomMath;
 using UnityEngine;
 
 public class Voronoi : MonoBehaviour
 {
     [SerializeField] private List<GameObject> staticObjects = new List<GameObject>();
-    private List<Plane> _planes = new List<Plane>();
+    private List<Self_Plane> _planes = new List<Self_Plane>();
 
     [SerializeField] private GameObject planePrefab;
 
@@ -26,19 +25,19 @@ public class Voronoi : MonoBehaviour
                 if (staticObjects[i] == point)
                     continue;
 
-                Vector3 dir = (staticObjects[i].transform.position - point.transform.position).normalized;
-                Vector3 position = Vector3.Lerp(staticObjects[i].transform.position, point.transform.position, 0.5f);
-                Plane newPlane = new Plane(dir, position);
+                Vec3 dir = new Vec3((staticObjects[i].transform.position - point.transform.position).normalized);
+                Vec3 position = Vec3.Lerp(new Vec3(staticObjects[i].transform.position), new Vec3(point.transform.position), 0.5f);
+                Self_Plane newPlane = new Self_Plane(dir, position);
                 _planes.Add(newPlane);
-                GameObject newPlaneObject = Instantiate(planePrefab, position, Quaternion.identity);
-                newPlaneObject.transform.up = dir;
+                GameObject newPlaneObject = Instantiate(planePrefab, newPlane.Normal * newPlane.Distance, Quaternion.identity);
+                newPlaneObject.transform.up = newPlane.Normal;
 
                 _voronoiObject[i].planes.Add(newPlane);
             }
         }
     }
 
-    public VoronoiPoint GetClosestPoint(Vector3 point)
+    public VoronoiPoint GetClosestPoint(Vec3 point)
     {
         bool isPointOut = false;
         foreach (VoronoiPoint voronoiPoint in _voronoiObject)

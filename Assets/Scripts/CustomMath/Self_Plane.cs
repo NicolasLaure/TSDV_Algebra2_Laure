@@ -14,7 +14,7 @@ namespace CustomMath
         public Self_Plane(Vec3 inNormal, Vec3 inPoint)
         {
             normal = inNormal;
-            distance = Vec3.Dot(inNormal, inPoint) / -normal.magnitude;
+            distance = Vec3.Dot(inNormal, inPoint) / normal.magnitude;
         }
         public Self_Plane(Vec3 inNormal, float d)
         {

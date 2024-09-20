@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using CustomMath;
 using UnityEngine;
 
 public class VoronoiTester : MonoBehaviour
@@ -20,11 +21,11 @@ public class VoronoiTester : MonoBehaviour
 
     private void UpdateClosestPoint()
     {
-        VoronoiPoint newVoronoiPoint = voronoi.GetClosestPoint(pointGameObject.transform.position);
+        VoronoiPoint newVoronoiPoint = voronoi.GetClosestPoint(new Vec3(pointGameObject.transform.position));
         if (lastPoint == null)
             lastPoint = newVoronoiPoint;
-        
-        else if(lastPoint != newVoronoiPoint)
+
+        else if (lastPoint != newVoronoiPoint)
         {
             lastPoint.objectMesh.material = defaultMat;
             lastPoint = newVoronoiPoint;
