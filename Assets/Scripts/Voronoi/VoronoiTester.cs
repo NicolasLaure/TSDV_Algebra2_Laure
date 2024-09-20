@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using CustomMath;
 using UnityEngine;
 
 public class VoronoiTester : MonoBehaviour
 {
     [SerializeField] private GameObject pointGameObject;
-    [SerializeField] private Voronoi voronoi;
+    [SerializeField] private VoronoiSpatialTessellation voronoiSpatialTessellation;
     // Update is called once per frame
 
     [SerializeField] private Material defaultMat;
@@ -21,7 +19,7 @@ public class VoronoiTester : MonoBehaviour
 
     private void UpdateClosestPoint()
     {
-        VoronoiPoint newVoronoiPoint = voronoi.GetClosestPoint(new Vec3(pointGameObject.transform.position));
+        VoronoiPoint newVoronoiPoint = voronoiSpatialTessellation.GetClosestPoint(new Vec3(pointGameObject.transform.position));
         if (lastPoint == null)
             lastPoint = newVoronoiPoint;
 

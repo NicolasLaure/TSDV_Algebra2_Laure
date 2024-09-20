@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using CustomMath;
 using UnityEngine;
 
-public class Voronoi : MonoBehaviour
+public class VoronoiSpatialTessellation : MonoBehaviour
 {
     [SerializeField] private List<GameObject> staticObjects = new List<GameObject>();
     private List<Self_Plane> _planes = new List<Self_Plane>();
