@@ -77,21 +77,17 @@ public class VoronoiSpatialTessellation : MonoBehaviour
         List<Self_Plane> planesToDelete = new List<Self_Plane>();
         List<GameObject> planesGameObjectsToDelete = new List<GameObject>();
 
-        bool isOut = false;
         for (int i = 0; i < voronoiPoint.planePositions.Count; i++)
         {
-            isOut = false;
             for (int j = 0; j < voronoiPoint.planes.Count; j++)
             {
                 if (i != j)
                     if (!voronoiPoint.planes[j].GetSide(voronoiPoint.planePositions[i]))
-                        isOut = true;
-            }
-
-            if (isOut)
-            {
-                planesToDelete.Add(voronoiPoint.planes[i]);
-                planesGameObjectsToDelete.Add(voronoiPoint.planeGameObject[i]);
+                    {
+                        planesToDelete.Add(voronoiPoint.planes[i]);
+                        planesGameObjectsToDelete.Add(voronoiPoint.planeGameObject[i]);
+                        break;
+                    }
             }
         }
 
