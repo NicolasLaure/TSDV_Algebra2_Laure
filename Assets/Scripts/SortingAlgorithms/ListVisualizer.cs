@@ -11,7 +11,7 @@ public class ListVisualizer : MonoBehaviour
     [SerializeField] private GameObject barPrefab;
     private List<GameObject> _bars = new List<GameObject>();
     private float _barWidth = 0;
-
+    
     private void OnEnable()
     {
         Sort<int>.onListUpdated += UpdateBars;

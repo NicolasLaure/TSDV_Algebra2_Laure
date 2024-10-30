@@ -9,6 +9,10 @@ namespace SortingAlgorithms
     public static class Sort<T> where T : IComparable<T>
     {
         public static event Action<List<T>> onListUpdated;
+        public static event Action<int> onCountUpdated;
+
+
+        private static int iterationCount = 0;
 
         public static bool IsSorted(List<T> list)
         {
@@ -23,9 +27,12 @@ namespace SortingAlgorithms
 
         public static IEnumerator BogoSort(List<T> list, float delay)
         {
+            iterationCount = 0;
             while (!IsSorted(list))
             {
                 Shuffle(list);
+                iterationCount++;
+                onCountUpdated?.Invoke(iterationCount);
                 yield return new WaitForSeconds(delay);
             }
         }
@@ -41,6 +48,7 @@ namespace SortingAlgorithms
                 list[i] = list[randomIndex];
                 list[randomIndex] = aux;
             }
+
             onListUpdated?.Invoke(list);
         }
     }
