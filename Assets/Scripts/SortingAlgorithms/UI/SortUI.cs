@@ -8,20 +8,28 @@ using UnityEngine.Serialization;
 
 public class SortUI : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI countText;
+    [SerializeField] private TextMeshProUGUI iterationCountText;
+    [SerializeField] private TextMeshProUGUI comparissonsCountText;
 
     private void OnEnable()
     {
-        Sort<int>.onCountUpdated += UpdateCount;
+        Sort<int>.oniterationCountUpdated += UpdateIterationCount;
+        Sort<int>.onComparissonUpdated += UpdateComparissonsCount;
     }
 
     private void OnDisable()
     {
-        Sort<int>.onCountUpdated -= UpdateCount;
+        Sort<int>.oniterationCountUpdated -= UpdateIterationCount;
+        Sort<int>.onComparissonUpdated -= UpdateComparissonsCount;
     }
 
-    private void UpdateCount(int newCount)
+    private void UpdateIterationCount(int newCount)
     {
-        countText.text = "Iteration Count: " + newCount;
+        iterationCountText.text = "Iteration Count: " + newCount;
+    }
+    
+    private void UpdateComparissonsCount(int newCount)
+    {
+        comparissonsCountText.text = "Comparissons Count: " + newCount;
     }
 }

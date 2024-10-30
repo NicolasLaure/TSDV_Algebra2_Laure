@@ -66,13 +66,14 @@ public class SortHandler : MonoBehaviour
             case SortTypes.Shell:
                 break;
             case SortTypes.Bogo:
-                StartCoroutine(Sort<int>.BogoSort(_list, delay));
+                _sortCoroutine = StartCoroutine(Sort<int>.BogoSort(_list, delay));
                 break;
             case SortTypes.Intro:
                 break;
             case SortTypes.AdaptiveMerge:
                 break;
             case SortTypes.Bubble:
+                _sortCoroutine = StartCoroutine(Sort<int>.BubbleSort(_list, delay));
                 break;
             case SortTypes.Gnome:
                 break;
