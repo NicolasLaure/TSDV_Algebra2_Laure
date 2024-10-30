@@ -52,36 +52,49 @@ public class SortHandler : MonoBehaviour
         switch (sortType)
         {
             case SortTypes.Bitonic:
+                _sortCoroutine = StartCoroutine(Sort<int>.BitonicSort(_list, delay));
                 break;
             case SortTypes.Selection:
+                _sortCoroutine = StartCoroutine(Sort<int>.SelectionSort(_list, delay));
                 break;
             case SortTypes.CocktailShaker:
+                _sortCoroutine = StartCoroutine(Sort<int>.CocktailShakerSort(_list, delay));
                 break;
             case SortTypes.Quick:
+                _sortCoroutine = StartCoroutine(Sort<int>.QuickSort(_list, delay));
                 break;
             case SortTypes.RadixLSD:
+                _sortCoroutine = StartCoroutine(Sort<int>.RadixLSDSort(_list, delay));
                 break;
             case SortTypes.RadixMSD:
+                _sortCoroutine = StartCoroutine(Sort<int>.RadixMSDSort(_list, delay));
                 break;
             case SortTypes.Shell:
+                _sortCoroutine = StartCoroutine(Sort<int>.ShellSort(_list, delay));
                 break;
             case SortTypes.Bogo:
                 _sortCoroutine = StartCoroutine(Sort<int>.BogoSort(_list, delay));
                 break;
             case SortTypes.Intro:
+                _sortCoroutine = StartCoroutine(Sort<int>.IntroSort(_list, delay));
                 break;
             case SortTypes.AdaptiveMerge:
+                _sortCoroutine = StartCoroutine(Sort<int>.AdaptiveMergeSort(_list, delay));
                 break;
             case SortTypes.Bubble:
                 _sortCoroutine = StartCoroutine(Sort<int>.BubbleSort(_list, delay));
                 break;
             case SortTypes.Gnome:
+                _sortCoroutine = StartCoroutine(Sort<int>.GnomeSort(_list, delay));
                 break;
             case SortTypes.Merge:
+                _sortCoroutine = StartCoroutine(Sort<int>.MergeSort(_list, delay));
                 break;
             case SortTypes.Heap:
+                _sortCoroutine = StartCoroutine(Sort<int>.HeapSort(_list, delay));
                 break;
             case SortTypes.Insertion:
+                _sortCoroutine = StartCoroutine(Sort<int>.InsertionSort(_list, delay));
                 break;
             default:
                 throw new ArgumentOutOfRangeException();

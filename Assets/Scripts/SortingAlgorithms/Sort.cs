@@ -16,15 +16,42 @@ namespace SortingAlgorithms
         private static int iterationCount = 0;
         private static int comparissonCount = 0;
 
-        public static bool IsSorted(List<T> list)
-        {
-            for (int i = 1; i < list.Count; i++)
-            {
-                if (list[i - 1].CompareTo(list[i]) > 0)
-                    return false;
-            }
 
-            return true;
+        #region SortingMethods
+
+        public static IEnumerator BitonicSort(List<T> list, float delay)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static IEnumerator SelectionSort(List<T> list, float delay)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static IEnumerator CocktailShakerSort(List<T> list, float delay)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static IEnumerator QuickSort(List<T> list, float delay)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static IEnumerator RadixLSDSort(List<T> list, float delay)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static IEnumerator RadixMSDSort(List<T> list, float delay)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static IEnumerator ShellSort(List<T> list, float delay)
+        {
+            throw new NotImplementedException();
         }
 
         public static IEnumerator BogoSort(List<T> list, float delay)
@@ -36,6 +63,16 @@ namespace SortingAlgorithms
                 UpdateIterationCount();
                 yield return new WaitForSeconds(delay);
             }
+        }
+
+        public static IEnumerator IntroSort(List<T> list, float delay)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static IEnumerator AdaptiveMergeSort(List<T> list, float delay)
+        {
+            throw new NotImplementedException();
         }
 
         public static IEnumerator BubbleSort(List<T> list, float delay)
@@ -59,6 +96,41 @@ namespace SortingAlgorithms
                     }
                 }
             }
+        }
+
+        public static IEnumerator GnomeSort(List<T> list, float delay)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static IEnumerator MergeSort(List<T> list, float delay)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static IEnumerator HeapSort(List<T> list, float delay)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static IEnumerator InsertionSort(List<T> list, float delay)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region Utilities
+
+        public static bool IsSorted(List<T> list)
+        {
+            for (int i = 1; i < list.Count; i++)
+            {
+                if (list[i - 1].CompareTo(list[i]) > 0)
+                    return false;
+            }
+
+            return true;
         }
 
         public static void Shuffle(List<T> list)
@@ -93,5 +165,7 @@ namespace SortingAlgorithms
             comparissonCount++;
             onComparissonUpdated?.Invoke(comparissonCount);
         }
+
+        #endregion
     }
 }
