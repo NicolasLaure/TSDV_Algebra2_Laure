@@ -71,7 +71,27 @@ namespace SortingAlgorithms
 
         public static IEnumerator CocktailShakerSort(List<T> list, float delay)
         {
-            throw new NotImplementedException();
+            ResetCounts();
+            for (int i = 0; i < list.Count / 2; i++)
+            {
+                for (int j = 0; j < list.Count - i - 1; j++)
+                {
+                    if (Compare(list[j], list[j + 1]) > 0)
+                    {
+                        Swap(list, j, j + 1);
+                        yield return new WaitForSeconds(delay);
+                    }
+                }
+
+                for (int j = list.Count - i - 2; j > i + 1; j--)
+                {
+                    if (Compare(list[j], list[j - 1]) < 0)
+                    {
+                        Swap(list, j, j - 1);
+                        yield return new WaitForSeconds(delay);
+                    }
+                }
+            }
         }
 
         public static IEnumerator QuickSort(List<T> list, float delay)
