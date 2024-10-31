@@ -26,7 +26,19 @@ namespace SortingAlgorithms
 
         public static IEnumerator SelectionSort(List<T> list, float delay)
         {
-            throw new NotImplementedException();
+            int minIndex;
+            for (int i = 0; i < list.Count; i++)
+            {
+                minIndex = i;
+                for (int j = i; j < list.Count; j++)
+                {
+                    if (list[j].CompareTo(list[minIndex]) < 0)
+                        minIndex = j;
+                }
+
+                Swap(list, i, minIndex);
+                yield return new WaitForSeconds(delay);
+            }
         }
 
         public static IEnumerator CocktailShakerSort(List<T> list, float delay)
@@ -164,6 +176,14 @@ namespace SortingAlgorithms
         {
             comparissonCount++;
             onComparissonUpdated?.Invoke(comparissonCount);
+        }
+
+        private static void Swap(List<T> list, int firstIndex, int secondIndex)
+        {
+            T aux = list[firstIndex];
+            list[firstIndex] = list[secondIndex];
+            list[secondIndex] = aux;
+            onListUpdated?.Invoke(list);
         }
 
         #endregion
