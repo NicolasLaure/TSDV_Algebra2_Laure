@@ -26,13 +26,14 @@ namespace SortingAlgorithms
 
         public static IEnumerator SelectionSort(List<T> list, float delay)
         {
+            ResetCounts();
             int minIndex;
             for (int i = 0; i < list.Count; i++)
             {
                 minIndex = i;
                 for (int j = i; j < list.Count; j++)
                 {
-                    if (list[j].CompareTo(list[minIndex]) < 0)
+                    if (Compare(list[j], list[minIndex]) < 0)
                         minIndex = j;
                 }
 
@@ -90,16 +91,13 @@ namespace SortingAlgorithms
         public static IEnumerator BubbleSort(List<T> list, float delay)
         {
             ResetCounts();
-            T aux;
             for (int i = 0; i < list.Count - 1; i++)
             {
                 for (int j = 0; j < list.Count - i - 1; j++)
                 {
-                    UpdateComparissonCount();
-                    if (list[j].CompareTo(list[j + 1]) > 0)
+                    if (Compare(list[j], list[j + 1]) > 0)
                     {
                         Swap(list, j, j + 1);
-                        UpdateIterationCount();
                         yield return new WaitForSeconds(delay);
                     }
                 }
@@ -179,9 +177,16 @@ namespace SortingAlgorithms
             T aux = list[firstIndex];
             list[firstIndex] = list[secondIndex];
             list[secondIndex] = aux;
+            UpdateIterationCount();
             onListUpdated?.Invoke(list);
         }
-        
+
+        private static int Compare(T a, T b)
+        {
+            UpdateComparissonCount();
+            return a.CompareTo(b);
+        }
+
         #endregion
     }
 }
