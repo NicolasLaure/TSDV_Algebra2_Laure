@@ -94,9 +94,34 @@ namespace SortingAlgorithms
             }
         }
 
-        public static IEnumerator QuickSort(List<T> list, float delay)
+        public static IEnumerator QuickSort(List<T> list, int from, int to, float delay)
         {
-            throw new NotImplementedException();
+            ResetCounts();
+            yield return RecursiveQuickSort(list, from, to, delay);
+        }
+
+        private static IEnumerator RecursiveQuickSort(List<T> list, int from, int to, float delay)
+        {
+            if (to < from)
+                yield break;
+
+            int j = from - 1;
+            for (int i = from; i < to; i++)
+            {
+                if (Compare(list[i], list[to]) < 0)
+                {
+                    j++;
+                    Swap(list, i, j);
+                    yield return new WaitForSeconds(delay);
+                }
+            }
+
+            Swap(list, j + 1, to);
+
+            int pivot = j + 1;
+
+            yield return RecursiveQuickSort(list, from, pivot - 1, delay);
+            yield return RecursiveQuickSort(list, pivot + 1, to, delay);
         }
 
         public static IEnumerator RadixLSDSort(List<T> list, float delay)
