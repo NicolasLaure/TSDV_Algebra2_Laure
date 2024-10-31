@@ -98,11 +98,7 @@ namespace SortingAlgorithms
                     UpdateComparissonCount();
                     if (list[j].CompareTo(list[j + 1]) > 0)
                     {
-                        aux = list[j];
-                        list[j] = list[j + 1];
-                        list[j + 1] = aux;
-
-                        onListUpdated?.Invoke(list);
+                        Swap(list, j, j + 1);
                         UpdateIterationCount();
                         yield return new WaitForSeconds(delay);
                     }
@@ -185,7 +181,7 @@ namespace SortingAlgorithms
             list[secondIndex] = aux;
             onListUpdated?.Invoke(list);
         }
-
+        
         #endregion
     }
 }
