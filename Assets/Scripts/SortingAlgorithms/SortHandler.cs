@@ -8,6 +8,7 @@ public enum SortTypes
 {
     Bitonic,
     Selection,
+    DoubleSelection,
     CocktailShaker,
     Quick,
     RadixLSD,
@@ -56,6 +57,9 @@ public class SortHandler : MonoBehaviour
                 break;
             case SortTypes.Selection:
                 _sortCoroutine = StartCoroutine(Sort<int>.SelectionSort(_list, delay));
+                break;
+            case SortTypes.DoubleSelection:
+                _sortCoroutine = StartCoroutine(Sort<int>.DoubleSelectionSort(_list, delay));
                 break;
             case SortTypes.CocktailShaker:
                 _sortCoroutine = StartCoroutine(Sort<int>.CocktailShakerSort(_list, delay));

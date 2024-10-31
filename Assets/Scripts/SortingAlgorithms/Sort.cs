@@ -12,7 +12,6 @@ namespace SortingAlgorithms
         public static event Action<int> oniterationCountUpdated;
         public static event Action<int> onComparissonUpdated;
 
-
         private static int iterationCount = 0;
         private static int comparissonCount = 0;
 
@@ -38,6 +37,34 @@ namespace SortingAlgorithms
                 }
 
                 Swap(list, i, minIndex);
+                yield return new WaitForSeconds(delay);
+            }
+        }
+
+        public static IEnumerator DoubleSelectionSort(List<T> list, float delay)
+        {
+            ResetCounts();
+            int minIndex;
+            int maxIndex;
+
+            for (int i = 0; i < list.Count / 2; i++)
+            {
+                minIndex = i;
+                maxIndex = list.Count - 1 - i;
+                for (int j = i; j < list.Count - i; j++)
+                {
+                    if (Compare(list[j], list[minIndex]) < 0)
+                        minIndex = j;
+                }
+
+                for (int j = list.Count - 1 - i; j > i; j--)
+                {
+                    if (Compare(list[j], list[maxIndex]) > 0)
+                        maxIndex = j;
+                }
+
+                Swap(list, i, minIndex);
+                Swap(list, list.Count - 1 - i, maxIndex);
                 yield return new WaitForSeconds(delay);
             }
         }
@@ -158,6 +185,8 @@ namespace SortingAlgorithms
         {
             iterationCount = 0;
             comparissonCount = 0;
+            oniterationCountUpdated?.Invoke(0);
+            onComparissonUpdated?.Invoke(0);
         }
 
         private static void UpdateIterationCount()
