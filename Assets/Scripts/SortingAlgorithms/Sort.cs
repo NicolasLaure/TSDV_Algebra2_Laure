@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -188,14 +189,13 @@ namespace SortingAlgorithms
 
         private static IEnumerator RecursiveMergeSort(List<T> list, int from, int to, float delay)
         {
-            if (from < to)
-            {
-                int middle = from + (to - from) / 2;
+            if (from >= to) yield break;
 
-                yield return RecursiveMergeSort(list, from, middle, delay);
-                yield return RecursiveMergeSort(list, middle + 1, to, delay);
-                yield return Merge(list, from, middle, to, delay);
-            }
+            int middle = from + (to - from) / 2;
+
+            yield return RecursiveMergeSort(list, from, middle, delay);
+            yield return RecursiveMergeSort(list, middle + 1, to, delay);
+            yield return Merge(list, from, middle, to, delay);
         }
 
         public static IEnumerator HeapSort(List<T> list, float delay)
@@ -299,16 +299,17 @@ namespace SortingAlgorithms
 
             List<T> leftHalf = new List<T>();
             List<T> rightHalf = new List<T>();
+            int leftIndex, rightIndex;
 
-            for (int i = 0; i < leftLastPos; i++)
-                leftHalf.Add(list[from + i]);
-            for (int i = 0; i < rightLastPos; i++)
-                rightHalf.Add(list[middle + 1 + i]);
+            for (leftIndex = 0; leftIndex < leftLastPos; ++leftIndex)
+                leftHalf.Add(list[from + leftIndex]);
+            for (rightIndex = 0; rightIndex < rightLastPos; ++rightIndex)
+                rightHalf.Add(list[middle + 1 + rightIndex]);
 
-            int leftIndex = 0;
-            int rightIndex = 0;
+            leftIndex = 0;
+            rightIndex = 0;
+
             int auxIndex = from;
-
             while (leftIndex < leftLastPos && rightIndex < rightLastPos)
             {
                 if (Compare(leftHalf[leftIndex], rightHalf[rightIndex]) <= 0)
@@ -331,22 +332,22 @@ namespace SortingAlgorithms
             while (leftIndex < leftLastPos)
             {
                 list[auxIndex] = leftHalf[leftIndex];
-                UpdateIterationCount();
-                onListUpdated?.Invoke(list);
-
                 leftIndex++;
                 auxIndex++;
+
+                UpdateIterationCount();
+                onListUpdated?.Invoke(list);
                 yield return new WaitForSeconds(delay);
             }
 
             while (rightIndex < rightLastPos)
             {
-                list[auxIndex] = leftHalf[rightIndex];
-                UpdateIterationCount();
-                onListUpdated?.Invoke(list);
-
+                list[auxIndex] = rightHalf[rightIndex];
                 rightIndex++;
                 auxIndex++;
+
+                UpdateIterationCount();
+                onListUpdated?.Invoke(list);
                 yield return new WaitForSeconds(delay);
             }
         }
