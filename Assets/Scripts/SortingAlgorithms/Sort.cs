@@ -93,10 +93,10 @@ namespace SortingAlgorithms
             }
         }
 
-        public static IEnumerator QuickSort(List<T> list, int from, int to, float delay)
+        public static IEnumerator QuickSort(List<T> list, float delay)
         {
             ResetCounts();
-            yield return RecursiveQuickSort(list, from, to, delay);
+            yield return RecursiveQuickSort(list, 0, list.Count - 1, delay);
         }
 
         private static IEnumerator RecursiveQuickSort(List<T> list, int from, int to, float delay)
@@ -182,7 +182,20 @@ namespace SortingAlgorithms
 
         public static IEnumerator MergeSort(List<T> list, float delay)
         {
-            throw new NotImplementedException();
+            ResetCounts();
+            yield return RecursiveMergeSort(list, 0, list.Count - 1, delay);
+        }
+
+        private static IEnumerator RecursiveMergeSort(List<T> list, int from, int to, float delay)
+        {
+            if (from < to)
+            {
+                int middle = from + (to - from) / 2;
+
+                yield return RecursiveMergeSort(list, from, middle, delay);
+                yield return RecursiveMergeSort(list, middle + 1, to, delay);
+                yield return Merge(list, from, middle, to, delay);
+            }
         }
 
         public static IEnumerator HeapSort(List<T> list, float delay)
@@ -277,6 +290,65 @@ namespace SortingAlgorithms
         {
             UpdateComparissonCount();
             return a.CompareTo(b);
+        }
+
+        private static IEnumerator Merge(List<T> list, int from, int middle, int to, float delay)
+        {
+            int leftLastPos = middle - from + 1;
+            int rightLastPos = to - middle;
+
+            List<T> leftHalf = new List<T>();
+            List<T> rightHalf = new List<T>();
+
+            for (int i = 0; i < leftLastPos; i++)
+                leftHalf.Add(list[from + i]);
+            for (int i = 0; i < rightLastPos; i++)
+                rightHalf.Add(list[middle + 1 + i]);
+
+            int leftIndex = 0;
+            int rightIndex = 0;
+            int auxIndex = from;
+
+            while (leftIndex < leftLastPos && rightIndex < rightLastPos)
+            {
+                if (Compare(leftHalf[leftIndex], rightHalf[rightIndex]) <= 0)
+                {
+                    list[auxIndex] = leftHalf[leftIndex];
+                    leftIndex++;
+                }
+                else
+                {
+                    list[auxIndex] = rightHalf[rightIndex];
+                    rightIndex++;
+                }
+
+                UpdateIterationCount();
+                onListUpdated?.Invoke(list);
+                yield return new WaitForSeconds(delay);
+                auxIndex++;
+            }
+
+            while (leftIndex < leftLastPos)
+            {
+                list[auxIndex] = leftHalf[leftIndex];
+                UpdateIterationCount();
+                onListUpdated?.Invoke(list);
+
+                leftIndex++;
+                auxIndex++;
+                yield return new WaitForSeconds(delay);
+            }
+
+            while (rightIndex < rightLastPos)
+            {
+                list[auxIndex] = leftHalf[rightIndex];
+                UpdateIterationCount();
+                onListUpdated?.Invoke(list);
+
+                rightIndex++;
+                auxIndex++;
+                yield return new WaitForSeconds(delay);
+            }
         }
 
         #endregion

@@ -65,7 +65,7 @@ public class SortHandler : MonoBehaviour
                 _sortCoroutine = StartCoroutine(Sort<int>.CocktailShakerSort(_list, delay));
                 break;
             case SortTypes.Quick:
-                _sortCoroutine = StartCoroutine(Sort<int>.QuickSort(_list, 0, _list.Count - 1, delay));
+                _sortCoroutine = StartCoroutine(Sort<int>.QuickSort(_list, delay));
                 break;
             case SortTypes.RadixLSD:
                 _sortCoroutine = StartCoroutine(Sort<int>.RadixLSDSort(_list, delay));

@@ -791,7 +791,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sortType: 15
-  delay: 0.01
+  delay: 0.1
   quantity: 128
   listVisualizer: {fileID: 1501222210}
 --- !u!1 &1576547232
