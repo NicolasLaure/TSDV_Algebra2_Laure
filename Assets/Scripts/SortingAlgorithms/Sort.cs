@@ -15,7 +15,6 @@ namespace SortingAlgorithms
         private static int iterationCount = 0;
         private static int comparissonCount = 0;
 
-
         #region SortingMethods
 
         public static IEnumerator BitonicSort(List<T> list, float delay)
@@ -193,7 +192,17 @@ namespace SortingAlgorithms
 
         public static IEnumerator InsertionSort(List<T> list, float delay)
         {
-            throw new NotImplementedException();
+            ResetCounts();
+            for (int i = 0; i < list.Count; ++i)
+            {
+                int j = i - 1;
+
+                while (j >= 0 && Compare(list[i], list[j]) < 0)
+                    j--;
+
+                InsertAt(list, i, j + 1);
+                yield return new WaitForSeconds(delay);
+            }
         }
 
         #endregion
@@ -251,6 +260,15 @@ namespace SortingAlgorithms
             T aux = list[firstIndex];
             list[firstIndex] = list[secondIndex];
             list[secondIndex] = aux;
+            UpdateIterationCount();
+            onListUpdated?.Invoke(list);
+        }
+
+        private static void InsertAt(List<T> list, int from, int to)
+        {
+            T aux = list[from];
+            list.RemoveAt(from);
+            list.Insert(to, aux);
             UpdateIterationCount();
             onListUpdated?.Invoke(list);
         }
