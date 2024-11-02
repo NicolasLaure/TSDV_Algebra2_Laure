@@ -266,7 +266,7 @@ namespace SortingAlgorithms
         {
             for (int i = 1; i < list.Count; i++)
             {
-                if (list[i - 1].CompareTo(list[i]) > 0)
+                if (Compare(list[i - 1], list[i]) > 0)
                     return false;
             }
 
