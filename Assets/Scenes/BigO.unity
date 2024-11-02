@@ -790,9 +790,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fbe250cce75ae34897b14f3f7f83907, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sortType: 15
-  delay: 0.1
-  quantity: 128
+  sortType: 13
+  delay: 0.2
+  quantity: 16
   listVisualizer: {fileID: 1501222210}
 --- !u!1 &1576547232
 GameObject:

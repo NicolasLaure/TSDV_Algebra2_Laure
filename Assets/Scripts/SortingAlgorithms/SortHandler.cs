@@ -7,21 +7,21 @@ using UnityEngine;
 public enum SortTypes
 {
     Bitonic,
-    Selection,
-    DoubleSelection,
-    CocktailShaker,
-    Quick,
+    Selection, //Done
+    DoubleSelection, //Done
+    CocktailShaker, //Done
+    Quick, //Done
     RadixLSD,
     RadixMSD,
     Shell,
-    Bogo,
+    Bogo, // Done
     Intro,
     AdaptiveMerge,
-    Bubble,
+    Bubble, // Done
     Gnome,
-    Merge,
+    Merge, // Done
     Heap,
-    Insertion
+    Insertion // Done
 }
 
 public class SortHandler : MonoBehaviour

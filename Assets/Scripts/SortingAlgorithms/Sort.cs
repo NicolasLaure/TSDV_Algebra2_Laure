@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -126,6 +127,14 @@ namespace SortingAlgorithms
 
         public static IEnumerator RadixLSDSort(List<T> list, float delay)
         {
+            // int bytesSize = Marshal.SizeOf<T>();
+            // byte[] bytes = new byte[bytesSize];
+            // for (int i = 0; i < bytesSize; i++)
+            // {
+            //     bytes[i] = Marshal.ReadByte(intptr);
+            // }
+            // BitArray bits = new BitArray(bytes);
+            // Debug.Log(bits.Length);
             throw new NotImplementedException();
         }
 
@@ -178,7 +187,21 @@ namespace SortingAlgorithms
 
         public static IEnumerator GnomeSort(List<T> list, float delay)
         {
-            throw new NotImplementedException();
+            int gnome = 0;
+            while (gnome < list.Count)
+            {
+                if (gnome == 0)
+                    gnome++;
+                else if (Compare(list[gnome - 1], list[gnome]) <= 0)
+                    gnome++;
+                else
+                {
+                    Swap(list, gnome, gnome - 1);
+                    gnome--;
+                }
+
+                yield return new WaitForSeconds(delay);
+            }
         }
 
         public static IEnumerator MergeSort(List<T> list, float delay)
