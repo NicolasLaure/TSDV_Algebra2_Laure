@@ -204,6 +204,7 @@ namespace SortingAlgorithms
 
         public static IEnumerator GnomeSort(List<T> list, float delay)
         {
+            ResetCounts();
             int gnome = 0;
             while (gnome < list.Count)
             {
