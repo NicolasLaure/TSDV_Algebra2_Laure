@@ -13,12 +13,12 @@ public enum SortTypes
     Quick, //Done
     RadixLSD,
     RadixMSD,
-    Shell,
+    Shell, // Done
     Bogo, // Done
     Intro,
     AdaptiveMerge,
     Bubble, // Done
-    Gnome,
+    Gnome, // Done
     Merge, // Done
     Heap,
     Insertion // Done

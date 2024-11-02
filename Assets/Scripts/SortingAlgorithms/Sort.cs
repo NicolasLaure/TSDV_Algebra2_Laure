@@ -145,7 +145,24 @@ namespace SortingAlgorithms
 
         public static IEnumerator ShellSort(List<T> list, float delay)
         {
-            throw new NotImplementedException();
+            ResetCounts();
+            for (int gap = list.Count / 2; gap > 0; gap /= 2)
+            {
+                for (int i = 0; i < list.Count; i++)
+                {
+                    T aux = list[i];
+                    int j;
+                    for (j = i; j >= gap && Compare(list[j - gap], aux) > 0; j -= gap)
+                    {
+                        Swap(list, j, j - gap);
+                        yield return new WaitForSeconds(delay);
+                    }
+
+                    list[j] = aux;
+                    UpdateIterationCount();
+                    onListUpdated?.Invoke(list);
+                }
+            }
         }
 
         public static IEnumerator BogoSort(List<T> list, float delay)
