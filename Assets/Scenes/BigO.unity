@@ -777,7 +777,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   width: 36
-  barPrefab: {fileID: 8652957139023230854, guid: 9d026f6fc1f5a5949a14df9fc71be9d9, type: 3}
+  barPrefab: {fileID: 8977042436444255989, guid: 9d026f6fc1f5a5949a14df9fc71be9d9, type: 3}
 --- !u!114 &1501222211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -790,9 +790,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fbe250cce75ae34897b14f3f7f83907, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sortType: 13
-  delay: 0.2
-  quantity: 16
+  sortType: 7
+  delay: 0
+  quantity: 100
   listVisualizer: {fileID: 1501222210}
 --- !u!1 &1576547232
 GameObject:
