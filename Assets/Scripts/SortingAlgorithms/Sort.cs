@@ -241,7 +241,65 @@ namespace SortingAlgorithms
 
         public static IEnumerator HeapSort(List<T> list, float delay)
         {
-            throw new NotImplementedException();
+            ResetCounts();
+            yield return Heapify(list, list.Count - 1, delay);
+            for (int i = list.Count - 1; i > 1; i--)
+            {
+                Swap(list, 0, i);
+                yield return new WaitForSeconds(delay);
+                yield return Heapify(list, i - 1, delay);
+                // int j = 0;
+                // int limit = list.Count - 1 - i;
+                // while (j * 2 + 1 < limit)
+                // {
+                //     int leftChild = j * 2 + 1;
+                //     int rightChild = j * 2 + 2;
+                //     int biggestChild = leftChild;
+                //     if (rightChild < limit)
+                //         biggestChild = Compare(list[leftChild], list[rightChild]) > 0 ? leftChild : rightChild;
+                //
+                //     if (Compare(list[j], list[biggestChild]) < 0)
+                //     {
+                //         Swap(list, j, biggestChild);
+                //         yield return new WaitForSeconds(delay);
+                //         j = biggestChild;
+                //     }
+                //     else
+                //         break;
+                // }
+            }
+        }
+
+        private static IEnumerator Heapify(List<T> list, int lastIndex, float delay)
+        {
+            if (lastIndex == 1)
+            {
+                if (Compare(list[1], list[0]) < 0)
+                    Swap(list, 0, 1);
+                yield break;
+            }
+
+            for (int i = lastIndex; i > 1; i -= 2)
+            {
+                int biggestLeafIndex = i;
+                int parentIndex = (i - 2) / 2;
+
+                if (Compare(list[i], list[i - 1]) < 0)
+                    biggestLeafIndex = i - 1;
+
+                if (i % 2 != 0)
+                {
+                    parentIndex = (i - 1) / 2;
+                    biggestLeafIndex = i;
+                    i++;
+                }
+
+                if (Compare(list[biggestLeafIndex], list[parentIndex]) > 0)
+                {
+                    Swap(list, biggestLeafIndex, parentIndex);
+                    yield return new WaitForSeconds(delay);
+                }
+            }
         }
 
         public static IEnumerator InsertionSort(List<T> list, float delay)

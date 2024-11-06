@@ -6,29 +6,29 @@ using UnityEngine;
 
 public enum SortTypes
 {
-    Bitonic,
-    Selection, //Done
-    DoubleSelection, //Done
-    CocktailShaker, //Done
-    Quick, //Done
-    RadixLSD,
-    RadixMSD,
-    Shell, // Done
-    Bogo, // Done
-    Intro,
-    AdaptiveMerge,
-    Bubble, // Done
-    Gnome, // Done
-    Merge, // Done
-    Heap,
-    Insertion // Done
+    Bitonic, // Todo
+    Selection,
+    DoubleSelection,
+    CocktailShaker,
+    Quick,
+    RadixLSD, // Todo
+    RadixMSD, // Todo
+    Shell,
+    Bogo,
+    Intro, // Todo
+    AdaptiveMerge, // Todo
+    Bubble,
+    Gnome,
+    Merge,
+    Heap, // Todo
+    Insertion,
 }
 
 public class SortHandler : MonoBehaviour
 {
     [SerializeField] private SortTypes sortType;
     [SerializeField] private float delay;
-    [SerializeField] private float quantity;
+    [SerializeField] private int quantity;
 
     [SerializeField] private ListVisualizer listVisualizer;
 
