@@ -19,9 +19,47 @@ namespace SortingAlgorithms
 
         #region SortingMethods
 
+        /// <summary>
+        /// Only Works for sizes that are power of 2
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="delay"></param>
+        /// <returns></returns>
         public static IEnumerator BitonicSort(List<T> list, float delay)
         {
-            throw new NotImplementedException();
+            ResetCounts();
+            yield return RecursiveBitonicSort(list, 0, list.Count, 1, delay);
+        }
+
+        private static IEnumerator RecursiveBitonicSort(List<T> list, int from, int count, int dir, float delay)
+        {
+            if (count <= 1)
+                yield break;
+
+            int half = count / 2;
+
+            yield return RecursiveBitonicSort(list, from, half, 1, delay);
+            yield return RecursiveBitonicSort(list, from + half, half, 0, delay);
+            yield return BitonicMerge(list, from, count, dir, delay);
+        }
+
+        private static IEnumerator BitonicMerge(List<T> list, int from, int count, int dir, float delay)
+        {
+            if (count <= 1) yield break;
+
+            int half = count / 2;
+
+            for (int i = from; i < from + half; i++)
+            {
+                if ((Compare(list[i], list[i + half]) > 0 && dir == 1) || (Compare(list[i], list[i + half]) < 0 && dir == 0))
+                {
+                    Swap(list, i, i + half);
+                    yield return new WaitForSeconds(delay);
+                }
+            }
+
+            yield return BitonicMerge(list, from, half, dir, delay);
+            yield return BitonicMerge(list, from + half, half, dir, delay);
         }
 
         public static IEnumerator SelectionSort(List<T> list, float delay)
