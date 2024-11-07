@@ -50,6 +50,7 @@ public class SortHandler : MonoBehaviour
 
         listVisualizer.CreateBars(_list);
         Sort<int>.Shuffle(_list);
+        Sort<int>.ResetCounts();
         switch (sortType)
         {
             case SortTypes.Bitonic:

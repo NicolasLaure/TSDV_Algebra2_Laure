@@ -27,7 +27,6 @@ namespace SortingAlgorithms
         /// <returns></returns>
         public static IEnumerator BitonicSort(List<T> list, float delay)
         {
-            ResetCounts();
             yield return RecursiveBitonicSort(list, 0, list.Count, 1, delay);
         }
 
@@ -64,7 +63,6 @@ namespace SortingAlgorithms
 
         public static IEnumerator SelectionSort(List<T> list, float delay)
         {
-            ResetCounts();
             int minIndex;
             for (int i = 0; i < list.Count; i++)
             {
@@ -82,7 +80,6 @@ namespace SortingAlgorithms
 
         public static IEnumerator DoubleSelectionSort(List<T> list, float delay)
         {
-            ResetCounts();
             int minIndex;
             int maxIndex;
 
@@ -110,7 +107,6 @@ namespace SortingAlgorithms
 
         public static IEnumerator CocktailShakerSort(List<T> list, float delay)
         {
-            ResetCounts();
             for (int i = 0; i < list.Count / 2; i++)
             {
                 for (int j = 0; j < list.Count - i - 1; j++)
@@ -135,7 +131,6 @@ namespace SortingAlgorithms
 
         public static IEnumerator QuickSort(List<T> list, float delay)
         {
-            ResetCounts();
             yield return RecursiveQuickSort(list, 0, list.Count - 1, delay);
         }
 
@@ -183,7 +178,6 @@ namespace SortingAlgorithms
 
         public static IEnumerator ShellSort(List<T> list, float delay)
         {
-            ResetCounts();
             for (int gap = list.Count / 2; gap > 0; gap /= 2)
             {
                 for (int i = 0; i < list.Count; i++)
@@ -205,7 +199,6 @@ namespace SortingAlgorithms
 
         public static IEnumerator BogoSort(List<T> list, float delay)
         {
-            ResetCounts();
             while (!IsSorted(list))
             {
                 Shuffle(list);
@@ -216,7 +209,6 @@ namespace SortingAlgorithms
 
         public static IEnumerator IntroSort(List<T> list, float delay)
         {
-            ResetCounts();
             //Recursive Quantity of steps
             int depthLimit = (int)(2 * Math.Floor(Math.Log(list.Count) / Math.Log(2)));
             yield return RecursiveIntroSort(list, 0, list.Count - 1, depthLimit, delay);
@@ -224,31 +216,28 @@ namespace SortingAlgorithms
 
         private static IEnumerator RecursiveIntroSort(List<T> list, int from, int to, int depth, float delay)
         {
-            int maxInsertionCount = 16;
-            if (list.Count > maxInsertionCount)
+            if (to - from > 16)
             {
                 if (depth == 0)
                 {
-                    yield return HeapSort(list, delay);
+                    yield return HeapSort(list, from, to, delay);
                     yield break;
                 }
 
                 depth -= 1;
 
-                var j = from + (to - from);
-                j = Mathf.Clamp(j, 0, list.Count - 1);
-                int pivot = FindPivot(list, from, j, to);
+                int middle = from + ((to - from) / 2);
+                int pivot = FindPivot(list, from, middle, to);
                 Swap(list, pivot, to);
 
                 int divisionIndex = Partition(list, from, to);
 
-                int index = Mathf.Clamp(divisionIndex - 1, 0, list.Count - 1);
-                yield return RecursiveIntroSort(list, from, index, depth, delay);
+                yield return RecursiveIntroSort(list, from, divisionIndex - 1, depth, delay);
                 yield return RecursiveIntroSort(list, divisionIndex + 1, to, depth, delay);
             }
             else
             {
-                yield return InsertionSort(list, delay);
+                yield return InsertionSort(list, from, to, delay);
             }
         }
 
@@ -259,7 +248,6 @@ namespace SortingAlgorithms
 
         public static IEnumerator BubbleSort(List<T> list, float delay)
         {
-            ResetCounts();
             for (int i = 0; i < list.Count - 1; i++)
             {
                 for (int j = 0; j < list.Count - i - 1; j++)
@@ -275,7 +263,6 @@ namespace SortingAlgorithms
 
         public static IEnumerator GnomeSort(List<T> list, float delay)
         {
-            ResetCounts();
             int gnome = 0;
             while (gnome < list.Count)
             {
@@ -295,7 +282,6 @@ namespace SortingAlgorithms
 
         public static IEnumerator MergeSort(List<T> list, float delay)
         {
-            ResetCounts();
             yield return RecursiveMergeSort(list, 0, list.Count - 1, delay);
         }
 
@@ -312,13 +298,23 @@ namespace SortingAlgorithms
 
         public static IEnumerator HeapSort(List<T> list, float delay)
         {
-            ResetCounts();
             yield return Heapify(list, list.Count - 1, delay);
             for (int i = list.Count - 1; i > 1; i--)
             {
                 Swap(list, 0, i);
                 yield return new WaitForSeconds(delay);
                 yield return Heapify(list, i - 1, delay);
+            }
+        }
+
+        public static IEnumerator HeapSort(List<T> list, int from, int to, float delay)
+        {
+            yield return Heapify(list, from, to - 1, delay);
+            for (int i = to - 1; i > from; i--)
+            {
+                Swap(list, 0, i);
+                yield return new WaitForSeconds(delay);
+                yield return Heapify(list, from, i - 1, delay);
             }
         }
 
@@ -354,14 +350,59 @@ namespace SortingAlgorithms
             }
         }
 
+        private static IEnumerator Heapify(List<T> list, int from, int lastIndex, float delay)
+        {
+            if (lastIndex == from)
+            {
+                if (Compare(list[from], list[0]) < 0)
+                    Swap(list, 0, from);
+                yield break;
+            }
+
+            for (int i = lastIndex; i > from; i -= 2)
+            {
+                int biggestLeafIndex = i;
+                int parentIndex = (i - 2) / 2;
+
+                if (Compare(list[i], list[i - 1]) < 0)
+                    biggestLeafIndex = i - 1;
+
+                if (i % 2 != 0)
+                {
+                    parentIndex = (i - 1) / 2;
+                    biggestLeafIndex = i;
+                    i++;
+                }
+
+                if (Compare(list[biggestLeafIndex], list[parentIndex]) > 0)
+                {
+                    Swap(list, biggestLeafIndex, parentIndex);
+                    yield return new WaitForSeconds(delay);
+                }
+            }
+        }
+
         public static IEnumerator InsertionSort(List<T> list, float delay)
         {
-            ResetCounts();
             for (int i = 0; i < list.Count; ++i)
             {
                 int j = i - 1;
 
                 while (j >= 0 && Compare(list[i], list[j]) < 0)
+                    j--;
+
+                InsertAt(list, i, j + 1);
+                yield return new WaitForSeconds(delay);
+            }
+        }
+
+        public static IEnumerator InsertionSort(List<T> list, int left, int right, float delay)
+        {
+            for (int i = left; i <= right; ++i)
+            {
+                int j = i - 1;
+
+                while (j >= left && Compare(list[i], list[j]) < 0)
                     j--;
 
                 InsertAt(list, i, j + 1);
@@ -399,7 +440,7 @@ namespace SortingAlgorithms
             onListUpdated?.Invoke(list);
         }
 
-        private static void ResetCounts()
+        public static void ResetCounts()
         {
             iterationCount = 0;
             comparissonCount = 0;
@@ -503,27 +544,26 @@ namespace SortingAlgorithms
             }
         }
 
-        private static int FindPivot(List<T> list, int i, int j, int k)
+        private static int FindPivot(List<T> list, int left, int mid, int right)
         {
-            //Index Out of range exception
-            int max = i;
-            if (Compare(list[i], list[j]) < 0)
-                max = j;
-            if (Compare(list[k], list[j]) > 0 && Compare(list[k], list[i]) > 0)
-                max = k;
+            int max = left;
+            if (Compare(list[left], list[mid]) < 0)
+                max = mid;
+            if (Compare(list[right], list[mid]) > 0 && Compare(list[right], list[left]) > 0)
+                max = right;
 
-            int min = i;
-            if (Compare(list[i], list[j]) > 0)
-                min = j;
-            if (Compare(list[k], list[j]) < 0 && Compare(list[k], list[i]) < 0)
-                min = k;
+            int min = left;
+            if (Compare(list[left], list[mid]) > 0)
+                min = mid;
+            if (Compare(list[right], list[mid]) < 0 && Compare(list[right], list[left]) < 0)
+                min = right;
 
-            if ((min == j && max == k) || (max == j && min == k))
-                return i;
-            if ((min == i && max == k) || (max == i && min == k))
-                return j;
+            if ((min == mid && max == right) || (max == mid && min == right))
+                return left;
+            if ((min == left && max == right) || (max == left && min == right))
+                return mid;
 
-            return k;
+            return right;
         }
 
         private static int Partition(List<T> list, int from, int to)
