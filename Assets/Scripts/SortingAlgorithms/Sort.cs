@@ -216,7 +216,37 @@ namespace SortingAlgorithms
 
         public static IEnumerator IntroSort(List<T> list, float delay)
         {
-            throw new NotImplementedException();
+            ResetCounts();
+            //Recursive Quantity of steps
+            int depthLimit = (int)(2 * Math.Floor(Math.Log(list.Count) / Math.Log(2)));
+            yield return RecursiveIntroSort(list, 0, list.Count - 1, depthLimit, delay);
+        }
+
+        private static IEnumerator RecursiveIntroSort(List<T> list, int from, int to, int depth, float delay)
+        {
+            int maxInsertionCount = 16;
+            if (list.Count > maxInsertionCount)
+            {
+                if (depth == 0)
+                {
+                    yield return HeapSort(list, delay);
+                    yield break;
+                }
+
+                depth -= 1;
+
+                int pivot = FindPivot(list, from, from + (to - from), to);
+                Swap(list, pivot, to);
+
+                int divisionIndex = Partition(list, from, to);
+
+                yield return RecursiveIntroSort(list, from, divisionIndex - 1, depth, delay);
+                yield return RecursiveIntroSort(list, divisionIndex + 1, to, depth, delay);
+            }
+            else
+            {
+                yield return InsertionSort(list, delay);
+            }
         }
 
         public static IEnumerator AdaptiveMergeSort(List<T> list, float delay)
@@ -286,25 +316,6 @@ namespace SortingAlgorithms
                 Swap(list, 0, i);
                 yield return new WaitForSeconds(delay);
                 yield return Heapify(list, i - 1, delay);
-                // int j = 0;
-                // int limit = list.Count - 1 - i;
-                // while (j * 2 + 1 < limit)
-                // {
-                //     int leftChild = j * 2 + 1;
-                //     int rightChild = j * 2 + 2;
-                //     int biggestChild = leftChild;
-                //     if (rightChild < limit)
-                //         biggestChild = Compare(list[leftChild], list[rightChild]) > 0 ? leftChild : rightChild;
-                //
-                //     if (Compare(list[j], list[biggestChild]) < 0)
-                //     {
-                //         Swap(list, j, biggestChild);
-                //         yield return new WaitForSeconds(delay);
-                //         j = biggestChild;
-                //     }
-                //     else
-                //         break;
-                // }
             }
         }
 
@@ -487,6 +498,48 @@ namespace SortingAlgorithms
                 onListUpdated?.Invoke(list);
                 yield return new WaitForSeconds(delay);
             }
+        }
+
+        private static int FindPivot(List<T> list, int i, int j, int k)
+        {
+            //Index Out of range exception
+            int max = i;
+            if (Compare(list[i], list[j]) < 0)
+                max = j;
+            if (Compare(list[k], list[j]) > 0 && Compare(list[k], list[i]) > 0)
+                max = k;
+
+            int min = i;
+            if (Compare(list[i], list[j]) > 0)
+                min = j;
+            if (Compare(list[k], list[j]) < 0 && Compare(list[k], list[i]) < 0)
+                min = k;
+
+            if ((min == j && max == k) || (max == j && min == k))
+                return i;
+            if ((min == i && max == k) || (max == i && min == k))
+                return j;
+
+            return k;
+        }
+
+        private static int Partition(List<T> list, int from, int to)
+        {
+            T pivot = list[to];
+
+            int i = (from - 1);
+
+            for (int j = from; j <= to - 1; j++)
+            {
+                if (Compare(list[j], pivot) <= 0)
+                {
+                    i++;
+                    Swap(list, i, j);
+                }
+            }
+
+            Swap(list, i + 1, to);
+            return (i + 1);
         }
 
         #endregion
