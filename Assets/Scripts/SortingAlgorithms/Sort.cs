@@ -235,12 +235,15 @@ namespace SortingAlgorithms
 
                 depth -= 1;
 
-                int pivot = FindPivot(list, from, from + (to - from), to);
+                var j = from + (to - from);
+                j = Mathf.Clamp(j, 0, list.Count - 1);
+                int pivot = FindPivot(list, from, j, to);
                 Swap(list, pivot, to);
 
                 int divisionIndex = Partition(list, from, to);
 
-                yield return RecursiveIntroSort(list, from, divisionIndex - 1, depth, delay);
+                int index = Mathf.Clamp(divisionIndex - 1, 0, list.Count - 1);
+                yield return RecursiveIntroSort(list, from, index, depth, delay);
                 yield return RecursiveIntroSort(list, divisionIndex + 1, to, depth, delay);
             }
             else
