@@ -243,7 +243,37 @@ namespace SortingAlgorithms
 
         public static IEnumerator AdaptiveMergeSort(List<T> list, float delay)
         {
-            throw new NotImplementedException();
+            yield return RecursiveAdaptiveMergeSort(list, 0, list.Count - 1, delay);
+        }
+
+        private static IEnumerator RecursiveAdaptiveMergeSort(List<T> list, int from, int to, float delay)
+        {
+            if (from >= to) yield break;
+
+            int middle = from + (to - from) / 2;
+
+            if (IsSorted(list, from, to, 0))
+            {
+                Inverse(list, from, to);
+            }
+            else
+            {
+                if (IsSorted(list, from, middle, 0))
+                    Inverse(list, from, middle);
+                if (IsSorted(list, middle + 1, to, 0))
+                    Inverse(list, middle + 1, to);
+            }
+
+            if (!IsSorted(list, from, to, 1))
+            {
+                if (!IsSorted(list, from, middle, 1))
+                    yield return RecursiveMergeSort(list, from, middle, delay);
+
+                if (!IsSorted(list, middle + 1, to, 1))
+                    yield return RecursiveMergeSort(list, middle + 1, to, delay);
+
+                yield return AdaptiveMerge(list, from, middle, to, delay);
+            }
         }
 
         public static IEnumerator BubbleSort(List<T> list, float delay)
@@ -425,6 +455,20 @@ namespace SortingAlgorithms
             return true;
         }
 
+        private static bool IsSorted(List<T> list, int from, int to, int dir)
+        {
+            for (int i = from + 1; i <= to; i++)
+            {
+                if (dir == 1 && Compare(list[i - 1], list[i]) > 0)
+                    return false;
+
+                if (dir == 0 && Compare(list[i - 1], list[i]) < 0)
+                    return false;
+            }
+
+            return true;
+        }
+
         public static void Shuffle(List<T> list)
         {
             T aux;
@@ -432,6 +476,21 @@ namespace SortingAlgorithms
             for (int i = 0; i < list.Count; i++)
             {
                 randomIndex = Random.Range(0, list.Count);
+                aux = list[i];
+                list[i] = list[randomIndex];
+                list[randomIndex] = aux;
+            }
+
+            onListUpdated?.Invoke(list);
+        }
+
+        public static void Shuffle(List<T> list, int from, int to)
+        {
+            T aux;
+            int randomIndex = 0;
+            for (int i = from; i < to; i++)
+            {
+                randomIndex = Random.Range(from, to);
                 aux = list[i];
                 list[i] = list[randomIndex];
                 list[randomIndex] = aux;
@@ -544,6 +603,14 @@ namespace SortingAlgorithms
             }
         }
 
+        private static IEnumerator AdaptiveMerge(List<T> list, int from, int middle, int to, float delay)
+        {
+            if (IsSorted(list, from, to, 1))
+                yield break;
+
+            yield return Merge(list, from, middle, to, delay);
+        }
+
         private static int FindPivot(List<T> list, int left, int mid, int right)
         {
             int max = left;
@@ -583,6 +650,14 @@ namespace SortingAlgorithms
 
             Swap(list, i + 1, to);
             return (i + 1);
+        }
+
+        private static void Inverse(List<T> list, int from, int to)
+        {
+            for (int i = 0; i < (to - from) / 2 + 1; i++)
+            {
+                Swap(list, i, to - i);
+            }
         }
 
         #endregion

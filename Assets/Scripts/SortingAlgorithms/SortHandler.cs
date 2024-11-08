@@ -29,7 +29,12 @@ public class SortHandler : MonoBehaviour
     [SerializeField] private SortTypes sortType;
     [SerializeField] private float delay;
     [SerializeField] private int quantity;
+    [SerializeField] private bool hasAscendantOrder;
+    [SerializeField] private bool shouldShuffle;
 
+    [SerializeField] private bool shouldShuffleRange;
+    [SerializeField] private int rangeMin;
+    [SerializeField] private int rangeMax;
     [SerializeField] private ListVisualizer listVisualizer;
 
     private Coroutine _sortCoroutine;
@@ -45,11 +50,17 @@ public class SortHandler : MonoBehaviour
 
         for (int i = 0; i < quantity; i++)
         {
-            _list.Add(i + 1);
+            int number = hasAscendantOrder ? i + 1 : quantity - i;
+            _list.Add(number);
         }
 
         listVisualizer.CreateBars(_list);
-        Sort<int>.Shuffle(_list);
+        if (shouldShuffle)
+            Sort<int>.Shuffle(_list);
+
+        if (shouldShuffleRange)
+            Sort<int>.Shuffle(_list, rangeMin, rangeMax);
+
         Sort<int>.ResetCounts();
         switch (sortType)
         {
