@@ -94,13 +94,14 @@ namespace SortingAlgorithms
                         minIndex = j;
                 }
 
+                Swap(list, i, minIndex);
+
                 for (int j = list.Count - 1 - i; j > i; j--)
                 {
                     if (Compare(list[j], list[maxIndex]) > 0)
                         maxIndex = j;
                 }
 
-                Swap(list, i, minIndex);
                 Swap(list, list.Count - 1 - i, maxIndex);
                 yield return new WaitForSeconds(delay);
             }
