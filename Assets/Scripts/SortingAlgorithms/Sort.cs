@@ -1,14 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
-using System.Runtime.InteropServices;
+using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using UnityEditor;
 using UnityEngine;
-using Object = System.Object;
 using Random = UnityEngine.Random;
 
 namespace SortingAlgorithms
@@ -217,7 +213,68 @@ namespace SortingAlgorithms
 
         public static IEnumerator RadixMSDSort(List<T> list, float delay)
         {
-            throw new NotImplementedException();
+            List<uint> ints = GetIntsFromT(list);
+            uint biggestNum = ints[0];
+            for (int i = 1; i < ints.Count; i++)
+            {
+                if (ints[i] > biggestNum)
+                    biggestNum = ints[i];
+            }
+
+            uint maxDigits = Convert.ToUInt32(GetNumberOfDigits(Convert.ToInt32(biggestNum)));
+
+            yield return RecursiveRadixMSD(list, ints, 0, list.Count - 1, maxDigits, delay);
+        }
+
+        private static IEnumerator RecursiveRadixMSD(List<T> list, List<uint> ints, int from, int to, uint digit, float delay)
+        {
+            if (to <= from)
+                yield break;
+
+            List<int>[] buckets = new List<int>[10];
+
+            for (int i = 0; i < buckets.Length; i++)
+            {
+                buckets[i] = new List<int>();
+            }
+
+            for (int j = from; j < to; j++)
+            {
+                int digitResult = (int)(ints[j] / Mathf.Pow(10, digit - 1) % 10);
+                Debug.Log(digitResult);
+                buckets[digitResult].Add(j);
+            }
+
+            List<T> auxList = CloneList(list);
+            List<uint> auxNumbers = Sort<uint>.CloneList(ints);
+
+
+            int iterator = 0;
+            for (int bucketIndex = 0; bucketIndex < buckets.Length; bucketIndex++)
+            {
+                for (int i = 0; i < buckets[bucketIndex].Count; i++, iterator++)
+                {
+                    auxList[iterator] = list[buckets[bucketIndex][i]];
+                    auxNumbers[iterator] = ints[buckets[bucketIndex][i]];
+                }
+            }
+
+            for (int i = from; i <= to; i++)
+            {
+                list[i] = auxList[i];
+                UpdateIterationCount();
+                onListUpdated?.Invoke(list);
+                yield return new WaitForSeconds(delay);
+            }
+
+            for (int i = 0; i < buckets.Length; i++)
+            {
+                int nextBucketCount = i + 1 < buckets.Length ? buckets[i + 1].Count : 0;
+                if (i == 0)
+                    yield return RecursiveRadixMSD(list, ints, from, from + buckets[i].Count - 1, digit - 1, delay);
+
+                yield return RecursiveRadixMSD(list, ints, from + buckets[i].Count, from + nextBucketCount - 1, digit - 1, delay);
+            }
         }
 
         public static IEnumerator ShellSort(List<T> list, float delay)

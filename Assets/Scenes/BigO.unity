@@ -790,7 +790,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fbe250cce75ae34897b14f3f7f83907, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sortType: 5
+  sortType: 6
   delay: 0
   quantity: 512
   hasAscendantOrder: 1
