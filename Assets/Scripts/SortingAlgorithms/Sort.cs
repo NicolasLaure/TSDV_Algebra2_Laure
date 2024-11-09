@@ -14,6 +14,7 @@ namespace SortingAlgorithms
         public static event Action<List<T>> onListUpdated;
         public static event Action<int> oniterationCountUpdated;
         public static event Action<int> onComparissonUpdated;
+        public static event Action onSortEnded;
 
         private static int iterationCount = 0;
         private static int comparissonCount = 0;
@@ -29,6 +30,7 @@ namespace SortingAlgorithms
         public static IEnumerator BitonicSort(List<T> list, float delay)
         {
             yield return RecursiveBitonicSort(list, 0, list.Count, 1, delay);
+            onSortEnded?.Invoke();
         }
 
         private static IEnumerator RecursiveBitonicSort(List<T> list, int from, int count, int dir, float delay)
@@ -77,6 +79,8 @@ namespace SortingAlgorithms
                 Swap(list, i, minIndex);
                 yield return new WaitForSeconds(delay);
             }
+
+            onSortEnded?.Invoke();
         }
 
         public static IEnumerator DoubleSelectionSort(List<T> list, float delay)
@@ -105,6 +109,8 @@ namespace SortingAlgorithms
                 Swap(list, list.Count - 1 - i, maxIndex);
                 yield return new WaitForSeconds(delay);
             }
+
+            onSortEnded?.Invoke();
         }
 
         public static IEnumerator CocktailShakerSort(List<T> list, float delay)
@@ -129,11 +135,14 @@ namespace SortingAlgorithms
                     }
                 }
             }
+
+            onSortEnded?.Invoke();
         }
 
         public static IEnumerator QuickSort(List<T> list, float delay)
         {
             yield return RecursiveQuickSort(list, 0, list.Count - 1, delay);
+            onSortEnded?.Invoke();
         }
 
         private static IEnumerator RecursiveQuickSort(List<T> list, int from, int to, float delay)
@@ -210,6 +219,8 @@ namespace SortingAlgorithms
                 for (int j = 0; j < buckets.Length; j++)
                     buckets[j].Clear();
             }
+
+            onSortEnded?.Invoke();
         }
 
         public static IEnumerator RadixMSDSort(List<T> list, float delay)
@@ -222,12 +233,12 @@ namespace SortingAlgorithms
                     biggestNum = ints[i];
             }
 
-            uint maxDigits = Convert.ToUInt32(GetNumberOfDigits(Convert.ToInt32(biggestNum)));
-
+            int maxDigits = GetNumberOfDigits(Convert.ToInt32(biggestNum));
             yield return RecursiveRadixMSD(list, ints, 0, list.Count - 1, maxDigits, delay);
+            onSortEnded?.Invoke();
         }
 
-        private static IEnumerator RecursiveRadixMSD(List<T> list, List<uint> ints, int from, int to, uint digit, float delay)
+        private static IEnumerator RecursiveRadixMSD(List<T> list, List<uint> ints, int from, int to, int digit, float delay)
         {
             if (to <= from)
                 yield break;
@@ -239,18 +250,16 @@ namespace SortingAlgorithms
                 buckets[i] = new List<int>();
             }
 
-            for (int j = from; j < to; j++)
+            for (int j = from; j <= to; j++)
             {
                 int digitResult = (int)(ints[j] / Mathf.Pow(10, digit - 1) % 10);
-                Debug.Log(digitResult);
                 buckets[digitResult].Add(j);
             }
 
             List<T> auxList = CloneList(list);
             List<uint> auxNumbers = Sort<uint>.CloneList(ints);
 
-
-            int iterator = 0;
+            int iterator = from;
             for (int bucketIndex = 0; bucketIndex < buckets.Length; bucketIndex++)
             {
                 for (int i = 0; i < buckets[bucketIndex].Count; i++, iterator++)
@@ -263,18 +272,20 @@ namespace SortingAlgorithms
             for (int i = from; i <= to; i++)
             {
                 list[i] = auxList[i];
+                ints[i] = auxNumbers[i];
                 UpdateIterationCount();
                 onListUpdated?.Invoke(list);
                 yield return new WaitForSeconds(delay);
             }
 
+            int prevPos = from;
             for (int i = 0; i < buckets.Length; i++)
             {
-                int nextBucketCount = i + 1 < buckets.Length ? buckets[i + 1].Count : 0;
-                if (i == 0)
-                    yield return RecursiveRadixMSD(list, ints, from, from + buckets[i].Count - 1, digit - 1, delay);
+                if (buckets[i].Count < 1)
+                    continue;
 
-                yield return RecursiveRadixMSD(list, ints, from + buckets[i].Count, from + nextBucketCount - 1, digit - 1, delay);
+                yield return RecursiveRadixMSD(list, ints, prevPos, prevPos + buckets[i].Count - 1, digit - 1, delay);
+                prevPos += buckets[i].Count;
             }
         }
 
@@ -297,6 +308,8 @@ namespace SortingAlgorithms
                     onListUpdated?.Invoke(list);
                 }
             }
+
+            onSortEnded?.Invoke();
         }
 
         public static IEnumerator BogoSort(List<T> list, float delay)
@@ -307,6 +320,8 @@ namespace SortingAlgorithms
                 UpdateIterationCount();
                 yield return new WaitForSeconds(delay);
             }
+
+            onSortEnded?.Invoke();
         }
 
         public static IEnumerator IntroSort(List<T> list, float delay)
@@ -314,6 +329,7 @@ namespace SortingAlgorithms
             //Recursive Quantity of steps
             int depthLimit = (int)(2 * Math.Floor(Math.Log(list.Count) / Math.Log(2)));
             yield return RecursiveIntroSort(list, 0, list.Count - 1, depthLimit, delay);
+            onSortEnded?.Invoke();
         }
 
         private static IEnumerator RecursiveIntroSort(List<T> list, int from, int to, int depth, float delay)
@@ -346,6 +362,7 @@ namespace SortingAlgorithms
         public static IEnumerator AdaptiveMergeSort(List<T> list, float delay)
         {
             yield return RecursiveAdaptiveMergeSort(list, 0, list.Count - 1, delay);
+            onSortEnded?.Invoke();
         }
 
         private static IEnumerator RecursiveAdaptiveMergeSort(List<T> list, int from, int to, float delay)
@@ -391,6 +408,8 @@ namespace SortingAlgorithms
                     }
                 }
             }
+
+            onSortEnded?.Invoke();
         }
 
         public static IEnumerator GnomeSort(List<T> list, float delay)
@@ -410,11 +429,14 @@ namespace SortingAlgorithms
 
                 yield return new WaitForSeconds(delay);
             }
+
+            onSortEnded?.Invoke();
         }
 
         public static IEnumerator MergeSort(List<T> list, float delay)
         {
             yield return RecursiveMergeSort(list, 0, list.Count - 1, delay);
+            onSortEnded?.Invoke();
         }
 
         private static IEnumerator RecursiveMergeSort(List<T> list, int from, int to, float delay)
@@ -437,6 +459,8 @@ namespace SortingAlgorithms
                 yield return new WaitForSeconds(delay);
                 yield return Heapify(list, i - 1, delay);
             }
+
+            onSortEnded?.Invoke();
         }
 
         public static IEnumerator HeapSort(List<T> list, int from, int to, float delay)
@@ -526,6 +550,8 @@ namespace SortingAlgorithms
                 InsertAt(list, i, j + 1);
                 yield return new WaitForSeconds(delay);
             }
+
+            onSortEnded?.Invoke();
         }
 
         public static IEnumerator InsertionSort(List<T> list, int left, int right, float delay)
