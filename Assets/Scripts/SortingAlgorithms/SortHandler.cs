@@ -22,6 +22,7 @@ public enum SortTypes
     Merge,
     Heap, // Todo
     Insertion,
+    Sleep
 }
 
 public class SortHandler : MonoBehaviour
@@ -111,6 +112,9 @@ public class SortHandler : MonoBehaviour
                 break;
             case SortTypes.Insertion:
                 _sortCoroutine = StartCoroutine(Sort<int>.InsertionSort(_list, delay));
+                break;
+            case SortTypes.Sleep:
+                _sortCoroutine = StartCoroutine(Sort<int>.SleepSort(_list, delay));
                 break;
             default:
                 throw new ArgumentOutOfRangeException();

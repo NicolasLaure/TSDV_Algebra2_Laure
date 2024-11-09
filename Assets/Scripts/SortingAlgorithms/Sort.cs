@@ -568,6 +568,39 @@ namespace SortingAlgorithms
             }
         }
 
+        public static IEnumerator SleepSort(List<T> list, float delay)
+        {
+            List<uint> ints = GetIntsFromT(list);
+            uint biggestNum = ints[0];
+            for (int i = 1; i < ints.Count; i++)
+            {
+                if (ints[i] > biggestNum)
+                    biggestNum = ints[i];
+            }
+
+            List<T> auxList = CloneList(list);
+
+            Coroutine[] waits = new Coroutine[list.Count];
+
+            list.Clear();
+            for (int i = 0; i < waits.Length; i++)
+            {
+                waits[i] = CoroutineHandler.Instance.StartCoroutine(WaitFor(list, auxList[i], (float)ints[i] / 1000));
+            }
+
+            yield return new WaitForSeconds((float)biggestNum / 1000);
+            onSortEnded?.Invoke();
+        }
+
+        private static IEnumerator WaitFor(List<T> list, T value, float duration)
+        {
+            Debug.Log(duration);
+            yield return new WaitForSeconds(duration);
+            list.Add(value);
+            UpdateIterationCount();
+            onListUpdated?.Invoke(list);
+        }
+
         #endregion
 
         #region Utilities
