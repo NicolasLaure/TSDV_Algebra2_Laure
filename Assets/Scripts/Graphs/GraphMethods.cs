@@ -17,7 +17,10 @@ public class GraphMethods
         while (sourceEnum.MoveNext())
         {
             if (!predicate.Invoke(sourceEnum.Current))
+            {
+                sourceEnum.Dispose();
                 return false;
+            }
         }
 
         sourceEnum.Dispose();
@@ -37,7 +40,10 @@ public class GraphMethods
         while (sourceEnum.MoveNext())
         {
             if (predicate.Invoke(sourceEnum.Current))
+            {
+                sourceEnum.Dispose();
                 return true;
+            }
         }
 
         sourceEnum.Dispose();
@@ -70,7 +76,10 @@ public class GraphMethods
         while (sourceEnum.MoveNext())
         {
             if (comparer.Equals(sourceEnum.Current, item))
+            {
+                sourceEnum.Dispose();
                 return true;
+            }
         }
 
         sourceEnum.Dispose();
@@ -139,7 +148,10 @@ public class GraphMethods
             currentIndex++;
 
             if (currentIndex == index)
+            {
+                sourceEnum.Dispose();
                 return sourceEnum.Current;
+            }
         }
 
         sourceEnum.Dispose();
