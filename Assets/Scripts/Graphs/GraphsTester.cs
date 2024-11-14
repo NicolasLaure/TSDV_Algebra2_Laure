@@ -192,5 +192,12 @@ public class GraphsTester : MonoBehaviour
 
     private void TestWhere()
     {
+        List<int> whereList = GraphMethods.ToList(GraphMethods.Where(source1, i => i == 1));
+        string where = "Where: ";
+        for (int i = 0; i < whereList.Count; i++)
+        {
+            where += $"{whereList[i]}, ";
+        }
+        Debug.Log(where);
     }
 }

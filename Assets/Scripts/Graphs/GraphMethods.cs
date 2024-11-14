@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class GraphMethods
@@ -381,17 +382,17 @@ public class GraphMethods
     /// <returns></returns>
     public static IEnumerable<TSource> SkipWhile<TSource>(IEnumerable<TSource> source, Func<TSource, bool> predicate)
     {
-        List<TSource> skipped = new List<TSource>();
+        List<TSource> notSkipped = new List<TSource>();
         IEnumerator<TSource> sourceEnum = source.GetEnumerator();
 
         while (sourceEnum.MoveNext())
         {
             if (!predicate.Invoke(sourceEnum.Current))
-                skipped.Add(sourceEnum.Current);
+                notSkipped.Add(sourceEnum.Current);
         }
 
         sourceEnum.Dispose();
-        return skipped;
+        return notSkipped;
     }
 
     /// <summary>
@@ -455,7 +456,17 @@ public class GraphMethods
     /// <returns></returns>
     public static IEnumerable<TSource> Where<TSource>(IEnumerable<TSource> source, Func<TSource, bool> predicate)
     {
-        throw new NotImplementedException();
+        List<TSource> whereList = new List<TSource>();
+        IEnumerator<TSource> sourceEnum = source.GetEnumerator();
+
+        while (sourceEnum.MoveNext())
+        {
+            if (predicate.Invoke(sourceEnum.Current))
+                whereList.Add(sourceEnum.Current);
+        }
+
+        sourceEnum.Dispose();
+        return whereList;
     }
 
     public static List<TSource> ToList<TSource>(IEnumerable<TSource> source)
