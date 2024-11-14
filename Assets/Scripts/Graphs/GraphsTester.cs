@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -131,6 +132,7 @@ public class GraphsTester : MonoBehaviour
 
     private void TestFirst()
     {
+        Debug.Log($"{GraphMethods.First(source1, i => i == 0)}");
     }
 
     private void TestLast()

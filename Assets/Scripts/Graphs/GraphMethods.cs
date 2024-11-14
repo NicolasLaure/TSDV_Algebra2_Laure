@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class GraphMethods
 {
@@ -190,7 +191,21 @@ public class GraphMethods
     /// <returns></returns>
     public static TSource First<TSource>(IEnumerable<TSource> source, Func<TSource, bool> predicate)
     {
-        throw new NotImplementedException();
+        IEnumerator<TSource> sourceEnum = source.GetEnumerator();
+        int count = -1;
+        while (sourceEnum.MoveNext())
+        {
+            count++;
+            if (predicate.Invoke(sourceEnum.Current))
+            {
+                sourceEnum.Dispose();
+                Debug.Log(count);
+                return sourceEnum.Current;
+            }
+        }
+
+        sourceEnum.Dispose();
+        throw new KeyNotFoundException();
     }
 
     /// <summary>
