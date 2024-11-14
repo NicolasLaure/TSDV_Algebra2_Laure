@@ -120,6 +120,8 @@ public class GraphsTester : MonoBehaviour
 
     private void TestContainsCompared()
     {
+        //Debug.Log($"Contains Zero: {GraphMethods.Contains(list, 0, IEqualityComparer<int>)}");
+        throw new NotImplementedException();
     }
 
     private void TestDistinct()

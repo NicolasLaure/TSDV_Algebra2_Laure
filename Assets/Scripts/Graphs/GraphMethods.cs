@@ -55,7 +55,7 @@ public class GraphMethods
         IEnumerator<TSource> sourceEnum = source.GetEnumerator();
         while (sourceEnum.MoveNext())
         {
-            if (sourceEnum.Current.Equals(item))
+            if (EqualityComparer<TSource>.Default.Equals(sourceEnum.Current, item))
                 return true;
         }
 
@@ -73,7 +73,15 @@ public class GraphMethods
     /// <returns></returns>
     public static bool Contains<TSource>(IEnumerable<TSource> source, TSource item, IEqualityComparer<TSource> comparer)
     {
-        throw new NotImplementedException();
+        IEnumerator<TSource> sourceEnum = source.GetEnumerator();
+        while (sourceEnum.MoveNext())
+        {
+            if (comparer.Equals(sourceEnum.Current, item))
+                return true;
+        }
+
+        sourceEnum.Dispose();
+        return false;
     }
 
     /// <summary>
