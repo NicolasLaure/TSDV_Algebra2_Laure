@@ -164,6 +164,7 @@ public class GraphsTester : MonoBehaviour
 
     private void TestSingle()
     {
+        Debug.Log($"Single 1: {GraphMethods.Single(source1, i => i == 1)}");
     }
 
     private void TestSkipWhile()

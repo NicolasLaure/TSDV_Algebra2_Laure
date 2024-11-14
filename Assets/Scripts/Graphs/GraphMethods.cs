@@ -354,7 +354,22 @@ public class GraphMethods
     /// <returns></returns>
     public static TSource Single<TSource>(IEnumerable<TSource> source, Func<TSource, bool> predicate)
     {
-        throw new NotImplementedException();
+        if (Count(source, predicate) > 1)
+            throw new NotSupportedException();
+
+        IEnumerator<TSource> sourceEnum = source.GetEnumerator();
+
+        while (sourceEnum.MoveNext())
+        {
+            if (predicate.Invoke(sourceEnum.Current))
+            {
+                sourceEnum.Dispose();
+                return sourceEnum.Current;
+            }
+        }
+
+        sourceEnum.Dispose();
+        throw new NotSupportedException();
     }
 
     /// <summary>
