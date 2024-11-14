@@ -52,15 +52,7 @@ public class GraphMethods
     /// <returns></returns>
     public static bool Contains<TSource>(IEnumerable<TSource> source, TSource item)
     {
-        IEnumerator<TSource> sourceEnum = source.GetEnumerator();
-        while (sourceEnum.MoveNext())
-        {
-            if (EqualityComparer<TSource>.Default.Equals(sourceEnum.Current, item))
-                return true;
-        }
-
-        sourceEnum.Dispose();
-        return false;
+        return Contains(source, item, EqualityComparer<TSource>.Default);
     }
 
     /// <summary>
@@ -92,7 +84,7 @@ public class GraphMethods
     /// <returns></returns>
     public static IEnumerable<TSource> Distinct<TSource>(IEnumerable<TSource> source)
     {
-        throw new NotImplementedException();
+        return Distinct(source, EqualityComparer<TSource>.Default);
     }
 
     /// <summary>
@@ -104,7 +96,30 @@ public class GraphMethods
     /// <returns></returns>
     public static IEnumerable<TSource> Distinct<TSource>(IEnumerable<TSource> source, IEqualityComparer<TSource> comparer)
     {
-        throw new NotImplementedException();
+        List<TSource> result = new List<TSource>();
+        IEnumerator<TSource> sourceEnum = source.GetEnumerator();
+
+        while (sourceEnum.MoveNext())
+        {
+            if (result.Count == 0)
+                result.Add(sourceEnum.Current);
+
+            bool isDistinct = true;
+            for (int i = 0; i < result.Count; i++)
+            {
+                if (comparer.Equals(sourceEnum.Current, result[i]))
+                {
+                    isDistinct = false;
+                    break;
+                }
+            }
+
+            if (isDistinct)
+                result.Add(sourceEnum.Current);
+        }
+
+        sourceEnum.Dispose();
+        return result;
     }
 
     /// <summary>
@@ -277,5 +292,16 @@ public class GraphMethods
     public static IEnumerable<TSource> Where<TSource>(IEnumerable<TSource> source, Func<TSource, bool> predicate)
     {
         throw new NotImplementedException();
+    }
+
+    public static List<TSource> ToList<TSource>(IEnumerable<TSource> source)
+    {
+        List<TSource> list = new List<TSource>();
+        foreach (TSource data in source)
+        {
+            list.Add(data);
+        }
+
+        return list;
     }
 }

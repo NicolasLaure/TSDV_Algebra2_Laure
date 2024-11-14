@@ -8,22 +8,17 @@ public enum Methods
     All,
     Any,
     Contains,
-    ContainsCompared,
     Distinct,
-    DistinctCompared,
     ElementAt,
     Except,
-    ExceptCompared,
     First,
     Last,
     Intersect,
-    IntersectCompared,
     Count,
     SequenceEqual,
     Single,
     SkipWhile,
     Union,
-    UnionCompared,
     Where
 }
 
@@ -47,23 +42,14 @@ public class GraphsTester : MonoBehaviour
             case Methods.Contains:
                 TestContains();
                 break;
-            case Methods.ContainsCompared:
-                TestContainsCompared();
-                break;
             case Methods.Distinct:
                 TestDistinct();
-                break;
-            case Methods.DistinctCompared:
-                TestDistinctCompared();
                 break;
             case Methods.ElementAt:
                 TestElementAt();
                 break;
             case Methods.Except:
                 TestExcept();
-                break;
-            case Methods.ExceptCompared:
-                TestExceptCompared();
                 break;
             case Methods.First:
                 TestFirst();
@@ -73,9 +59,6 @@ public class GraphsTester : MonoBehaviour
                 break;
             case Methods.Intersect:
                 TestIntersect();
-                break;
-            case Methods.IntersectCompared:
-                TestIntersectCompared();
                 break;
             case Methods.Count:
                 TestCount();
@@ -91,9 +74,6 @@ public class GraphsTester : MonoBehaviour
                 break;
             case Methods.Union:
                 TestUnion();
-                break;
-            case Methods.UnionCompared:
-                TestUnionCompared();
                 break;
             case Methods.Where:
                 TestWhere();
@@ -118,18 +98,16 @@ public class GraphsTester : MonoBehaviour
         Debug.Log($"Contains Zero: {GraphMethods.Contains(list, 0)}");
     }
 
-    private void TestContainsCompared()
-    {
-        //Debug.Log($"Contains Zero: {GraphMethods.Contains(list, 0, IEqualityComparer<int>)}");
-        throw new NotImplementedException();
-    }
-
     private void TestDistinct()
     {
-    }
+        List<int> distinctInts = GraphMethods.ToList(GraphMethods.Distinct(list));
+        string distincts = "Distincts: ";
+        for (int i = 0; i < distinctInts.Count; i++)
+        {
+            distincts += $"{distinctInts[i]}, ";
+        }
 
-    private void TestDistinctCompared()
-    {
+        Debug.Log(distincts);
     }
 
     private void TestElementAt()
@@ -137,10 +115,6 @@ public class GraphsTester : MonoBehaviour
     }
 
     private void TestExcept()
-    {
-    }
-
-    private void TestExceptCompared()
     {
     }
 
@@ -153,10 +127,6 @@ public class GraphsTester : MonoBehaviour
     }
 
     private void TestIntersect()
-    {
-    }
-
-    private void TestIntersectCompared()
     {
     }
 
@@ -177,10 +147,6 @@ public class GraphsTester : MonoBehaviour
     }
 
     private void TestUnion()
-    {
-    }
-
-    private void TestUnionCompared()
     {
     }
 
