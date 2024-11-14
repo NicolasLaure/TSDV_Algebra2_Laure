@@ -154,7 +154,7 @@ public class GraphMethods
     /// <returns></returns>
     public static IEnumerable<TSource> Except<TSource>(IEnumerable<TSource> source1, IEnumerable<TSource> source2)
     {
-        throw new NotImplementedException();
+        return Except(source1, source2, EqualityComparer<TSource>.Default);
     }
 
     /// <summary>
@@ -167,7 +167,18 @@ public class GraphMethods
     /// <returns></returns>
     public static IEnumerable<TSource> Except<TSource>(IEnumerable<TSource> source1, IEnumerable<TSource> source2, IEqualityComparer<TSource> comparer)
     {
-        throw new NotImplementedException();
+        IEnumerator<TSource> source1Enum = source1.GetEnumerator();
+        List<TSource> excepts = new List<TSource>();
+
+        while (source1Enum.MoveNext())
+        {
+            if (!Contains(source2, source1Enum.Current))
+                excepts.Add(source1Enum.Current);
+        }
+
+        source1Enum.Dispose();
+
+        return excepts;
     }
 
     /// <summary>

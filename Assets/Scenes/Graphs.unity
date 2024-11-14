@@ -152,9 +152,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0de00d47c9192e4b9dada8ac77964f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  list: 010000000100000001000000010000000100000001000000
-  method: 4
-  index: 0
+  source1: 010000000200000003000000040000000500000006000000
+  source2: 050000000600000007000000060000000700000008000000
+  method: 5
+  index: 1
 --- !u!4 &1039065990
 Transform:
   m_ObjectHideFlags: 0

@@ -25,7 +25,8 @@ public enum Methods
 
 public class GraphsTester : MonoBehaviour
 {
-    [SerializeField] private List<int> list = new List<int>();
+    [SerializeField] private List<int> source1 = new List<int>();
+    [SerializeField] private List<int> source2 = new List<int>();
     [SerializeField] private Methods method;
     [SerializeField] private int index;
 
@@ -86,22 +87,22 @@ public class GraphsTester : MonoBehaviour
 
     private void TestAll()
     {
-        Debug.Log($"All One: {GraphMethods.All(list, i => i == 1)}");
+        Debug.Log($"All One: {GraphMethods.All(source1, i => i == 1)}");
     }
 
     private void TestAny()
     {
-        Debug.Log($"Any Zero: {GraphMethods.Any(list, i => i == 0)}");
+        Debug.Log($"Any Zero: {GraphMethods.Any(source1, i => i == 0)}");
     }
 
     private void TestContains()
     {
-        Debug.Log($"Contains Zero: {GraphMethods.Contains(list, 0)}");
+        Debug.Log($"Contains Zero: {GraphMethods.Contains(source1, 0)}");
     }
 
     private void TestDistinct()
     {
-        List<int> distinctInts = GraphMethods.ToList(GraphMethods.Distinct(list));
+        List<int> distinctInts = GraphMethods.ToList(GraphMethods.Distinct(source1));
         string distincts = "Distincts: ";
         for (int i = 0; i < distinctInts.Count; i++)
         {
@@ -113,11 +114,19 @@ public class GraphsTester : MonoBehaviour
 
     private void TestElementAt()
     {
-        Debug.Log($"Element at: {index}: {GraphMethods.ElementAt(list, index)}");
+        Debug.Log($"Element at: {index}: {GraphMethods.ElementAt(source1, index)}");
     }
 
     private void TestExcept()
     {
+        List<int> exceptsList = GraphMethods.ToList(GraphMethods.Except(source1, source2));
+        string excepts = "Excepts: ";
+        for (int i = 0; i < exceptsList.Count; i++)
+        {
+            excepts += $"{exceptsList[i]}, ";
+        }
+
+        Debug.Log(excepts);
     }
 
     private void TestFirst()
