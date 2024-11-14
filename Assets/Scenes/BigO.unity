@@ -836,9 +836,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fbe250cce75ae34897b14f3f7f83907, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sortType: 3
-  delay: 0.2
-  quantity: 512
+  sortType: 7
+  delay: 0
+  quantity: 64
   hasAscendantOrder: 1
   shouldShuffle: 1
   shouldShuffleRange: 0
@@ -943,7 +943,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1040,7 +1040,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 1915344323}
-  iterationClip: {fileID: 8300000, guid: 7927515c3f3d9e04a81a1bb3b868ff84, type: 3}
+  iterationClip: {fileID: 0}
   panningClip: {fileID: 8300000, guid: 204481bdbefe7034b8139d4684fbbfef, type: 3}
   startPanningClip: {fileID: 8300000, guid: 2863949084184b94186ad6cc59cf9b6d, type: 3}
 --- !u!4 &1915344325

@@ -23,6 +23,8 @@ namespace SortingAlgorithms
 
         /// <summary>
         /// Only Works for sizes that are power of 2
+        /// Space: O(n log(n))
+        /// Time: O(log(n))
         /// </summary>
         /// <param name="list"></param>
         /// <param name="delay"></param>
@@ -64,6 +66,13 @@ namespace SortingAlgorithms
             yield return BitonicMerge(list, from + half, half, dir, delay);
         }
 
+        /// <summary>
+        /// Space: O(1)
+        /// Time: O(n^2)
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="delay"></param>
+        /// <returns></returns>
         public static IEnumerator SelectionSort(List<T> list, float delay)
         {
             int minIndex;
@@ -83,6 +92,13 @@ namespace SortingAlgorithms
             onSortEnded?.Invoke();
         }
 
+        /// <summary>
+        /// Space: O(1)
+        /// Time:  O(n/2 * n/2) -> O(n^2)
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="delay"></param>
+        /// <returns></returns>
         public static IEnumerator DoubleSelectionSort(List<T> list, float delay)
         {
             int minIndex;
@@ -113,6 +129,13 @@ namespace SortingAlgorithms
             onSortEnded?.Invoke();
         }
 
+        /// <summary>
+        /// Space: O(1)
+        /// Time: O(n^2)
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="delay"></param>
+        /// <returns></returns>
         public static IEnumerator CocktailShakerSort(List<T> list, float delay)
         {
             for (int i = 0; i < list.Count / 2; i++)
@@ -139,6 +162,13 @@ namespace SortingAlgorithms
             onSortEnded?.Invoke();
         }
 
+        /// <summary>
+        /// Space: O(log(n))
+        /// Time: O(n log(n))
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="delay"></param>
+        /// <returns></returns>
         public static IEnumerator QuickSort(List<T> list, float delay)
         {
             yield return RecursiveQuickSort(list, 0, list.Count - 1, delay);
@@ -169,6 +199,13 @@ namespace SortingAlgorithms
             yield return RecursiveQuickSort(list, pivot + 1, to, delay);
         }
 
+        /// <summary>
+        /// Space: O(n + b) Where b is the quantity of buckets, in other words b is the base of the digits, in this case 10
+        /// Time: O(d*(n+b)) where d is the amount of digits
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="delay"></param>
+        /// <returns></returns>
         public static IEnumerator RadixLSDSort(List<T> list, float delay)
         {
             List<uint> ints = GetIntsFromT(list);
@@ -223,6 +260,13 @@ namespace SortingAlgorithms
             onSortEnded?.Invoke();
         }
 
+        /// <summary>
+        /// Space: O(n+b+d)
+        /// Time: O(d*n)
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="delay"></param>
+        /// <returns></returns>
         public static IEnumerator RadixMSDSort(List<T> list, float delay)
         {
             List<uint> ints = GetIntsFromT(list);
@@ -289,9 +333,16 @@ namespace SortingAlgorithms
             }
         }
 
+        /// <summary>
+        /// Space: O(1)
+        /// Time: O(n^1.2)
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="delay"></param>
+        /// <returns></returns>
         public static IEnumerator ShellSort(List<T> list, float delay)
         {
-            for (int gap = list.Count / 2; gap > 0; gap /= 2)
+            for (int gap = (int)(list.Count / 2.3f); gap > 0; gap = (int)(gap / 2.3f))
             {
                 for (int i = 0; i < list.Count; i++)
                 {
@@ -312,6 +363,16 @@ namespace SortingAlgorithms
             onSortEnded?.Invoke();
         }
 
+        /// <summary>
+        /// Randomly Shuffles the list until it is sorted
+        /// Space: O(1)
+        /// Time: O(n!)
+        /// Worst: O(lim->0) 
+        /// Best: O(1)
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="delay"></param>
+        /// <returns></returns>
         public static IEnumerator BogoSort(List<T> list, float delay)
         {
             while (!IsSorted(list))
@@ -324,6 +385,13 @@ namespace SortingAlgorithms
             onSortEnded?.Invoke();
         }
 
+        /// <summary>
+        /// Space: O(log(n))
+        /// Time: O(n log(n))
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="delay"></param>
+        /// <returns></returns>
         public static IEnumerator IntroSort(List<T> list, float delay)
         {
             //Recursive Quantity of steps
@@ -359,6 +427,13 @@ namespace SortingAlgorithms
             }
         }
 
+        /// <summary>
+        /// Space: O(n)
+        /// Time: O(n log(n))
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="delay"></param>
+        /// <returns></returns>
         public static IEnumerator AdaptiveMergeSort(List<T> list, float delay)
         {
             yield return RecursiveAdaptiveMergeSort(list, 0, list.Count - 1, delay);
@@ -395,6 +470,13 @@ namespace SortingAlgorithms
             }
         }
 
+        /// <summary>
+        /// Space: O(1)
+        /// Time: O(n^2)
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="delay"></param>
+        /// <returns></returns>
         public static IEnumerator BubbleSort(List<T> list, float delay)
         {
             for (int i = 0; i < list.Count - 1; i++)
@@ -412,6 +494,13 @@ namespace SortingAlgorithms
             onSortEnded?.Invoke();
         }
 
+        /// <summary>
+        /// Space: O(1)
+        /// Time: O(n^2)
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="delay"></param>
+        /// <returns></returns>
         public static IEnumerator GnomeSort(List<T> list, float delay)
         {
             int gnome = 0;
@@ -433,6 +522,13 @@ namespace SortingAlgorithms
             onSortEnded?.Invoke();
         }
 
+        /// <summary>
+        /// Space: O(n)
+        /// Time: O(n log(n))
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="delay"></param>
+        /// <returns></returns>
         public static IEnumerator MergeSort(List<T> list, float delay)
         {
             yield return RecursiveMergeSort(list, 0, list.Count - 1, delay);
@@ -450,6 +546,13 @@ namespace SortingAlgorithms
             yield return Merge(list, from, middle, to, delay);
         }
 
+        /// <summary>
+        /// Space: O(1)
+        /// Time: O(n log(n))
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="delay"></param>
+        /// <returns></returns>
         public static IEnumerator HeapSort(List<T> list, float delay)
         {
             yield return Heapify(list, list.Count - 1, delay);
@@ -538,6 +641,13 @@ namespace SortingAlgorithms
             }
         }
 
+        /// <summary>
+        /// Space: O(1)
+        /// Time: O(n^2)
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="delay"></param>
+        /// <returns></returns>
         public static IEnumerator InsertionSort(List<T> list, float delay)
         {
             for (int i = 0; i < list.Count; ++i)
@@ -568,6 +678,13 @@ namespace SortingAlgorithms
             }
         }
 
+        /// <summary>
+        /// Space: O(1) Technically not Space (OS driven)
+        /// Time: O(n + arr.max)
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="delay"></param>
+        /// <returns></returns>
         public static IEnumerator SleepSort(List<T> list, float delay)
         {
             List<uint> ints = GetIntsFromT(list);
