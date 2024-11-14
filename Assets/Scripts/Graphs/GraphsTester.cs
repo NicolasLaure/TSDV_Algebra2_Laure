@@ -169,6 +169,13 @@ public class GraphsTester : MonoBehaviour
 
     private void TestSkipWhile()
     {
+        List<int> notSkipped = GraphMethods.ToList(GraphMethods.SkipWhile(source1, i => i == 1));
+        string skipped = "Skipped: ";
+        for (int i = 0; i < notSkipped.Count; i++)
+        {
+            skipped += $"{notSkipped[i]}, ";
+        }
+        Debug.Log(skipped);
     }
 
     private void TestUnion()
@@ -179,6 +186,7 @@ public class GraphsTester : MonoBehaviour
         {
             union += $"{unionList[i]}, ";
         }
+
         Debug.Log(union);
     }
 

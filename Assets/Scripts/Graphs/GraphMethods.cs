@@ -381,7 +381,17 @@ public class GraphMethods
     /// <returns></returns>
     public static IEnumerable<TSource> SkipWhile<TSource>(IEnumerable<TSource> source, Func<TSource, bool> predicate)
     {
-        throw new NotImplementedException();
+        List<TSource> skipped = new List<TSource>();
+        IEnumerator<TSource> sourceEnum = source.GetEnumerator();
+
+        while (sourceEnum.MoveNext())
+        {
+            if (!predicate.Invoke(sourceEnum.Current))
+                skipped.Add(sourceEnum.Current);
+        }
+
+        sourceEnum.Dispose();
+        return skipped;
     }
 
     /// <summary>
