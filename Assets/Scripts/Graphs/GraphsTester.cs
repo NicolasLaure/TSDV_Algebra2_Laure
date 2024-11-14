@@ -154,6 +154,7 @@ public class GraphsTester : MonoBehaviour
 
     private void TestCount()
     {
+        Debug.Log($"Count of 1: {GraphMethods.Count(source1, i => i == 1)}");
     }
 
     private void TestSequenceEqual()

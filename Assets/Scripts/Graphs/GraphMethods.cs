@@ -290,7 +290,16 @@ public class GraphMethods
     /// <returns></returns>
     public static int Count<TSource>(IEnumerable<TSource> source, Func<TSource, bool> predicate)
     {
-        throw new NotImplementedException();
+        int count = 0;
+        IEnumerator<TSource> sourceEnum = source.GetEnumerator();
+        while (sourceEnum.MoveNext())
+        {
+            if (predicate.Invoke(sourceEnum.Current))
+                count++;
+        }
+
+        sourceEnum.Dispose();
+        return count;
     }
 
     /// <summary>
