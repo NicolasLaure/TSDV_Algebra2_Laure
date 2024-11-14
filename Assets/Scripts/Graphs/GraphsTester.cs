@@ -142,6 +142,14 @@ public class GraphsTester : MonoBehaviour
 
     private void TestIntersect()
     {
+        List<int> intersectList = GraphMethods.ToList(GraphMethods.Intersect(source1, source2));
+        string intersects = "Intersects: ";
+        for (int i = 0; i < intersectList.Count; i++)
+        {
+            intersects += $"{intersectList[i]}, ";
+        }
+
+        Debug.Log(intersects);
     }
 
     private void TestCount()

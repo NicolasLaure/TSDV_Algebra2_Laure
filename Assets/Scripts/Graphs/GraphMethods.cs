@@ -256,7 +256,7 @@ public class GraphMethods
     /// <returns></returns>
     public static IEnumerable<TSource> Intersect<TSource>(IEnumerable<TSource> source1, IEnumerable<TSource> source2)
     {
-        throw new NotImplementedException();
+        return Intersect(source1, source2, EqualityComparer<TSource>.Default);
     }
 
     /// <summary>
@@ -269,7 +269,16 @@ public class GraphMethods
     /// <returns></returns>
     public static IEnumerable<TSource> Intersect<TSource>(IEnumerable<TSource> source1, IEnumerable<TSource> source2, IEqualityComparer<TSource> comparer)
     {
-        throw new NotImplementedException();
+        List<TSource> intersectionList = new List<TSource>();
+        IEnumerator<TSource> source1Enum = source1.GetEnumerator();
+        while (source1Enum.MoveNext())
+        {
+            if (Contains(source2, source1Enum.Current))
+                intersectionList.Add(source1Enum.Current);
+        }
+
+        source1Enum.Dispose();
+        return intersectionList;
     }
 
     /// <summary>
