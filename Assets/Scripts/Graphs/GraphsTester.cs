@@ -115,6 +115,7 @@ public class GraphsTester : MonoBehaviour
 
     private void TestContains()
     {
+        Debug.Log($"Contains Zero: {GraphMethods.Contains(list, 0)}");
     }
 
     private void TestContainsCompared()

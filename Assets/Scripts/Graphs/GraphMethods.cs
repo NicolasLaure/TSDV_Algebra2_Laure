@@ -52,7 +52,15 @@ public class GraphMethods
     /// <returns></returns>
     public static bool Contains<TSource>(IEnumerable<TSource> source, TSource item)
     {
-        throw new NotImplementedException();
+        IEnumerator<TSource> sourceEnum = source.GetEnumerator();
+        while (sourceEnum.MoveNext())
+        {
+            if (sourceEnum.Current.Equals(item))
+                return true;
+        }
+
+        sourceEnum.Dispose();
+        return false;
     }
 
     /// <summary>
