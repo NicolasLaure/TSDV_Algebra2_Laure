@@ -393,7 +393,7 @@ public class GraphMethods
     /// <returns></returns>
     public static IEnumerable<TSource> Union<TSource>(IEnumerable<TSource> source1, IEnumerable<TSource> source2)
     {
-        throw new NotImplementedException();
+        return Union(source1, source2, EqualityComparer<TSource>.Default);
     }
 
     /// <summary>
@@ -406,7 +406,34 @@ public class GraphMethods
     /// <returns></returns>
     public static IEnumerable<TSource> Union<TSource>(IEnumerable<TSource> source1, IEnumerable<TSource> source2, IEqualityComparer<TSource> comparer)
     {
-        throw new NotImplementedException();
+        List<TSource> union = new List<TSource>();
+        IEnumerator<TSource> source1Enum = source1.GetEnumerator();
+        IEnumerator<TSource> source2Enum = source2.GetEnumerator();
+
+        while (source1Enum.MoveNext())
+        {
+            union.Add(source1Enum.Current);
+        }
+
+        while (source2Enum.MoveNext())
+        {
+            bool alreadyOnList = false;
+            for (int i = 0; i < union.Count; i++)
+            {
+                if (comparer.Equals(source2Enum.Current, union[i]))
+                {
+                    alreadyOnList = true;
+                    break;
+                }
+            }
+
+            if (!alreadyOnList)
+                union.Add(source2Enum.Current);
+        }
+
+        source1Enum.Dispose();
+        source2Enum.Dispose();
+        return union;
     }
 
     /// <summary>

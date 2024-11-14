@@ -173,6 +173,13 @@ public class GraphsTester : MonoBehaviour
 
     private void TestUnion()
     {
+        List<int> unionList = GraphMethods.ToList(GraphMethods.Union(source1, source2));
+        string union = "Union: ";
+        for (int i = 0; i < unionList.Count; i++)
+        {
+            union += $"{unionList[i]}, ";
+        }
+        Debug.Log(union);
     }
 
     private void TestWhere()
