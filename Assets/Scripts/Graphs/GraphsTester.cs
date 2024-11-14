@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public enum Methods
 {
@@ -25,8 +26,8 @@ public enum Methods
 public class GraphsTester : MonoBehaviour
 {
     [SerializeField] private List<int> list = new List<int>();
-
     [SerializeField] private Methods method;
+    [SerializeField] private int index;
 
     [ContextMenu("Test Method")]
     public void TestMethod()
@@ -112,6 +113,7 @@ public class GraphsTester : MonoBehaviour
 
     private void TestElementAt()
     {
+        Debug.Log($"Element at: {index}: {GraphMethods.ElementAt(list, index)}");
     }
 
     private void TestExcept()

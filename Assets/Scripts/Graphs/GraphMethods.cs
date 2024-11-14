@@ -131,7 +131,18 @@ public class GraphMethods
     /// <returns></returns>
     public static TSource ElementAt<TSource>(IEnumerable<TSource> source, int index)
     {
-        throw new NotImplementedException();
+        IEnumerator<TSource> sourceEnum = source.GetEnumerator();
+        int currentIndex = -1;
+        while (sourceEnum.MoveNext())
+        {
+            currentIndex++;
+
+            if (currentIndex == index)
+                return sourceEnum.Current;
+        }
+
+        sourceEnum.Dispose();
+        throw new ArgumentOutOfRangeException();
     }
 
     /// <summary>
