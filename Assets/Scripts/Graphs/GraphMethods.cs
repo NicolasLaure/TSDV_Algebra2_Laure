@@ -19,6 +19,7 @@ public class GraphMethods
                 return false;
         }
 
+        sourceEnum.Dispose();
         return true;
     }
 
@@ -31,7 +32,15 @@ public class GraphMethods
     /// <returns></returns>
     public static bool Any<TSource>(IEnumerable<TSource> source, Func<TSource, bool> predicate)
     {
-        throw new NotImplementedException();
+        IEnumerator<TSource> sourceEnum = source.GetEnumerator();
+        while (sourceEnum.MoveNext())
+        {
+            if (predicate.Invoke(sourceEnum.Current))
+                return true;
+        }
+
+        sourceEnum.Dispose();
+        return false;
     }
 
     /// <summary>

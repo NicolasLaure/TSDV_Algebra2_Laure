@@ -110,6 +110,7 @@ public class GraphsTester : MonoBehaviour
 
     private void TestAny()
     {
+        Debug.Log($"Any Zero: {GraphMethods.Any(list, i => i == 0)}");
     }
 
     private void TestContains()
