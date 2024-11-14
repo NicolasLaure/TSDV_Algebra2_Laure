@@ -229,7 +229,22 @@ public class GraphMethods
     /// <returns></returns>
     public static TSource Last<TSource>(IEnumerable<TSource> source, Func<TSource, bool> predicate)
     {
-        throw new NotImplementedException();
+        IEnumerator<TSource> sourceEnum = source.GetEnumerator();
+        int count = -1;
+        int lastFoundIndex = -1;
+        while (sourceEnum.MoveNext())
+        {
+            count++;
+            if (predicate.Invoke(sourceEnum.Current))
+                lastFoundIndex = count;
+        }
+
+        sourceEnum.Dispose();
+        Debug.Log(lastFoundIndex);
+        if (lastFoundIndex != -1)
+            return ElementAt(source, lastFoundIndex);
+
+        throw new KeyNotFoundException();
     }
 
     /// <summary>

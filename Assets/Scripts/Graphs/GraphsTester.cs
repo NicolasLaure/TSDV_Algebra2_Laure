@@ -137,6 +137,7 @@ public class GraphsTester : MonoBehaviour
 
     private void TestLast()
     {
+        Debug.Log($"Last: {GraphMethods.Last(source1, i => i == 0)}");
     }
 
     private void TestIntersect()
