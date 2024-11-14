@@ -159,6 +159,7 @@ public class GraphsTester : MonoBehaviour
 
     private void TestSequenceEqual()
     {
+        Debug.Log($"Are Equal: {GraphMethods.SequenceEqual(source1, source2, EqualityComparer<int>.Default)}");
     }
 
     private void TestSingle()

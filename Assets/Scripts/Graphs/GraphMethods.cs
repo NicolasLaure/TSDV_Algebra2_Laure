@@ -302,6 +302,19 @@ public class GraphMethods
         return count;
     }
 
+    public static int Count<TSource>(IEnumerable<TSource> source)
+    {
+        int count = 0;
+        IEnumerator<TSource> sourceEnum = source.GetEnumerator();
+        while (sourceEnum.MoveNext())
+        {
+            count++;
+        }
+
+        sourceEnum.Dispose();
+        return count;
+    }
+
     /// <summary>
     /// Determines whether two sequences are equal by comparing their elements by using a specified IEqualityComparer<T>.
     /// </summary>
@@ -312,7 +325,24 @@ public class GraphMethods
     /// <returns></returns>
     public static bool SequenceEqual<TSource>(IEnumerable<TSource> source1, IEnumerable<TSource> source2, IEqualityComparer<TSource> comparer)
     {
-        throw new NotImplementedException();
+        if (Count(source1) != Count(source2))
+            return false;
+
+        IEnumerator<TSource> source1Enum = source1.GetEnumerator();
+        IEnumerator<TSource> source2Enum = source2.GetEnumerator();
+        while (source1Enum.MoveNext() && source2Enum.MoveNext())
+        {
+            if (!comparer.Equals(source1Enum.Current, source2Enum.Current))
+            {
+                source1Enum.Dispose();
+                source2Enum.Dispose();
+                return false;
+            }
+        }
+
+        source1Enum.Dispose();
+        source2Enum.Dispose();
+        return true;
     }
 
     /// <summary>
