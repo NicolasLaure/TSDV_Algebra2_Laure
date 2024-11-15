@@ -6,23 +6,23 @@ using UnityEngine;
 
 public enum SortTypes
 {
-    Bitonic, // Todo
-    Selection,
-    DoubleSelection,
-    CocktailShaker,
-    Quick,
-    RadixLSD, // Todo
-    RadixMSD, // Todo
-    Shell,
-    Bogo,
-    Intro, // Todo
-    AdaptiveMerge, // Todo
-    Bubble,
-    Gnome,
-    Merge,
-    Heap, // Todo
-    Insertion,
-    Sleep
+    Sleep, // O(n + arr.max) -> O(n)
+    RadixMSD, // O(d*n)
+    RadixLSD, // O(d*(n+b))
+    Intro, // O(n log(n))
+    Quick, // O(n log(n))
+    AdaptiveMerge, // O(n log(n))
+    Merge, // O(n log(n))
+    Heap, // O(n log(n))
+    Bitonic, // O(n*log(n)^2)
+    Shell, // O(n^1.2)
+    Insertion, // O(n^2)
+    DoubleSelection, // O(n^2)
+    Selection, // O(n^2)
+    CocktailShaker, // O(n^2)
+    Gnome, // O(n^2)
+    Bubble, // O(n^2)
+    Bogo // O(n!)
 }
 
 public class SortHandler : MonoBehaviour

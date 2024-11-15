@@ -335,6 +335,7 @@ namespace SortingAlgorithms
 
         /// <summary>
         /// Space: O(1)
+        /// Time: O(n^2) 
         /// Time: O(n^1.2)
         /// </summary>
         /// <param name="list"></param>
