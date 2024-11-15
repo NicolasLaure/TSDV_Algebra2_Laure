@@ -11,6 +11,7 @@ public class ListVisualizer : MonoBehaviour
     [SerializeField] private GameObject barPrefab;
     [SerializeField] private Color panningColor;
     [SerializeField] private AudioHandler audioHandler;
+    [SerializeField] private float panningCoolDown;
 
     private List<GameObject> _bars = new List<GameObject>();
     private float _barWidth = 0;
@@ -76,7 +77,7 @@ public class ListVisualizer : MonoBehaviour
         {
             _bars[i].GetComponent<SpriteRenderer>().color = panningColor;
             audioHandler.PlayPanningSoundPitched(1.0f + (float)i / _bars.Count);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(panningCoolDown);
         }
     }
 }
